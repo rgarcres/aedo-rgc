@@ -1,0 +1,9 @@
+{
+  "lumoImports" : [ "typography", "color", "spacing", "badge", "utility" ],
+  "assets" : {
+    "@fontsource/lora" : {
+      "*.css" : "@fontsource/lora",
+      "files/*" : "@fontsource/lora/files"
+    }
+  }
+}

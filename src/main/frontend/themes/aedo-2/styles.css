@@ -1,0 +1,28 @@
+@import url('./main-layout.css');
+@import url('./views/home-view.css');
+@import url('./views/seleccionar-usuarios-view.css');
+@import url('./views/seleccionar-encuestas-view.css');
+@import url('@fontsource/lora/index.css');    html {
+      --lumo-shade-5pct: hsla(241, 84%, 59%, 0.05);
+      --lumo-shade-10pct: hsla(241, 84%, 59%, 0.1);
+      --lumo-shade-20pct: hsla(241, 84%, 59%, 0.2);
+      --lumo-shade-30pct: hsla(241, 84%, 59%, 0.3);
+      --lumo-shade-40pct: hsla(241, 84%, 59%, 0.4);
+      --lumo-shade-50pct: hsla(241, 84%, 59%, 0.5);
+      --lumo-shade-60pct: hsla(241, 84%, 59%, 0.6);
+      --lumo-shade-70pct: hsla(241, 84%, 59%, 0.7);
+      --lumo-shade-80pct: hsla(241, 84%, 59%, 0.8);
+      --lumo-shade-90pct: hsla(241, 84%, 59%, 0.9);
+      --lumo-primary-color-50pct: hsla(241, 84%, 59%, 0.5);
+      --lumo-primary-color-10pct: hsla(241, 84%, 59%, 0.1);
+      --lumo-shade: hsl(241, 84%, 59%);
+      --lumo-primary-color: hsl(241, 84%, 59%);
+      --lumo-primary-text-color: hsl(241, 84%, 59%);
+      --lumo-base-color: #fcfcfc;
+      --lumo-border-radius-s: calc(var(--lumo-size-m) / 6);
+      --lumo-border-radius-m: calc(var(--lumo-size-m) / 2);
+      --lumo-border-radius-l: var(--lumo-size-m);
+      --lumo-body-text-color: hsla(0, 0%, 0%, 0.94);
+--lumo-font-family: Lora;
+
+    }
