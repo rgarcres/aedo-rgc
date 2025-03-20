@@ -37,8 +37,8 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         TextField textField2 = new TextField();
         Checkbox checkbox = new Checkbox();
         Checkbox checkbox2 = new Checkbox();
-        Button buttonPrimary = new Button();
-        Button buttonSecondary = new Button();
+        Button buscarButton = new Button("Buscar");
+        Button cancelarButton = new Button("Cancelar");
         Grid basicGrid = new Grid(SamplePerson.class);
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
@@ -64,11 +64,9 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         checkbox.setWidth("min-content");
         checkbox2.setLabel("Hombre");
         checkbox2.setWidth("min-content");
-        buttonPrimary.setText("Buscar");
-        buttonPrimary.setWidth("min-content");
-        buttonPrimary.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonSecondary.setText("Cancelar");
-        buttonSecondary.setWidth("min-content");
+        buscarButton.setWidth("min-content");
+        buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        cancelarButton.setWidth("min-content");
         basicGrid.setWidth("100%");
         basicGrid.getStyle().set("flex-grow", "0");
         setGridSampleData(basicGrid);
@@ -79,8 +77,8 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         layoutRow.add(textField2);
         layoutRow.add(checkbox);
         layoutRow.add(checkbox2);
-        layoutRow.add(buttonPrimary);
-        layoutRow.add(buttonSecondary);
+        layoutRow.add(buscarButton);
+        layoutRow.add(cancelarButton);
         layoutColumn2.add(basicGrid);
     }
 
