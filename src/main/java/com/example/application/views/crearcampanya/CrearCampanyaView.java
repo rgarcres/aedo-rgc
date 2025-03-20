@@ -1,5 +1,6 @@
 package com.example.application.views.crearcampanya;
 
+import com.example.application.views.Personalizacion;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -74,14 +75,10 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutRow.getStyle().set("flex-grow", "1");
         layoutRow.setAlignItems(Alignment.CENTER);
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
-        siguienteButton.setWidth("min-content");
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        cancelarButton.setWidth("min-content");
 
-        siguienteButton.addClickListener(e -> siguienteButton.getUI().ifPresent(
-            ui -> ui.navigate("seleccionar-usuarios")
-        ));
-
+        Personalizacion.configurarBoton(siguienteButton, "seleccionar-usuarios");
+        Personalizacion.configurarBoton(cancelarButton, "");
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);

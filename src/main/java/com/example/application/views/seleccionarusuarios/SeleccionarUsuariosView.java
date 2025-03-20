@@ -2,6 +2,7 @@ package com.example.application.views.seleccionarusuarios;
 
 import com.example.application.data.SamplePerson;
 import com.example.application.services.SamplePersonService;
+import com.example.application.views.Personalizacion;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -28,8 +29,8 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         H3 h3 = new H3();
         Grid multiSelectGrid = new Grid(SamplePerson.class);
         FormLayout formLayout2Col = new FormLayout();
-        Button siguienteButton = new Button();
-        Button buttonSecondary = new Button();
+        Button siguienteButton = new Button("Siguiente");
+        Button cancelarButton = new Button("Cancelar");
         getContent().setHeightFull();
         getContent().setWidthFull();
         h3.setText("Seleccionar Usuarios");
@@ -39,20 +40,16 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         multiSelectGrid.getStyle().set("flex-grow", "0");
         setGridSampleData(multiSelectGrid);
         formLayout2Col.setWidth("100%");
-        siguienteButton.setText("Siguiente");
-        siguienteButton.setWidth("min-content");
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buttonSecondary.setText("Cancelar");
-        buttonSecondary.setWidth("min-content");
+
+        Personalizacion.configurarBoton(siguienteButton, "seleccionar-encuestas");
+        Personalizacion.configurarBoton(cancelarButton, "");
         
-        siguienteButton.addClickListener(e -> siguienteButton.getUI().ifPresent(
-            ui -> ui.navigate("seleccionar-encuestas")
-        ));
         getContent().add(h3);
         getContent().add(multiSelectGrid);
         getContent().add(formLayout2Col);
         formLayout2Col.add(siguienteButton);
-        formLayout2Col.add(buttonSecondary);
+        formLayout2Col.add(cancelarButton);
     }
 
     private void setGridSampleData(Grid grid) {

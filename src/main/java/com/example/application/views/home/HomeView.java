@@ -1,5 +1,6 @@
 package com.example.application.views.home;
 
+import com.example.application.views.Personalizacion;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -45,19 +46,11 @@ public class HomeView extends Composite<VerticalLayout> {
         h3.setText("Bienvenido " + nombreUsuario +"!!");
 
         layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, crearCampanyaButton);
-        crearCampanyaButton.setWidth("min-content");
         crearCampanyaButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        crearCampanyaButton.getStyle().set("cursor", "pointer");
-        crearCampanyaButton.addClickListener(e -> crearCampanyaButton.getUI().ifPresent(
-            ui -> ui.navigate("crear-campanya")   
-           ));
+        Personalizacion.configurarBoton(crearCampanyaButton, "crear-campanya");
         
-        misCampanyaButton.setWidth("min-content");
         misCampanyaButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        misCampanyaButton.getStyle().set("cursor", "pointer");
-        misCampanyaButton.addClickListener(e -> misCampanyaButton.getUI().ifPresent(
-            ui -> ui.navigate("mis-campanyas")   
-           ));
+        Personalizacion.configurarBoton(misCampanyaButton, "mis-campanyas");
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h2);
