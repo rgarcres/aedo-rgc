@@ -34,6 +34,7 @@ public class SeleccionarEncuestasView extends Composite<VerticalLayout> {
         FormLayout formLayout2Col = new FormLayout();
         Button crearButton = new Button("Crear Campaña");
         Button cancelarButton = new Button("Cancelar");
+        Button atrasButton = new Button("<");
         getContent().setHeightFull();
         getContent().setWidthFull();
         h3.setText("Seleccionar Encuestas");
@@ -46,7 +47,9 @@ public class SeleccionarEncuestasView extends Composite<VerticalLayout> {
         crearButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Personalizacion.configurarBoton(crearButton, "mis-campanyas");
         Personalizacion.configurarBoton(cancelarButton, "");
+        Personalizacion.configurarBoton(atrasButton, "seleccionar-usuarios");
 
+        getContent().add(atrasButton);
         getContent().add(h3);
         getContent().add(multiSelectGrid);
         getContent().add(formLayout2Col);
