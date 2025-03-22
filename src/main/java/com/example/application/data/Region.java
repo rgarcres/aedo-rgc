@@ -4,6 +4,11 @@ public class Region extends AbstractEntity {
     private String nombre;
     private String provincia;
 
+    public Region(String nombre, String provincia){
+        this.nombre = nombre;
+        this.provincia = provincia;
+    }
+
     public String getNombre() {
         return nombre;
     }

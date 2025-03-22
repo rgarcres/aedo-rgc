@@ -1,5 +1,7 @@
 package com.example.application.views.crearcampanya;
 
+import com.example.application.data.Bloque;
+import com.example.application.data.Region;
 import com.example.application.views.Personalizacion;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
@@ -35,8 +37,8 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         TextField textField2 = new TextField();
         DatePicker datePicker = new DatePicker();
         DatePicker datePicker2 = new DatePicker();
-        ComboBox comboBox = new ComboBox();
-        ComboBox comboBox2 = new ComboBox();
+        ComboBox<Region> regionComboBox = new ComboBox<>("Region");
+        ComboBox<Bloque> bloqueComboBox = new ComboBox<>("Bloque");
         TextField textField3 = new TextField();
         TextField textField4 = new TextField();
         HorizontalLayout layoutRow = new HorizontalLayout();
@@ -60,12 +62,12 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         datePicker.setLabel("Inicio");
         datePicker2.setLabel("Fin");
         datePicker2.setWidth("min-content");
-        comboBox.setLabel("Region");
-        comboBox.setWidth("min-content");
-        setComboBoxSampleData(comboBox);
-        comboBox2.setLabel("Bloque");
-        comboBox2.setWidth("min-content");
-        setComboBoxSampleData(comboBox2);
+
+        regionComboBox.setWidth("min-content");
+        setComboBoxRegion(regionComboBox);
+        bloqueComboBox.setWidth("min-content");
+        setComboBoxBloque(bloqueComboBox);
+
         textField3.setLabel("Objetivos");
         textField3.setWidth("100%");
         textField4.setLabel("Demografía");
@@ -87,8 +89,8 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         formLayout2Col.add(textField2);
         formLayout2Col.add(datePicker);
         formLayout2Col.add(datePicker2);
-        formLayout2Col.add(comboBox);
-        formLayout2Col.add(comboBox2);
+        formLayout2Col.add(regionComboBox);
+        formLayout2Col.add(bloqueComboBox);
         layoutColumn2.add(textField3);
         layoutColumn2.add(textField4);
         layoutColumn2.add(layoutRow);
@@ -99,13 +101,23 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
     record SampleItem(String value, String label, Boolean disabled) {
     }
 
-    private void setComboBoxSampleData(ComboBox comboBox) {
-        List<SampleItem> sampleItems = new ArrayList<>();
-        sampleItems.add(new SampleItem("first", "First", null));
-        sampleItems.add(new SampleItem("second", "Second", null));
-        sampleItems.add(new SampleItem("third", "Third", Boolean.TRUE));
-        sampleItems.add(new SampleItem("fourth", "Fourth", null));
-        comboBox.setItems(sampleItems);
-        comboBox.setItemLabelGenerator(item -> ((SampleItem) item).label());
+    private void setComboBoxBloque(ComboBox<Bloque> comboBox){
+        List<Bloque> bloques = new ArrayList<>();
+        bloques.add(new Bloque("Bloque 1"));
+        bloques.add(new Bloque("Bloque 2"));
+        bloques.add(new Bloque("Bloque 3"));
+        bloques.add(new Bloque("Bloque 4"));
+        comboBox.setItems(bloques);
+        comboBox.setItemLabelGenerator(item -> ((Bloque)item).getNombre());
+    }
+
+    private void setComboBoxRegion(ComboBox<Region> comboBox){
+        List<Region> regiones = new ArrayList<>();
+        regiones.add(new Region("Torremolinos", "Malaga"));
+        regiones.add(new Region("Alora", "Malaga"));
+        regiones.add(new Region("Nerja", "Malaga"));
+        regiones.add(new Region("Velez Malaga", "Malaga"));
+        comboBox.setItems(regiones);
+        comboBox.setItemLabelGenerator(item -> ((Region)item).getNombre());
     }
 }

@@ -43,7 +43,7 @@ public class HomeView extends Composite<VerticalLayout> {
         h2.setWidth("max-content");
         h3.setWidth("max-content");
         h3.getStyle().set("color","#535581");
-        h3.setText("Bienvenido " + nombreUsuario +"!!");
+        h3.setText("Bienvenid@ " + nombreUsuario +"!!");
 
         layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, crearCampanyaButton);
         crearCampanyaButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
