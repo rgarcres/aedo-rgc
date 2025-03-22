@@ -37,10 +37,13 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
     public SeleccionarUsuariosView() {
+        
+        
         H3 h3 = new H3("Seleccionar Usuarios");
         Grid<Usuario> gridUsuario = new Grid<>(Usuario.class);
         FormLayout formLayout2Col = new FormLayout();
         MultiSelectComboBox<Genero> selectGenero = new MultiSelectComboBox<>("Genero"); 
+        MultiSelectComboBox<NivelEstudios> selectNivelEstudios = new MultiSelectComboBox<>("Nivel Estudios"); 
         Button siguienteButton = new Button("Siguiente");
         Button cancelarButton = new Button("Cancelar");
         Button atrasButton = new Button("<");
@@ -49,6 +52,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         getContent().setWidthFull();
         h3.setWidth("max-content");
         selectGenero.setItems(Genero.DESCONOCIDO, Genero.HOMBRE, Genero.MUJER, Genero.NO_BINARIO, Genero.OTRO);
+        selectNivelEstudios.setItems(NivelEstudios.DESCONOCIDO, NivelEstudios.ESO, NivelEstudios.BACHILLERATO, NivelEstudios.FORMACION_PROFESIONAL, NivelEstudios.GRADO_UNIVERSITARIO, NivelEstudios.MASTER, NivelEstudios.DOCTORADO, NivelEstudios.OTRO);
 
         gridUsuario.setSelectionMode(Grid.SelectionMode.MULTI);
         gridUsuario.setWidth("100%");
@@ -61,6 +65,11 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             filtrarGenero(gridUsuario, generosSeleccionados, usuarios);
         });
 
+        selectNivelEstudios.addValueChangeListener(e -> {
+            Set<NivelEstudios> nivelesSeleccionados = e.getValue();
+            filtrarNivelEstudios(gridUsuario, nivelesSeleccionados, usuarios);
+        });
+
         formLayout2Col.setWidth("100%");
 
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -71,6 +80,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         getContent().add(atrasButton);
         getContent().add(h3);
         getContent().add(selectGenero);
+        getContent().add(selectNivelEstudios);
         getContent().add(gridUsuario);
         getContent().add(formLayout2Col);
         formLayout2Col.add(siguienteButton);
@@ -93,7 +103,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     }
 
     private void filtrarGenero(Grid<Usuario> grid, Set<Genero> generosSeleccionados, List<Usuario> usuarios){
-
+        
         if(generosSeleccionados == null || generosSeleccionados.isEmpty()){
             grid.setItems(usuarios);
         } else {
@@ -104,6 +114,18 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             grid.setItems(filtrados);
         }
         //grid.setSizeFull();
+    }
+
+    private void filtrarNivelEstudios(Grid<Usuario> grid, Set<NivelEstudios> nivelesSeleccionados, List<Usuario> usuarios) {
+        if(nivelesSeleccionados == null || nivelesSeleccionados.isEmpty()){
+            grid.setItems(usuarios);
+        } else {
+            List<Usuario> filtrados = usuarios.stream()
+            .filter(usuario -> nivelesSeleccionados.contains(usuario.getNivelEstudios()))
+            .collect(Collectors.toList());
+
+            grid.setItems(filtrados);
+        }
     }
 
     /*
