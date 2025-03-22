@@ -29,7 +29,7 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 public class SeleccionarEncuestasView extends Composite<VerticalLayout> {
 
     public SeleccionarEncuestasView() {
-        H3 h3 = new H3();
+        H3 h3 = new H3("Seleccionar Encuestas");
         Grid multiSelectGrid = new Grid(SamplePerson.class);
         FormLayout formLayout2Col = new FormLayout();
         Button crearButton = new Button("Crear Campaña");
@@ -37,12 +37,10 @@ public class SeleccionarEncuestasView extends Composite<VerticalLayout> {
         Button atrasButton = new Button("<");
         getContent().setHeightFull();
         getContent().setWidthFull();
-        h3.setText("Seleccionar Encuestas");
         h3.setWidth("max-content");
         multiSelectGrid.setSelectionMode(Grid.SelectionMode.MULTI);
         multiSelectGrid.setWidth("100%");
         multiSelectGrid.getStyle().set("flex-grow", "0");
-        setGridSampleData(multiSelectGrid);
         formLayout2Col.setWidth("100%");
         crearButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Personalizacion.configurarBoton(crearButton, "mis-campanyas");
@@ -57,10 +55,12 @@ public class SeleccionarEncuestasView extends Composite<VerticalLayout> {
         formLayout2Col.add(cancelarButton);
     }
 
+    /* 
     private void setGridSampleData(Grid grid) {
         grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query)).stream());
     }
 
     @Autowired()
     private SamplePersonService samplePersonService;
+    */
 }
