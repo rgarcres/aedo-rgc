@@ -8,6 +8,7 @@ import com.example.application.data.Usuario;
 //import com.example.application.services.SamplePersonService;
 import com.example.application.views.Personalizacion;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -18,6 +19,7 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
@@ -44,19 +46,28 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private Set<Genero> seleccionGeneros = new HashSet<>();
     private Set<NivelEstudios> seleccionEstudios = new HashSet<>();
     private Set<SituacionLaboral> seleccionLaboral = new HashSet<>();
+    private String nombreFiltro;
+    private String apellidoFiltro;
 
     public SeleccionarUsuariosView() {
         H3 h3 = new H3("Seleccionar Usuarios");
         Grid<Usuario> gridUsuario = new Grid<>(Usuario.class);
         HorizontalLayout filtrosLayout = new HorizontalLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
+        HorizontalLayout botonesFiltrosLayout = new HorizontalLayout(); 
         FormLayout formLayout2Col = new FormLayout();
+
         MultiSelectComboBox<Genero> selectGenero = new MultiSelectComboBox<>("Genero"); 
         MultiSelectComboBox<NivelEstudios> selectNivelEstudios = new MultiSelectComboBox<>("Nivel Estudios"); 
         MultiSelectComboBox<SituacionLaboral> selectSituacionLaboral = new MultiSelectComboBox<>("Situacion Laboral");
+        TextField textFieldNombre = new TextField("Nombre");
+        TextField textFieldApellido = new TextField("Apellidos");
+
         Button siguienteButton = new Button("Siguiente");
         Button cancelarButton = new Button("Cancelar");
         Button atrasButton = new Button("<");
+        Button buscarButton = new Button("Buscar");
+        Button limpiarButton = new Button("Limpiar");
 
         getContent().setHeightFull();
         getContent().setWidthFull();
@@ -76,6 +87,16 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         gridUsuario.setItems(usuariosFiltrados);
 
         //Filtros
+        textFieldNombre.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            actualizarFiltros(gridUsuario);
+        });
+        textFieldApellido.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            actualizarFiltros(gridUsuario);
+        });
         selectGenero.addValueChangeListener(e -> {
             seleccionGeneros = e.getValue();
             actualizarFiltros(gridUsuario);
@@ -94,38 +115,48 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         tituloLayout.setWidth("100%");
 
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        buscarButton.setWidth("min-content");
+        limpiarButton.setWidth("min-content");
+        atrasButton.setWidth("min-content");
         Personalizacion.configurarBoton(siguienteButton, "seleccionar-encuestas");
         Personalizacion.configurarBoton(cancelarButton, "");
         Personalizacion.configurarBoton(atrasButton, "crear-campanya");
+        buscarButton.addClickListener(e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            actualizarFiltros(gridUsuario);
+        });
+        limpiarButton.addClickListener(e -> {
+            textFieldNombre.clear();
+            textFieldApellido.clear();
+            nombreFiltro = "";
+            apellidoFiltro = "";
+            selectGenero.clear();
+            selectNivelEstudios.clear();
+            selectSituacionLaboral.clear();
+            actualizarFiltros(gridUsuario);
+        });
         
         //Añadir componentes al layout
         getContent().add(tituloLayout);
         tituloLayout.add(atrasButton);
         tituloLayout.add(h3);
         getContent().add(filtrosLayout);
+        filtrosLayout.add(textFieldNombre);
+        filtrosLayout.add(textFieldApellido);
         filtrosLayout.add(selectGenero);
         filtrosLayout.add(selectNivelEstudios);
         filtrosLayout.add(selectSituacionLaboral);
+        getContent().add(botonesFiltrosLayout);
+        botonesFiltrosLayout.add(buscarButton);
+        botonesFiltrosLayout.add(limpiarButton);
         getContent().add(gridUsuario);
         getContent().add(formLayout2Col);
         formLayout2Col.add(siguienteButton);
         formLayout2Col.add(cancelarButton);
     }
 
-    private List<Usuario> crearListaUsuarios(){
-        List<Usuario> usuarios = new ArrayList<>();
-
-        usuarios.add(new Usuario("Ruben", "Garcia Crespo", Genero.HOMBRE, SituacionLaboral.OTRO, NivelEstudios.BACHILLERATO, "550-1000", "Situacion Personal"));
-        usuarios.add(new Usuario("Juan", "Cuesta", Genero.HOMBRE, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.MASTER, "2300-3000", "Situacion Personal"));
-        usuarios.add(new Usuario("Maria", "Gomez Perez", Genero.MUJER, SituacionLaboral.ASALARIADO, NivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
-        usuarios.add(new Usuario("Lucia", "Sanchez Garcia", Genero.MUJER, SituacionLaboral.OTRO, NivelEstudios.MASTER, "1800-2100", "Situacion Personal"));
-        usuarios.add(new Usuario("Luffy", "Monkey D", Genero.NO_BINARIO, SituacionLaboral.PARO, NivelEstudios.ESO, "0", "Situacion Personal"));
-        usuarios.add(new Usuario("Ben", "Tennison", Genero.HOMBRE, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.DESCONOCIDO, "1200-1600", "Situacion Personal"));
-        usuarios.add(new Usuario("Sanji", "Vinsmoke", Genero.NO_BINARIO, SituacionLaboral.ASALARIADO, NivelEstudios.DOCTORADO, "2500-3300", "Situacion Personal"));
-        usuarios.add(new Usuario("Bad", "Gyal", Genero.MUJER, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.GRADO_UNIVERSITARIO, "1900-2400", "Situacion Personal"));
-
-        return usuarios;
-    }
 
     private void actualizarFiltros(Grid<Usuario> grid){
         usuariosFiltrados.clear();
@@ -133,10 +164,63 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         .filter(user -> seleccionGeneros.isEmpty() || seleccionGeneros.contains(user.getGenero()))
         .filter(user -> seleccionEstudios.isEmpty() || seleccionEstudios.contains(user.getNivelEstudios()))
         .filter(user -> seleccionLaboral.isEmpty() || seleccionLaboral.contains(user.getSituacionLaboral()))
+        .filter(user -> nombreFiltro.isBlank() || buscarCoincidencias(user.getNombre().toLowerCase(), nombreFiltro))
+        .filter(user -> apellidoFiltro.isBlank() || buscarCoincidencias(user.getApellido().toLowerCase(), apellidoFiltro))
         .collect(Collectors.toList()));
 
         grid.setItems(usuariosFiltrados);
     }
+
+    private boolean buscarCoincidencias(String valorCompleto, String filtro){
+        if(valorCompleto == null || filtro == null){
+            return false;
+        }
+
+        //Si hay dos apellidos dividimos el string en dos mediante el espacio en blanco
+        String[] palabras = valorCompleto.split("\\s+");
+
+        for(String p : palabras){
+            if(p.contains(filtro)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private List<Usuario> crearListaUsuarios(){
+        List<Usuario> usuarios = new ArrayList<>();
+
+        usuarios.add(new Usuario("Ruben", "Garcia Crespo", Genero.HOMBRE, SituacionLaboral.OTRO, NivelEstudios.BACHILLERATO, "550-1000", "Situacion Personal"));
+        usuarios.add(new Usuario("Juan", "Cuesta", Genero.HOMBRE, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.MASTER, "2300-3000", "Situacion Personal"));
+        usuarios.add(new Usuario("Pedro", "Martínez López", Genero.HOMBRE, SituacionLaboral.ASALARIADO, NivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
+        usuarios.add(new Usuario("Carlos", "Sánchez Ruiz", Genero.HOMBRE, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1800-2200", "Situacion Personal"));
+        usuarios.add(new Usuario("Frank", "Sinatra", Genero.HOMBRE, SituacionLaboral.AUTONOMO, NivelEstudios.DOCTORADO, "3000-3500", "Situacion Personal"));
+        usuarios.add(new Usuario("Antonio", "Hernández Pérez", Genero.HOMBRE, SituacionLaboral.PARO, NivelEstudios.ESO, "0", "Situacion Personal"));
+
+        usuarios.add(new Usuario("Maria", "Gomez Perez", Genero.MUJER, SituacionLaboral.ASALARIADO, NivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
+        usuarios.add(new Usuario("Lucia", "Sanchez Garcia", Genero.MUJER, SituacionLaboral.OTRO, NivelEstudios.MASTER, "1800-2100", "Situacion Personal"));
+        usuarios.add(new Usuario("Patricia", "Sánchez Gómez", Genero.MUJER, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.MASTER, "2500-3000", "Situacion Personal"));
+        usuarios.add(new Usuario("Laura", "Fernández Ruiz", Genero.MUJER, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1700-2000", "Situacion Personal"));
+        usuarios.add(new Usuario("Sandra", "García Pérez", Genero.MUJER, SituacionLaboral.AUTONOMO, NivelEstudios.GRADO_UNIVERSITARIO, "2100-2700", "Situacion Personal"));
+        usuarios.add(new Usuario("Bad", "Gyal", Genero.MUJER, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.GRADO_UNIVERSITARIO, "1900-2400", "Situacion Personal"));
+
+        usuarios.add(new Usuario("Alex", "Ruiz Fernández", Genero.NO_BINARIO, SituacionLaboral.ASALARIADO, NivelEstudios.MASTER, "2200-2800", "Situacion Personal"));
+        usuarios.add(new Usuario("Taylor", "Smith", Genero.NO_BINARIO, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.BACHILLERATO, "1500-1800", "Situacion Personal"));
+        usuarios.add(new Usuario("Robin", "Nico", Genero.NO_BINARIO, SituacionLaboral.PARO, NivelEstudios.ESO, "0", "Situacion Personal"));
+        usuarios.add(new Usuario("Jordan", "Williams", Genero.NO_BINARIO, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1600-2000", "Situacion Personal"));
+        usuarios.add(new Usuario("Sanji", "Vinsmoke", Genero.NO_BINARIO, SituacionLaboral.ASALARIADO, NivelEstudios.DOCTORADO, "2500-3300", "Situacion Personal"));
+
+        usuarios.add(new Usuario("Chris", "Evans", Genero.OTRO, SituacionLaboral.DESCONOCIDO, NivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));
+        usuarios.add(new Usuario("Jamie", "Lee Curtis", Genero.OTRO, SituacionLaboral.AUTONOMO, NivelEstudios.GRADO_UNIVERSITARIO, "2200-2800", "Situacion Personal"));
+        usuarios.add(new Usuario("Sam", "Taylor-Johnson", Genero.OTRO, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1800-2100", "Situacion Personal"));
+        usuarios.add(new Usuario("Alex", "Turner", Genero.OTRO, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.MASTER, "2000-2600", "Situacion Personal"));
+        usuarios.add(new Usuario("Jordan", "Peterson", Genero.OTRO, SituacionLaboral.OTRO, NivelEstudios.BACHILLERATO, "1700-2300", "Situacion Personal"));
+
+        usuarios.add(new Usuario("Anónimo", "Sin datos", Genero.DESCONOCIDO, SituacionLaboral.DESCONOCIDO, NivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));
+
+        return usuarios;
+    }
+
 
     /*
     private void setGridSampleData(Grid grid) {
