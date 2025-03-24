@@ -79,7 +79,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         //Establecer valores de las MultiSelectComboBox
         selectGenero.setItems(Genero.DESCONOCIDO, Genero.HOMBRE, Genero.MUJER, Genero.NO_BINARIO, Genero.OTRO);
         selectNivelEstudios.setItems(NivelEstudios.DESCONOCIDO, NivelEstudios.ESO, NivelEstudios.BACHILLERATO, NivelEstudios.FORMACION_PROFESIONAL, NivelEstudios.GRADO_UNIVERSITARIO, NivelEstudios.MASTER, NivelEstudios.DOCTORADO, NivelEstudios.OTRO);
-        selectSituacionLaboral.setItems(SituacionLaboral.DESCONOCIDO, SituacionLaboral.ASALARIADO, SituacionLaboral.AUTONOMO, SituacionLaboral.PARO, SituacionLaboral.TIEMPO_PARCIAL, SituacionLaboral.TIMEPO_TOTAL, SituacionLaboral.OTRO);
+        selectSituacionLaboral.setItems(SituacionLaboral.DESCONOCIDO, SituacionLaboral.ASALARIADO, SituacionLaboral.AUTONOMO, SituacionLaboral.PARO, SituacionLaboral.TIEMPO_PARCIAL, SituacionLaboral.TIEMPO_TOTAL, SituacionLaboral.OTRO);
 
         //PERSONALIZAR GRID
         gridUsuario.setSelectionMode(Grid.SelectionMode.MULTI);
@@ -249,7 +249,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         List<Usuario> usuarios = new ArrayList<>();
 
         usuarios.add(new Usuario("Ruben", "Garcia Crespo", Genero.HOMBRE, SituacionLaboral.OTRO, NivelEstudios.BACHILLERATO, "550-1000", "Situacion Personal"));
-        usuarios.add(new Usuario("Juan", "Cuesta", Genero.HOMBRE, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.MASTER, "2300-3000", "Situacion Personal"));
+        usuarios.add(new Usuario("Juan", "Cuesta", Genero.HOMBRE, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.MASTER, "2300-3000", "Situacion Personal"));
         usuarios.add(new Usuario("Pedro", "Martínez López", Genero.HOMBRE, SituacionLaboral.ASALARIADO, NivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
         usuarios.add(new Usuario("Carlos", "Sánchez Ruiz", Genero.HOMBRE, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1800-2200", "Situacion Personal"));
         usuarios.add(new Usuario("Frank", "Sinatra", Genero.HOMBRE, SituacionLaboral.AUTONOMO, NivelEstudios.DOCTORADO, "3000-3500", "Situacion Personal"));
@@ -257,13 +257,13 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
         usuarios.add(new Usuario("Maria", "Gomez Perez", Genero.MUJER, SituacionLaboral.ASALARIADO, NivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
         usuarios.add(new Usuario("Lucia", "Sanchez Garcia", Genero.MUJER, SituacionLaboral.OTRO, NivelEstudios.MASTER, "1800-2100", "Situacion Personal"));
-        usuarios.add(new Usuario("Patricia", "Sánchez Gómez", Genero.MUJER, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.MASTER, "2500-3000", "Situacion Personal"));
+        usuarios.add(new Usuario("Patricia", "Sánchez Gómez", Genero.MUJER, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.MASTER, "2500-3000", "Situacion Personal"));
         usuarios.add(new Usuario("Laura", "Fernández Ruiz", Genero.MUJER, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1700-2000", "Situacion Personal"));
         usuarios.add(new Usuario("Sandra", "García Pérez", Genero.MUJER, SituacionLaboral.AUTONOMO, NivelEstudios.GRADO_UNIVERSITARIO, "2100-2700", "Situacion Personal"));
-        usuarios.add(new Usuario("Bad", "Gyal", Genero.MUJER, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.GRADO_UNIVERSITARIO, "1900-2400", "Situacion Personal"));
+        usuarios.add(new Usuario("Bad", "Gyal", Genero.MUJER, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.GRADO_UNIVERSITARIO, "1900-2400", "Situacion Personal"));
 
         usuarios.add(new Usuario("Alex", "Ruiz Fernández", Genero.NO_BINARIO, SituacionLaboral.ASALARIADO, NivelEstudios.MASTER, "2200-2800", "Situacion Personal"));
-        usuarios.add(new Usuario("Taylor", "Smith", Genero.NO_BINARIO, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.BACHILLERATO, "1500-1800", "Situacion Personal"));
+        usuarios.add(new Usuario("Taylor", "Smith", Genero.NO_BINARIO, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.BACHILLERATO, "1500-1800", "Situacion Personal"));
         usuarios.add(new Usuario("Robin", "Nico", Genero.NO_BINARIO, SituacionLaboral.PARO, NivelEstudios.ESO, "0", "Situacion Personal"));
         usuarios.add(new Usuario("Jordan", "Williams", Genero.NO_BINARIO, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1600-2000", "Situacion Personal"));
         usuarios.add(new Usuario("Sanji", "Vinsmoke", Genero.NO_BINARIO, SituacionLaboral.ASALARIADO, NivelEstudios.DOCTORADO, "2500-3300", "Situacion Personal"));
@@ -271,7 +271,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         usuarios.add(new Usuario("Chris", "Evans", Genero.OTRO, SituacionLaboral.DESCONOCIDO, NivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));
         usuarios.add(new Usuario("Jamie", "Lee Curtis", Genero.OTRO, SituacionLaboral.AUTONOMO, NivelEstudios.GRADO_UNIVERSITARIO, "2200-2800", "Situacion Personal"));
         usuarios.add(new Usuario("Sam", "Taylor-Johnson", Genero.OTRO, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1800-2100", "Situacion Personal"));
-        usuarios.add(new Usuario("Alex", "Turner", Genero.OTRO, SituacionLaboral.TIMEPO_TOTAL, NivelEstudios.MASTER, "2000-2600", "Situacion Personal"));
+        usuarios.add(new Usuario("Alex", "Turner", Genero.OTRO, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.MASTER, "2000-2600", "Situacion Personal"));
         usuarios.add(new Usuario("Jordan", "Peterson", Genero.OTRO, SituacionLaboral.OTRO, NivelEstudios.BACHILLERATO, "1700-2300", "Situacion Personal"));
 
         usuarios.add(new Usuario("Anónimo", "Sin datos", Genero.DESCONOCIDO, SituacionLaboral.DESCONOCIDO, NivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));

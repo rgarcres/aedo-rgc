@@ -6,6 +6,6 @@ public enum SituacionLaboral {
     ASALARIADO,
     AUTONOMO,
     TIEMPO_PARCIAL,
-    TIMEPO_TOTAL,
+    TIEMPO_TOTAL,
     OTRO
 }
