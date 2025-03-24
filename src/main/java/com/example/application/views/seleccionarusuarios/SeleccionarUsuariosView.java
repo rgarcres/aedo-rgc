@@ -8,7 +8,6 @@ import com.example.application.data.Usuario;
 //import com.example.application.services.SamplePersonService;
 import com.example.application.views.Personalizacion;
 import com.vaadin.flow.component.Composite;
-import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -48,6 +47,8 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private Set<SituacionLaboral> seleccionLaboral = new HashSet<>();
     private String nombreFiltro;
     private String apellidoFiltro;
+    private String rangoMinFiltro;
+    private String rangoMaxFiltro;
 
     public SeleccionarUsuariosView() {
         H3 h3 = new H3("Seleccionar Usuarios");
@@ -62,6 +63,8 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         MultiSelectComboBox<SituacionLaboral> selectSituacionLaboral = new MultiSelectComboBox<>("Situacion Laboral");
         TextField textFieldNombre = new TextField("Nombre");
         TextField textFieldApellido = new TextField("Apellidos");
+        TextField textFieldRangoMin = new TextField("Rango Salarial Min");
+        TextField textFieldRangoMax = new TextField("Rango Salarial Max");
 
         Button siguienteButton = new Button("Siguiente");
         Button cancelarButton = new Button("Cancelar");
@@ -78,7 +81,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         selectNivelEstudios.setItems(NivelEstudios.DESCONOCIDO, NivelEstudios.ESO, NivelEstudios.BACHILLERATO, NivelEstudios.FORMACION_PROFESIONAL, NivelEstudios.GRADO_UNIVERSITARIO, NivelEstudios.MASTER, NivelEstudios.DOCTORADO, NivelEstudios.OTRO);
         selectSituacionLaboral.setItems(SituacionLaboral.DESCONOCIDO, SituacionLaboral.ASALARIADO, SituacionLaboral.AUTONOMO, SituacionLaboral.PARO, SituacionLaboral.TIEMPO_PARCIAL, SituacionLaboral.TIMEPO_TOTAL, SituacionLaboral.OTRO);
 
-        //Personalizar el Grid de usuarios
+        //PERSONALIZAR GRID
         gridUsuario.setSelectionMode(Grid.SelectionMode.MULTI);
         gridUsuario.setWidth("100%");
         gridUsuario.getStyle().set("flex-grow", "0");
@@ -87,16 +90,6 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         gridUsuario.setItems(usuariosFiltrados);
 
         //Filtros
-        textFieldNombre.addKeyPressListener(Key.ENTER, e -> {
-            nombreFiltro = textFieldNombre.getValue().toLowerCase();
-            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
-            actualizarFiltros(gridUsuario);
-        });
-        textFieldApellido.addKeyPressListener(Key.ENTER, e -> {
-            nombreFiltro = textFieldNombre.getValue().toLowerCase();
-            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
-            actualizarFiltros(gridUsuario);
-        });
         selectGenero.addValueChangeListener(e -> {
             seleccionGeneros = e.getValue();
             actualizarFiltros(gridUsuario);
@@ -109,11 +102,32 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             seleccionLaboral = e.getValue();
             actualizarFiltros(gridUsuario);
         });
+        /* 
+        textFieldNombre.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            actualizarFiltros(gridUsuario);
+        });
+        textFieldApellido.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            actualizarFiltros(gridUsuario);
+        });
+        textFieldRangoMin.addKeyPressListener(Key.ENTER, e -> {
+            rangoMinFiltro = textFieldRangoMin.getValue();
+            actualizarFiltros(gridUsuario);
+        });
+        textFieldRangoMax.addKeyPressListener(Key.ENTER, e -> {
+            rangoMaxFiltro = textFieldRangoMax.getValue();
+            actualizarFiltros(gridUsuario);
+        });
+        */
 
         formLayout2Col.setWidth("100%");
         filtrosLayout.setWidth("100%");
         tituloLayout.setWidth("100%");
 
+        //BOTONES
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.setWidth("min-content");
@@ -122,9 +136,13 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         Personalizacion.configurarBoton(siguienteButton, "seleccionar-encuestas");
         Personalizacion.configurarBoton(cancelarButton, "");
         Personalizacion.configurarBoton(atrasButton, "crear-campanya");
+        buscarButton.getStyle().set("cursor", "pointer");
+        limpiarButton.getStyle().set("cursor", "pointer");
         buscarButton.addClickListener(e -> {
             nombreFiltro = textFieldNombre.getValue().toLowerCase();
             apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            rangoMinFiltro = textFieldRangoMin.getValue();
+            rangoMaxFiltro = textFieldRangoMax.getValue();
             actualizarFiltros(gridUsuario);
         });
         limpiarButton.addClickListener(e -> {
@@ -135,10 +153,14 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             selectGenero.clear();
             selectNivelEstudios.clear();
             selectSituacionLaboral.clear();
+            textFieldRangoMin.clear();
+            textFieldRangoMax.clear();
+            rangoMinFiltro = "";
+            rangoMaxFiltro = "";
             actualizarFiltros(gridUsuario);
         });
         
-        //Añadir componentes al layout
+        //AÑADIR COMPONENENTES AL LAYOUT
         getContent().add(tituloLayout);
         tituloLayout.add(atrasButton);
         tituloLayout.add(h3);
@@ -149,6 +171,8 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         filtrosLayout.add(selectNivelEstudios);
         filtrosLayout.add(selectSituacionLaboral);
         getContent().add(botonesFiltrosLayout);
+        botonesFiltrosLayout.add(textFieldRangoMin);
+        botonesFiltrosLayout.add(textFieldRangoMax);
         botonesFiltrosLayout.add(buscarButton);
         botonesFiltrosLayout.add(limpiarButton);
         getContent().add(gridUsuario);
@@ -159,16 +183,50 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
 
     private void actualizarFiltros(Grid<Usuario> grid){
+        //LIMPAR LA LISTA DE USUARIOS FILTRADOS
         usuariosFiltrados.clear();
+
+        //AÑADE A LA LISTA LOS USUARIOS SEGÚN LOS FILTROS APLICADOS
         usuariosFiltrados.addAll(usuarios.stream()
         .filter(user -> seleccionGeneros.isEmpty() || seleccionGeneros.contains(user.getGenero()))
         .filter(user -> seleccionEstudios.isEmpty() || seleccionEstudios.contains(user.getNivelEstudios()))
         .filter(user -> seleccionLaboral.isEmpty() || seleccionLaboral.contains(user.getSituacionLaboral()))
         .filter(user -> nombreFiltro.isBlank() || buscarCoincidencias(user.getNombre().toLowerCase(), nombreFiltro))
         .filter(user -> apellidoFiltro.isBlank() || buscarCoincidencias(user.getApellido().toLowerCase(), apellidoFiltro))
+        .filter(user -> rangoMaxFiltro.isBlank() || filtrarRangoMax(rangoMaxFiltro, user.getRangoSalarial()))
+        .filter(user -> rangoMinFiltro.isBlank() || filtrarRangoMin(rangoMinFiltro, user.getRangoSalarial()))
         .collect(Collectors.toList()));
 
+        //PONE LOS USUARIOS FILTRADOS EN EL GRID
         grid.setItems(usuariosFiltrados);
+    }
+
+    private boolean filtrarRangoMax(String max, String rangoCompleto){
+        if(rangoCompleto == "0"){
+            return true;
+        } 
+
+        if (max == null || rangoCompleto == null){
+            return false;
+        }
+
+        String[] rangoDividido = rangoCompleto.split("\\-");
+        if(Double.parseDouble(rangoDividido[1]) <= Double.parseDouble(max)){
+            return true;
+        }
+        return false;
+    }
+
+    private boolean filtrarRangoMin(String min, String rangoCompleto){
+        if (min == null || rangoCompleto == null){
+            return false;
+        }
+
+        String[] rangoDividido = rangoCompleto.split("\\-");
+        if(Double.parseDouble(rangoDividido[0]) >= Double.parseDouble(min)){
+            return true;
+        }
+        return false;
     }
 
     private boolean buscarCoincidencias(String valorCompleto, String filtro){
