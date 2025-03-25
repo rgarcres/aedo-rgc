@@ -70,4 +70,7 @@ public class Usuario extends AbstractEntity{
         this.situacionPersonal = situacionPersonal;
     }
 
+    public String toString(){
+        return this.nombre + " " + this.apellido;
+    }
 }
