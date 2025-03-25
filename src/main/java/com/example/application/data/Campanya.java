@@ -1,6 +1,7 @@
 package com.example.application.data;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Campanya extends AbstractEntity {
@@ -19,6 +20,8 @@ public class Campanya extends AbstractEntity {
         this.demografia = demografia;
         this.inicio = inicio;
         this.fin = fin;
+        usuarios = new ArrayList<>();
+        preguntas = new ArrayList<>();
     }
 
     public String getNombre() {

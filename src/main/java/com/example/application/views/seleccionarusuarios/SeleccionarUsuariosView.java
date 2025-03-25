@@ -1,5 +1,6 @@
 package com.example.application.views.seleccionarusuarios;
 
+import com.example.application.data.Campanya;
 import com.example.application.data.Genero;
 import com.example.application.data.NivelEstudios;
 //import com.example.application.data.SamplePerson;
@@ -15,6 +16,7 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -23,6 +25,7 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 //import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -50,8 +53,11 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private String rangoMinFiltro;
     private String rangoMaxFiltro;
 
+    private Campanya camp = (Campanya) VaadinSession.getCurrent().getAttribute("nuevaCamp");
+
     public SeleccionarUsuariosView() {
         H3 h3 = new H3("Seleccionar Usuarios");
+        H4 error = new H4("Selcciona algun usuario");
         Grid<Usuario> gridUsuario = new Grid<>(Usuario.class);
         HorizontalLayout filtrosLayout = new HorizontalLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
@@ -89,7 +95,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         usuariosFiltrados.addAll(usuarios);
         gridUsuario.setItems(usuariosFiltrados);
 
-        //Filtros
+        //FILTROS
         selectGenero.addValueChangeListener(e -> {
             seleccionGeneros = e.getValue();
             actualizarFiltros(gridUsuario);
@@ -110,14 +116,13 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         //BOTONES
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        buscarButton.setWidth("min-content");
-        limpiarButton.setWidth("min-content");
-        atrasButton.setWidth("min-content");
-        Utilidades.configurarBoton(siguienteButton, "seleccionar-preguntas");
         Utilidades.configurarBoton(cancelarButton, "");
         Utilidades.configurarBoton(atrasButton, "crear-campanya");
-        buscarButton.getStyle().set("cursor", "pointer");
-        limpiarButton.getStyle().set("cursor", "pointer");
+        Utilidades.configurarBoton(limpiarButton);
+        Utilidades.configurarBoton(buscarButton);
+        Utilidades.configurarBoton(atrasButton);
+        Utilidades.configurarBoton(siguienteButton);
+
         buscarButton.addClickListener(e -> {
             nombreFiltro = textFieldNombre.getValue().toLowerCase();
             apellidoFiltro = textFieldApellido.getValue().toLowerCase();
@@ -139,11 +144,10 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             rangoMaxFiltro = "";
             actualizarFiltros(gridUsuario);
         });
-        
+
         //AÑADIR COMPONENENTES AL LAYOUT
         getContent().add(tituloLayout);
-        tituloLayout.add(atrasButton);
-        tituloLayout.add(h3);
+        tituloLayout.add(atrasButton, h3);
         getContent().add(filtrosLayout);
         filtrosLayout.add(textFieldNombre);
         filtrosLayout.add(textFieldApellido);
@@ -159,7 +163,19 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         getContent().add(formLayout2Col);
         formLayout2Col.add(siguienteButton);
         formLayout2Col.add(cancelarButton);
+
+        siguienteButton.addClickListener(e -> {
+            Set<Usuario> seleccionados = gridUsuario.getSelectedItems();
+            if(!seleccionados.isEmpty()){
+                camp.setUsuarios(new ArrayList<>(seleccionados));
+                VaadinSession.getCurrent().setAttribute("nuevaCampConUsuarios", camp);
+                getUI().ifPresent(ui -> ui.navigate("seleccionar-preguntas"));
+            } else {
+                getContent().add(error);
+            }
+        });
     }
+
 
 
     private void actualizarFiltros(Grid<Usuario> grid){
