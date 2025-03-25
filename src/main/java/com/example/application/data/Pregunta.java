@@ -1,11 +1,13 @@
 package com.example.application.data;
 
+import java.util.List;
+
 public class Pregunta {
     private String enunciado;
-    private String[] respuestas;
+    private List<String> respuestas;
     private int tipo;
     
-    public Pregunta(String enunciado, String[] respuestas, int tipo) {
+    public Pregunta(String enunciado, List<String> respuestas, int tipo) {
         this.enunciado = enunciado;
         this.respuestas = respuestas;
         this.tipo = tipo;
@@ -18,10 +20,10 @@ public class Pregunta {
         this.enunciado = enunciado;
     }
 
-    public String[] getRespuestas() {
+    public List<String> getRespuestas() {
         return respuestas;
     }
-    public void setRespuestas(String[] respuestas) {
+    public void setRespuestas(List<String> respuestas) {
         this.respuestas = respuestas;
     }
 

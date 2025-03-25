@@ -2,7 +2,7 @@ package com.example.application.views.crearcampanya;
 
 import com.example.application.data.Bloque;
 import com.example.application.data.Region;
-import com.example.application.views.Personalizacion;
+import com.example.application.views.Utilidades;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -79,8 +79,8 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
 
-        Personalizacion.configurarBoton(siguienteButton, "seleccionar-usuarios");
-        Personalizacion.configurarBoton(cancelarButton, "");
+        Utilidades.configurarBoton(siguienteButton, "seleccionar-usuarios");
+        Utilidades.configurarBoton(cancelarButton, "");
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);

@@ -1,6 +1,6 @@
 package com.example.application.views.home;
 
-import com.example.application.views.Personalizacion;
+import com.example.application.views.Utilidades;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -47,10 +47,10 @@ public class HomeView extends Composite<VerticalLayout> {
 
         layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, crearCampanyaButton);
         crearCampanyaButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Personalizacion.configurarBoton(crearCampanyaButton, "crear-campanya");
+        Utilidades.configurarBoton(crearCampanyaButton, "crear-campanya");
         
         misCampanyaButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Personalizacion.configurarBoton(misCampanyaButton, "mis-campanyas");
+        Utilidades.configurarBoton(misCampanyaButton, "mis-campanyas");
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h2);
