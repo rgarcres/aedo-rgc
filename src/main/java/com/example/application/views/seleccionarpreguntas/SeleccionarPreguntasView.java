@@ -1,5 +1,6 @@
 package com.example.application.views.seleccionarpreguntas;
 
+import com.example.application.data.Campanya;
 import com.example.application.data.Pregunta;
 import com.example.application.views.Utilidades;
 import com.vaadin.flow.component.Composite;
@@ -10,6 +11,7 @@ import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -17,6 +19,7 @@ import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.server.VaadinSession;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -38,8 +41,11 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
     private String enunciadoFiltro = "";
     private Set<Integer> tiposFiltro = new HashSet<>();
 
+    private Campanya camp = (Campanya) VaadinSession.getCurrent().getAttribute("nuevaCampConUsuarios");
+
     public SeleccionarPreguntasView() {
         H3 h3 = new H3("Seleccionar Preguntas");
+        H4 error = new H4("Selecciona alguna pregunta");
         Grid<Pregunta> gridPreguntas = new Grid<>();
         FormLayout formLayout2Col = new FormLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
@@ -73,7 +79,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Utilidades.configurarBoton(buscarButton);
         Utilidades.configurarBoton(limpiarButton);
-        Utilidades.configurarBoton(crearButton, "mis-campanyas");
+        Utilidades.configurarBoton(crearButton);
         Utilidades.configurarBoton(cancelarButton, "");
         Utilidades.configurarBoton(atrasButton, "seleccionar-usuarios");
         buscarButton.addClickListener(e -> {
@@ -112,6 +118,16 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         formLayout2Col.add(crearButton);
         formLayout2Col.add(cancelarButton);
         
+        crearButton.addClickListener(e -> {
+            Set<Pregunta> seleccionadas = gridPreguntas.getSelectedItems();
+            if(!seleccionadas.isEmpty()){
+                camp.setPreguntas(new ArrayList<>(seleccionadas));
+                VaadinSession.getCurrent().setAttribute("nuevaCampCompleta", camp);
+                getUI().ifPresent(ui -> ui.navigate("mis-campanyas"));
+            } else {
+                getContent().add(error);
+            }
+        });
     }
 
     private void actualizarFiltros(Grid<Pregunta> grid){
