@@ -108,7 +108,10 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
 
             if(comprobarCamposCompletos(nombre, inicio, fin, bloque, region)) {
                 Campanya camp = new Campanya(nombre, objetivos, demografia, inicio, fin);
-                VaadinSession.getCurrent().setAttribute("nuevaCamp", camp);
+                @SuppressWarnings("unchecked")
+                List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+                listaCamps.add(camp);
+                VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
             } else {
                 getContent().add(error);

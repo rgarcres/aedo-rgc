@@ -15,7 +15,6 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
@@ -26,8 +25,8 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Uses(Icon.class)
 public class MisCampanyasView extends Composite<VerticalLayout> {
 
-    private final List<Campanya> listaCamps = new ArrayList<>();
-    private Campanya camp = (Campanya) VaadinSession.getCurrent().getAttribute("nuevaCampCompleta");
+    @SuppressWarnings("unchecked")
+    private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
 
     public MisCampanyasView (){
         H3 h3 = new H3("Mis Campañas");
@@ -39,12 +38,9 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         getContent().setHeightFull();
         getContent().setWidthFull();
         h3.setWidth("max-content");
-
-        if(camp != null){
-            listaCamps.add(camp);
-        }
-        gridCamps.setItems(listaCamps);
         configurarGrid(gridCamps);
+
+        gridCamps.setItems(listaCamps);
 
         getContent().add(tituloLayout);
         tituloLayout.add(atrasButton, h3);

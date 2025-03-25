@@ -53,7 +53,8 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private String rangoMinFiltro;
     private String rangoMaxFiltro;
 
-    private Campanya camp = (Campanya) VaadinSession.getCurrent().getAttribute("nuevaCamp");
+    @SuppressWarnings("unchecked")
+    private List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
 
     public SeleccionarUsuariosView() {
         H3 h3 = new H3("Seleccionar Usuarios");
@@ -167,8 +168,8 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         siguienteButton.addClickListener(e -> {
             Set<Usuario> seleccionados = gridUsuario.getSelectedItems();
             if(!seleccionados.isEmpty()){
-                camp.setUsuarios(new ArrayList<>(seleccionados));
-                VaadinSession.getCurrent().setAttribute("nuevaCampConUsuarios", camp);
+                listaCamps.getLast().setUsuarios(new ArrayList<>(seleccionados));
+                VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-preguntas"));
             } else {
                 getContent().add(error);

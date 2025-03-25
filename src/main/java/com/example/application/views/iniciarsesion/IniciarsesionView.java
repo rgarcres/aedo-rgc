@@ -1,5 +1,6 @@
 package com.example.application.views.iniciarsesion;
 
+import com.example.application.data.Campanya;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -14,6 +15,9 @@ import com.vaadin.flow.router.Menu;
 import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.server.VaadinSession;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
@@ -58,6 +62,8 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
                 layoutColumn2.remove(h3);
                 if(!nombreUsuario.isEmpty()){
                     VaadinSession.getCurrent().setAttribute("nombreUsuario", nombreUsuario);
+                    List<Campanya> listaCamps = new ArrayList<>();
+                    VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                     getUI().ifPresent(ui -> ui.navigate(""));
                 } else {
                     layoutColumn2.add(h3);

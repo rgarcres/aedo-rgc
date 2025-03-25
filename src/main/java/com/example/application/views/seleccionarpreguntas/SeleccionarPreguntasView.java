@@ -41,7 +41,8 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
     private String enunciadoFiltro = "";
     private Set<Integer> tiposFiltro = new HashSet<>();
 
-    private Campanya camp = (Campanya) VaadinSession.getCurrent().getAttribute("nuevaCampConUsuarios");
+    @SuppressWarnings("unchecked")
+    private List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
 
     public SeleccionarPreguntasView() {
         H3 h3 = new H3("Seleccionar Preguntas");
@@ -121,8 +122,8 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         crearButton.addClickListener(e -> {
             Set<Pregunta> seleccionadas = gridPreguntas.getSelectedItems();
             if(!seleccionadas.isEmpty()){
-                camp.setPreguntas(new ArrayList<>(seleccionadas));
-                VaadinSession.getCurrent().setAttribute("nuevaCampCompleta", camp);
+                listaCamps.getLast().setPreguntas(new ArrayList<>(seleccionadas));
+                VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("mis-campanyas"));
             } else {
                 getContent().add(error);
