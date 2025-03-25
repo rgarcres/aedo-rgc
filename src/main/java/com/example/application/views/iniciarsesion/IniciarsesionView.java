@@ -26,11 +26,14 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Menu(order = 0, icon = LineAwesomeIconUrl.USER)
 public class IniciarsesionView extends Composite<VerticalLayout> {
 
+    private final List<Campanya> listaCamps = new ArrayList<>();
+
     public IniciarsesionView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H2 h2 = new H2("Iniciar sesión");
         TextField nombreUsuarioField = new TextField();
         Button iniciarSesionButton = new Button("Iniciar sesión");
+        VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
 
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
@@ -62,8 +65,6 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
                 layoutColumn2.remove(h3);
                 if(!nombreUsuario.isEmpty()){
                     VaadinSession.getCurrent().setAttribute("nombreUsuario", nombreUsuario);
-                    List<Campanya> listaCamps = new ArrayList<>();
-                    VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                     getUI().ifPresent(ui -> ui.navigate(""));
                 } else {
                     layoutColumn2.add(h3);

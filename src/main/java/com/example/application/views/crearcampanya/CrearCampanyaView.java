@@ -38,7 +38,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
     public CrearCampanyaView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3("Crear Campañas");
-        H4 error = new H4("Selecciona todos los campos");
+        H4 error = new H4("Selecciona todos los campos obligatorios");
         FormLayout formLayout2Col = new FormLayout();
         TextField textFieldNombre = new TextField("Nombre*");
         TextField textFieldID = new TextField("ID (Debe ser único)*");
@@ -79,7 +79,6 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutRow.setAlignItems(Alignment.CENTER);
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
 
         Utilidades.configurarBoton(cancelarButton, "");
 
