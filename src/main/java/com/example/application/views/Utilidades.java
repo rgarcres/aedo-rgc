@@ -1,5 +1,6 @@
 package com.example.application.views;
 
+import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,6 +25,12 @@ public class Utilidades {
         boton.addClickListener(e -> boton.getUI().ifPresent(
             ui -> ui.navigate(ruta)   
            ));
+    }
+
+    public static String quitarTildes(String s){
+        String sinTilde = Normalizer.normalize(s, Normalizer.Form.NFD);
+
+        return sinTilde.replaceAll("\\p{InCombiningDiacriticalMarks}","");
     }
 
     public static List<Usuario> crearListaUsuarios(){

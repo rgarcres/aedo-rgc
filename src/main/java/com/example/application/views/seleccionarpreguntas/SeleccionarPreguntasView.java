@@ -19,7 +19,9 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
@@ -33,7 +35,8 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
     private final List<Pregunta> listaPreguntas = new ArrayList<>();
     private final List<Pregunta> preguntasFiltradas = new ArrayList<>();
 
-    private String enunciadoFiltro;
+    private String enunciadoFiltro = "";
+    private Set<Integer> tiposFiltro = new HashSet<>();
 
     public SeleccionarPreguntasView() {
         H3 h3 = new H3("Seleccionar Preguntas");
@@ -77,9 +80,19 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
             enunciadoFiltro = textFieldEnunciado.getValue();
             actualizarFiltros(gridPreguntas);
         });
+        limpiarButton.addClickListener(e -> {
+            textFieldEnunciado.clear();
+            checkboxTipo.clear();
+            enunciadoFiltro = "";
+            actualizarFiltros(gridPreguntas);
+        });
 
         //CHECKBOX
         checkboxTipo.setItems(1,2,3,4);
+        checkboxTipo.addValueChangeListener(e -> {
+            tiposFiltro = checkboxTipo.getValue();
+            actualizarFiltros(gridPreguntas);
+        });
 
         getContent().setHeightFull();
         getContent().setWidthFull();
@@ -98,17 +111,47 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         getContent().add(formLayout2Col);
         formLayout2Col.add(crearButton);
         formLayout2Col.add(cancelarButton);
+        
     }
 
     private void actualizarFiltros(Grid<Pregunta> grid){
         preguntasFiltradas.clear();
-
+        
         preguntasFiltradas.addAll(listaPreguntas.stream()
-        .filter(pregunta -> enunciadoFiltro.isBlank() || pregunta.getEnunciado().contains(enunciadoFiltro))
+        .filter(pregunta -> enunciadoFiltro.isBlank() || buscarCoincidencias(enunciadoFiltro, pregunta.getEnunciado()))
+        .filter(pregunta -> tiposFiltro.isEmpty() || buscarTipos(tiposFiltro, pregunta.getTipo()))
         .collect(Collectors.toList())
         );
 
         grid.setItems(preguntasFiltradas);
+    }
+
+    private boolean buscarTipos(Set<Integer> filtro, Integer tipo){
+        if(filtro == null || tipo == null){
+            return false;
+        }
+
+        for(Integer t: filtro){
+            if(t == tipo) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private boolean buscarCoincidencias(String filtro, String enunciado){
+        if(filtro == null || enunciado == null){
+            return false;
+        }
+
+        String enunciadoSinTilde = Utilidades.quitarTildes(enunciado);
+        String filtroSinTilde = Utilidades.quitarTildes(filtro);
+        
+        if(enunciadoSinTilde.contains(filtroSinTilde)){
+            return true;
+        }
+
+        return false;
     }
 
     /* 
