@@ -79,7 +79,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutRow.setAlignItems(Alignment.CENTER);
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-
+        Utilidades.configurarBoton(siguienteButton);
         Utilidades.configurarBoton(cancelarButton, "");
 
         getContent().add(layoutColumn2);

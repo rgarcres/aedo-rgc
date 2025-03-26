@@ -41,6 +41,9 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         configurarGrid(gridCamps);
 
         gridCamps.setItems(listaCamps);
+        gridCamps.addItemClickListener(e -> getUI().ifPresent(
+            ui -> ui.navigate("crear-campanya")
+        ));
 
         getContent().add(tituloLayout);
         tituloLayout.add(atrasButton, h3);

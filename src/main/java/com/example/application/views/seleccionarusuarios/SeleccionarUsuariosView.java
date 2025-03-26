@@ -9,6 +9,7 @@ import com.example.application.data.Usuario;
 //import com.example.application.services.SamplePersonService;
 import com.example.application.views.Utilidades;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
@@ -26,6 +27,7 @@ import com.vaadin.flow.router.PageTitle;
 import com.vaadin.flow.router.Route;
 //import com.vaadin.flow.spring.data.VaadinSpringDataHelpers;
 import com.vaadin.flow.server.VaadinSession;
+
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -81,7 +83,10 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
         getContent().setHeightFull();
         getContent().setWidthFull();
-        h3.setWidth("max-content");
+        h3.setWidth("max-content");    
+        formLayout2Col.setWidth("100%");
+        filtrosLayout.setWidth("100%");
+        tituloLayout.setWidth("100%");
 
         //Establecer valores de las MultiSelectComboBox
         selectGenero.setItems(Genero.DESCONOCIDO, Genero.HOMBRE, Genero.MUJER, Genero.NO_BINARIO, Genero.OTRO);
@@ -110,10 +115,35 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             actualizarFiltros(gridUsuario);
         });
 
-        formLayout2Col.setWidth("100%");
-        filtrosLayout.setWidth("100%");
-        tituloLayout.setWidth("100%");
-
+        //TEXTLABEL COMPORTAMIENTO AL PULSAR ENTER
+        textFieldNombre.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            rangoMinFiltro = textFieldRangoMin.getValue();
+            rangoMaxFiltro = textFieldRangoMax.getValue();
+            actualizarFiltros(gridUsuario);
+        });
+        textFieldApellido.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            rangoMinFiltro = textFieldRangoMin.getValue();
+            rangoMaxFiltro = textFieldRangoMax.getValue();
+            actualizarFiltros(gridUsuario);
+        });
+        textFieldRangoMin.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            rangoMinFiltro = textFieldRangoMin.getValue();
+            rangoMaxFiltro = textFieldRangoMax.getValue();
+            actualizarFiltros(gridUsuario);
+        });
+        textFieldRangoMax.addKeyPressListener(Key.ENTER, e -> {
+            nombreFiltro = textFieldNombre.getValue().toLowerCase();
+            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+            rangoMinFiltro = textFieldRangoMin.getValue();
+            rangoMaxFiltro = textFieldRangoMax.getValue();
+            actualizarFiltros(gridUsuario);
+        });
         //BOTONES
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -231,11 +261,14 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             return false;
         }
 
+        String completoSinTilde = Utilidades.quitarTildes(valorCompleto).toLowerCase();
+        String filtroSinTilde = Utilidades.quitarTildes(filtro).toLowerCase();
+
         //Si hay dos apellidos dividimos el string en dos mediante el espacio en blanco
-        String[] palabras = valorCompleto.split("\\s+");
+        String[] palabras = completoSinTilde.split("\\s+");
 
         for(String p : palabras){
-            if(p.contains(filtro)){
+            if(p.contains(filtroSinTilde)){
                 return true;
             }
         }

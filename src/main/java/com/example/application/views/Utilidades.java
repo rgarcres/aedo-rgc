@@ -30,7 +30,7 @@ public class Utilidades {
     public static String quitarTildes(String s){
         String sinTilde = Normalizer.normalize(s, Normalizer.Form.NFD);
 
-        return sinTilde.replaceAll("\\p{InCombiningDiacriticalMarks}","");
+        return sinTilde.replaceAll("\\p{M}","");
     }
 
     public static List<Usuario> crearListaUsuarios(){

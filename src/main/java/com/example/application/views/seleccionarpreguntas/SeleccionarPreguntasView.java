@@ -161,8 +161,8 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
             return false;
         }
 
-        String enunciadoSinTilde = Utilidades.quitarTildes(enunciado);
-        String filtroSinTilde = Utilidades.quitarTildes(filtro);
+        String enunciadoSinTilde = Utilidades.quitarTildes(enunciado).toLowerCase();
+        String filtroSinTilde = Utilidades.quitarTildes(filtro).toLowerCase();
         
         if(enunciadoSinTilde.contains(filtroSinTilde)){
             return true;
