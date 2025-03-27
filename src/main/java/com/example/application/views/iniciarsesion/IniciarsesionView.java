@@ -2,6 +2,7 @@ package com.example.application.views.iniciarsesion;
 
 import com.example.application.data.Campanya;
 import com.vaadin.flow.component.Composite;
+import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H2;
@@ -71,6 +72,16 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
                 }     
             }
         );
+        nombreUsuarioField.addKeyPressListener(Key.ENTER, e -> {
+            String nombreUsuario = nombreUsuarioField.getValue();
+            layoutColumn2.remove(h3);
+            if(!nombreUsuario.isEmpty()){
+                VaadinSession.getCurrent().setAttribute("nombreUsuario", nombreUsuario);
+                getUI().ifPresent(ui -> ui.navigate(""));
+            } else {
+                layoutColumn2.add(h3);
+            }     
+        });
 
         layoutColumn2.add(nombreUsuarioField);
         layoutColumn2.add(iniciarSesionButton);
