@@ -126,6 +126,7 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
             String demografia = textFieldDemografia.getValue();
 
             if(comprobarCamposCompletos(ID, nombre, inicio, fin, bloque, region)) {
+                listaCamps.remove(campEdit);
                 Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
