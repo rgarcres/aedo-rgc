@@ -42,7 +42,7 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
 
         gridCamps.setItems(listaCamps);
         gridCamps.addItemDoubleClickListener(e -> {
-            VaadinSession.getCurrent().setAttribute("campEditar", e.getItem());
+            VaadinSession.getCurrent().setAttribute("campEdit", e.getItem());
             getUI().ifPresent(ui -> ui.navigate("editar-campanya"));
         });
 

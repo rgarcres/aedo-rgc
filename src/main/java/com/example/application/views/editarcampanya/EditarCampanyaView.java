@@ -25,7 +25,6 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
@@ -34,6 +33,10 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Route("editar-campanya")
 @Menu(order = 2, icon = LineAwesomeIconUrl.USER)
 public class EditarCampanyaView extends Composite<VerticalLayout> {
+    
+    @SuppressWarnings("unchecked")
+    private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+    private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
 
     public EditarCampanyaView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
@@ -95,9 +98,26 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         layoutColumn2.add(textFieldDemografia);
         layoutColumn2.add(layoutRow);
         layoutRow.add(siguienteButton);
-        layoutRow.add(cancelarButton);
+        layoutRow.add(cancelarButton); 
+
+        if(campEdit != null){
+            textFieldNombre.setValue(campEdit.getNombre());
+            textFieldID.setValue(campEdit.getId().toString());
+            datePickerInicio.setValue(campEdit.getInicio());
+            datePickerFin.setValue(campEdit.getFin());
+            regionComboBox.setValue(campEdit.getRegion());
+            bloqueComboBox.setValue(campEdit.getBloque());
+            if(!campEdit.getObjetivos().isBlank()){
+                textFieldObjetivos.setValue(campEdit.getObjetivos());
+            }
+            if(!campEdit.getDemografia().isBlank()){
+                textFieldDemografia.setValue(campEdit.getDemografia());
+            }
+        }
+
         siguienteButton.addClickListener(e -> {
             String nombre = textFieldNombre.getValue();
+            String ID = textFieldID.getValue();
             LocalDate inicio = datePickerInicio.getValue();
             LocalDate fin = datePickerFin.getValue();
             Bloque bloque = bloqueComboBox.getValue();
@@ -105,10 +125,8 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
             String objetivos = textFieldObjetivos.getValue();
             String demografia = textFieldDemografia.getValue();
 
-            if(comprobarCamposCompletos(nombre, inicio, fin, bloque, region)) {
-                Campanya camp = new Campanya(nombre, objetivos, demografia, inicio, fin);
-                @SuppressWarnings("unchecked")
-                List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+            if(comprobarCamposCompletos(ID, nombre, inicio, fin, bloque, region)) {
+                Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
@@ -118,30 +136,17 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         });
     }
 
-    record SampleItem(String value, String label, Boolean disabled) {
-    }
-
     private void setComboBoxBloque(ComboBox<Bloque> comboBox){
-        List<Bloque> bloques = new ArrayList<>();
-        bloques.add(new Bloque("Bloque 1"));
-        bloques.add(new Bloque("Bloque 2"));
-        bloques.add(new Bloque("Bloque 3"));
-        bloques.add(new Bloque("Bloque 4"));
-        comboBox.setItems(bloques);
+        comboBox.setItems(Utilidades.crearListaBloques());
         comboBox.setItemLabelGenerator(item -> ((Bloque)item).getNombre());
     }
 
     private void setComboBoxRegion(ComboBox<Region> comboBox){
-        List<Region> regiones = new ArrayList<>();
-        regiones.add(new Region("Torremolinos", "Malaga"));
-        regiones.add(new Region("Alora", "Malaga"));
-        regiones.add(new Region("Nerja", "Malaga"));
-        regiones.add(new Region("Velez Malaga", "Malaga"));
-        comboBox.setItems(regiones);
+        comboBox.setItems(Utilidades.crearListaRegiones());
         comboBox.setItemLabelGenerator(item -> ((Region)item).getNombre());
     }
 
-    private boolean comprobarCamposCompletos(String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
+    private boolean comprobarCamposCompletos(String ID, String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
         if(nombre.isBlank()){
             return false;
         }
@@ -157,6 +162,14 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         if(r == null){
             return false;
         }
-        return true;
-    }
+        //Comprobar ID: tiene formato numérico
+        //Como en esta página se está editando, no hay que comprobar que
+        //el ID esté ya en lista para devolver false
+        try {
+            Long.parseLong(ID);
+            return true;
+        } catch (NumberFormatException nfe){
+            return false;
+        }
+}
 }

@@ -35,11 +35,14 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 @Menu(order = 2, icon = LineAwesomeIconUrl.USER)
 public class CrearCampanyaView extends Composite<VerticalLayout> {
 
+    @SuppressWarnings("unchecked")
+    private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+    
     public CrearCampanyaView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3("Crear Campañas");
         H4 error = new H4("Selecciona todos los campos obligatorios");
-        FormLayout formLayout2Col = new FormLayout();
+        FormLayout camposObligatoriosLayout = new FormLayout();
         TextField textFieldNombre = new TextField("Nombre*");
         TextField textFieldID = new TextField("ID (Debe ser único)*");
         DatePicker datePickerInicio = new DatePicker("Inicio*");
@@ -63,7 +66,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutColumn2.setAlignItems(Alignment.CENTER);
         layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, h3);
         h3.setWidth("100%");
-        formLayout2Col.setWidth("100%");
+        camposObligatoriosLayout.setWidth("100%");
         datePickerFin.setWidth("min-content");
 
         regionComboBox.setWidth("min-content");
@@ -84,13 +87,13 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
-        layoutColumn2.add(formLayout2Col);
-        formLayout2Col.add(textFieldNombre);
-        formLayout2Col.add(textFieldID);
-        formLayout2Col.add(datePickerInicio);
-        formLayout2Col.add(datePickerFin);
-        formLayout2Col.add(regionComboBox);
-        formLayout2Col.add(bloqueComboBox);
+        layoutColumn2.add(camposObligatoriosLayout);
+        camposObligatoriosLayout.add(textFieldNombre);
+        camposObligatoriosLayout.add(textFieldID);
+        camposObligatoriosLayout.add(datePickerInicio);
+        camposObligatoriosLayout.add(datePickerFin);
+        camposObligatoriosLayout.add(regionComboBox);
+        camposObligatoriosLayout.add(bloqueComboBox);
         layoutColumn2.add(textFieldObjetivos);
         layoutColumn2.add(textFieldDemografia);
         layoutColumn2.add(layoutRow);
@@ -98,6 +101,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutRow.add(cancelarButton);
         siguienteButton.addClickListener(e -> {
             String nombre = textFieldNombre.getValue();
+            String ID = textFieldID.getValue();
             LocalDate inicio = datePickerInicio.getValue();
             LocalDate fin = datePickerFin.getValue();
             Bloque bloque = bloqueComboBox.getValue();
@@ -105,10 +109,8 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             String objetivos = textFieldObjetivos.getValue();
             String demografia = textFieldDemografia.getValue();
 
-            if(comprobarCamposCompletos(nombre, inicio, fin, bloque, region)) {
-                Campanya camp = new Campanya(nombre, objetivos, demografia, inicio, fin);
-                @SuppressWarnings("unchecked")
-                List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+            if(comprobarCamposCompletos(ID, nombre, inicio, fin, bloque, region)) {
+                Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
@@ -141,13 +143,15 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         comboBox.setItemLabelGenerator(item -> ((Region)item).getNombre());
     }
 
-    private boolean comprobarCamposCompletos(String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
+    //Comprueba que todos los campos introducidos son correctos y no están vacíos
+    private boolean comprobarCamposCompletos(String ID, String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
         if(nombre.isBlank()){
             return false;
         }
         if(inicio == null || fin == null){
             return false;
         }
+        //Comprobar que la fecha de inicio es anterior a la de fin
         if(inicio.isAfter(fin)){
             return false;
         }
@@ -157,6 +161,20 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         if(r == null){
             return false;
         }
-        return true;
+        
+        //Comprobar ID: tiene formato numérico y es único
+        try {
+            
+            Long id = Long.parseLong(ID);
+
+            for(Campanya c: listaCamps){
+                if(c.getId() == id){
+                    return false;
+                }
+            }
+            return true;
+        } catch (NumberFormatException nfe){
+            return false;
+        }
     }
 }

@@ -5,9 +5,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import com.example.application.data.Bloque;
 import com.example.application.data.Genero;
 import com.example.application.data.NivelEstudios;
 import com.example.application.data.Pregunta;
+import com.example.application.data.Region;
 import com.example.application.data.SituacionLaboral;
 import com.example.application.data.Usuario;
 import com.vaadin.flow.component.button.Button;
@@ -31,6 +33,24 @@ public class Utilidades {
         String sinTilde = Normalizer.normalize(s, Normalizer.Form.NFD);
 
         return sinTilde.replaceAll("\\p{M}","");
+    }
+
+    public static List<Bloque> crearListaBloques(){
+        List<Bloque> bloques = new ArrayList<>();
+        bloques.add(new Bloque("Bloque 1"));
+        bloques.add(new Bloque("Bloque 2"));
+        bloques.add(new Bloque("Bloque 3"));
+        bloques.add(new Bloque("Bloque 4"));
+        return bloques;
+    }
+
+    public static List<Region> crearListaRegiones(){
+        List<Region> regiones = new ArrayList<>();
+        regiones.add(new Region("Torremolinos", "Malaga"));
+        regiones.add(new Region("Alora", "Malaga"));
+        regiones.add(new Region("Nerja", "Malaga"));
+        regiones.add(new Region("Velez Malaga", "Malaga"));
+        return regiones;
     }
 
     public static List<Usuario> crearListaUsuarios(){
