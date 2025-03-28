@@ -57,6 +57,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
     @SuppressWarnings("unchecked")
     private List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+    private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
 
     public SeleccionarUsuariosView() {
         H3 h3 = new H3("Seleccionar Usuarios");
@@ -99,7 +100,14 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         gridUsuario.getStyle().set("flex-grow", "0");
         usuarios.addAll(Utilidades.crearListaUsuarios());
         usuariosFiltrados.addAll(usuarios);
-        gridUsuario.setItems(usuariosFiltrados);
+        if(campEdit == null) {
+            gridUsuario.setItems(usuariosFiltrados);
+        } else {
+            gridUsuario.setItems(campEdit.getUsuarios());
+            for(Usuario u: campEdit.getUsuarios()){
+                gridUsuario.select(u);
+            }
+        }
 
         //FILTROS
         selectGenero.addValueChangeListener(e -> {

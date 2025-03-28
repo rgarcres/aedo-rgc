@@ -43,6 +43,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
 
     @SuppressWarnings("unchecked")
     private List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+    private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
 
     public SeleccionarPreguntasView() {
         H3 h3 = new H3("Seleccionar Preguntas");
@@ -62,7 +63,14 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         
         listaPreguntas.addAll(Utilidades.crearListaPreguntas());
         preguntasFiltradas.addAll(listaPreguntas);
-        gridPreguntas.setItems(preguntasFiltradas);
+        if(campEdit == null){
+            gridPreguntas.setItems(preguntasFiltradas);
+        } else {
+            gridPreguntas.setItems(campEdit.getPreguntas());
+            for(Pregunta p: campEdit.getPreguntas()){
+                gridPreguntas.select(p);
+            }
+        }
 
         //CONFIGURAR EL GRID Y AÑADIR COLUMNAS
         gridPreguntas.setSelectionMode(Grid.SelectionMode.MULTI);
@@ -124,6 +132,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
             if(!seleccionadas.isEmpty()){
                 listaCamps.getLast().setPreguntas(new ArrayList<>(seleccionadas));
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
+                VaadinSession.getCurrent().setAttribute("campEdit", null);
                 getUI().ifPresent(ui -> ui.navigate("mis-campanyas"));
             } else {
                 getContent().add(error);
