@@ -112,15 +112,13 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             if(comprobarCamposCompletos(ID, nombre, inicio, fin, bloque, region)) {
                 Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
+                VaadinSession.getCurrent().setAttribute("bloqueSelec", bloque);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
             } else {
                 getContent().add(error);
             }        
         });
-    }
-
-    record SampleItem(String value, String label, Boolean disabled) {
     }
 
     private void setComboBoxBloque(ComboBox<Bloque> comboBox){

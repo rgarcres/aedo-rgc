@@ -1,5 +1,6 @@
 package com.example.application.views.seleccionarpreguntas;
 
+import com.example.application.data.Bloque;
 import com.example.application.data.Campanya;
 import com.example.application.data.Pregunta;
 import com.example.application.views.Utilidades;
@@ -42,12 +43,12 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
     private Set<Integer> tiposFiltro = new HashSet<>();
 
     @SuppressWarnings("unchecked")
-    private List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+    private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
     private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
 
     public SeleccionarPreguntasView() {
         H3 h3 = new H3("Seleccionar Preguntas");
-        H4 error = new H4("Selecciona alguna pregunta");
+        H4 errorMsg = new H4("Selecciona alguna pregunta");
         Grid<Pregunta> gridPreguntas = new Grid<>();
         FormLayout formLayout2Col = new FormLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
@@ -62,9 +63,14 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         CheckboxGroup<Integer> checkboxTipo = new CheckboxGroup<>("Tipo");
         
         listaPreguntas.addAll(Utilidades.crearListaPreguntas());
-        preguntasFiltradas.addAll(listaPreguntas);
+        Bloque bloqueSelec = (Bloque) VaadinSession.getCurrent().getAttribute("bloqueSelec");
+
+        preguntasFiltradas.addAll(preguntasPorBloqueSeleccionado(bloqueSelec, listaPreguntas));
         if(campEdit == null){
             gridPreguntas.setItems(preguntasFiltradas);
+            for(Pregunta p: preguntasFiltradas){
+                gridPreguntas.select(p);
+            }
         } else {
             gridPreguntas.setItems(campEdit.getPreguntas());
             for(Pregunta p: campEdit.getPreguntas()){
@@ -91,6 +97,10 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         Utilidades.configurarBoton(crearButton);
         Utilidades.configurarBoton(cancelarButton, "");
         Utilidades.configurarBoton(atrasButton, "seleccionar-usuarios");
+        atrasButton.addClickListener(e-> {
+            listaCamps.getLast().setPreguntas(null);
+            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
+        });
         buscarButton.addClickListener(e -> {
             enunciadoFiltro = textFieldEnunciado.getValue();
             actualizarFiltros(gridPreguntas);
@@ -127,6 +137,9 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         formLayout2Col.add(crearButton);
         formLayout2Col.add(cancelarButton);
         
+        //Cuando se pulsa en el botón de crear se comprueba si se ha seleccionado alguna pregunta
+        //Si se selecciona alguna pregunta se añaden a la campaña de la lista y se navega a la siguiente ventana
+        //Si no se selecciona ninguna muestra un mensaje de error
         crearButton.addClickListener(e -> {
             Set<Pregunta> seleccionadas = gridPreguntas.getSelectedItems();
             if(!seleccionadas.isEmpty()){
@@ -135,11 +148,18 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
                 VaadinSession.getCurrent().setAttribute("campEdit", null);
                 getUI().ifPresent(ui -> ui.navigate("mis-campanyas"));
             } else {
-                getContent().add(error);
+                getContent().add(errorMsg);
             }
+        });
+
+        cancelarButton.addClickListener(e-> {
+            listaCamps.removeLast();
+            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
         });
     }
 
+    //Cuando se aplica un filtro se llama a este método para filtrar la lista de Preguntas que se muestra
+    //en el grid
     private void actualizarFiltros(Grid<Pregunta> grid){
         preguntasFiltradas.clear();
         
@@ -152,6 +172,8 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         grid.setItems(preguntasFiltradas);
     }
 
+    //Busca de toda la lista de preguntas las que tengan el tipo
+    //que se ha seleccionado en los filtros
     private boolean buscarTipos(Set<Integer> filtro, Integer tipo){
         if(filtro == null || tipo == null){
             return false;
@@ -165,6 +187,8 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         return false;
     }
 
+    //Realiza una comparación entre el texto que se ha introducido en el filtro
+    //y el enunciado de la pregunta, solucionando conflictos de tildes y mayusculas
     private boolean buscarCoincidencias(String filtro, String enunciado){
         if(filtro == null || enunciado == null){
             return false;
@@ -180,12 +204,16 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         return false;
     }
 
-    /* 
-    private void setGridSampleData(Grid grid) {
-        grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query)).stream());
-    }
+    //Genera una lista de preguntas a partir de la pregunta pasada por parámetro que pertenezcan al
+    //bloque pasado como primer parámetro
+    private List<Pregunta> preguntasPorBloqueSeleccionado(Bloque bloque, List<Pregunta> preguntas){
+        List<Pregunta> lp = new ArrayList<>();
 
-    @Autowired()
-    private SamplePersonService samplePersonService;
-    */
+        for(Pregunta p: preguntas){
+            if(p.getBloque().getNombre().equals(bloque.getNombre())){
+                lp.add(p);
+            }
+        }
+        return lp;
+    }
 }

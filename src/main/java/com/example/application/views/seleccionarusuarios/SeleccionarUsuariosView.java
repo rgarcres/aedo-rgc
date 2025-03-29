@@ -56,7 +56,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private String rangoMaxFiltro;
 
     @SuppressWarnings("unchecked")
-    private List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+    private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
     private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
 
     public SeleccionarUsuariosView() {
@@ -162,6 +162,10 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         Utilidades.configurarBoton(atrasButton);
         Utilidades.configurarBoton(siguienteButton);
 
+        atrasButton.addClickListener(e -> {
+            listaCamps.getLast().setUsuarios(null);
+            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
+        });
         buscarButton.addClickListener(e -> {
             nombreFiltro = textFieldNombre.getValue().toLowerCase();
             apellidoFiltro = textFieldApellido.getValue().toLowerCase();
@@ -212,6 +216,10 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             } else {
                 getContent().add(error);
             }
+        });
+        cancelarButton.addClickListener(e -> {
+            listaCamps.removeLast();
+            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
         });
     }
 
@@ -282,25 +290,4 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         }
         return false;
     }
-
-    /*
-    private void setGridSampleData(Grid grid) {
-        grid.setItems(query -> samplePersonService.list(VaadinSpringDataHelpers.toSpringPageRequest(query)).stream());
-    }
-
-    @Autowired()
-    private SamplePersonService samplePersonService;
-     */
-
-    /* 
-    public static class UserFilters extends Div implements Specification<Usuario> {
-
-        @Override
-        public Predicate toPredicate(Root<Usuario> arg0, CriteriaQuery<?> arg1, CriteriaBuilder arg2) {
-            // TODO Auto-generated method stub
-
-            return null;
-        }
-    }
-    */
 }

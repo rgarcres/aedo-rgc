@@ -112,26 +112,46 @@ public class Utilidades {
         List<String> respuestas19 = Arrays.asList("Marte", "Júpiter", "Saturno", "Urano");
         List<String> respuestas20 = Arrays.asList("Perro", "Gato", "Pez", "Pájaro");
 
-        preguntas.add(new Pregunta("¿Cuál es la respuesta correcta?", respuestas1, 1));
-        preguntas.add(new Pregunta("¿Estás seguro de tu respuesta?", respuestas2, 2));
-        preguntas.add(new Pregunta("¿Cuál es el número más alto?", respuestas3, 4));
-        preguntas.add(new Pregunta("¿Cuál es tu color favorito?", respuestas4, 3));
-        preguntas.add(new Pregunta("¿Qué animal prefieres?", respuestas5, 2));
-        preguntas.add(new Pregunta("¿Cuál es tu estación favorita?", respuestas6, 1));
-        preguntas.add(new Pregunta("¿Qué fruta te gusta más?", respuestas7, 4));
-        preguntas.add(new Pregunta("¿Qué país visitarías primero?", respuestas8, 3));
-        preguntas.add(new Pregunta("¿En qué ciudad te gustaría vivir?", respuestas9, 2));
-        preguntas.add(new Pregunta("¿Cuál es tu lenguaje de programación favorito?", respuestas10, 1));
-        preguntas.add(new Pregunta("¿Cuál es tu día favorito de la semana?", respuestas11, 3));
-        preguntas.add(new Pregunta("¿Cuál es tu medio de transporte preferido?", respuestas12, 4));
-        preguntas.add(new Pregunta("¿Qué comida prefieres?", respuestas13, 1));
-        preguntas.add(new Pregunta("¿Qué bebida prefieres?", respuestas14, 2));
-        preguntas.add(new Pregunta("¿Qué red social usas más?", respuestas15, 3));
-        preguntas.add(new Pregunta("¿Cuál es tu clima ideal?", respuestas16, 2));
-        preguntas.add(new Pregunta("¿Qué género musical te gusta más?", respuestas17, 1));
-        preguntas.add(new Pregunta("¿En qué país te gustaría vivir?", respuestas18, 4));
-        preguntas.add(new Pregunta("¿Cuál es tu planeta favorito?", respuestas19, 2));
-        preguntas.add(new Pregunta("¿Qué mascota prefieres?", respuestas20, 1));
+        preguntas.add(new Pregunta("¿Cuál es la respuesta correcta?", respuestas1, 1, 
+        new Bloque("Bloque 1")));
+        preguntas.add(new Pregunta("¿Estás seguro de tu respuesta?", respuestas2, 2,
+        new Bloque("Bloque 2")));
+        preguntas.add(new Pregunta("¿Cuál es el número más alto?", respuestas3, 4,
+        new Bloque("Bloque 4")));
+        preguntas.add(new Pregunta("¿Cuál es tu color favorito?", respuestas4, 3,
+        new Bloque("Bloque 3")));
+        preguntas.add(new Pregunta("¿Qué animal prefieres?", respuestas5, 2,
+        new Bloque("Bloque 2")));
+        preguntas.add(new Pregunta("¿Cuál es tu estación favorita?", respuestas6, 1, 
+        new Bloque("Bloque 1")));
+        preguntas.add(new Pregunta("¿Qué fruta te gusta más?", respuestas7, 4,
+        new Bloque("Bloque 4")));
+        preguntas.add(new Pregunta("¿Qué país visitarías primero?", respuestas8, 3,
+        new Bloque("Bloque 3")));
+        preguntas.add(new Pregunta("¿En qué ciudad te gustaría vivir?", respuestas9, 2,
+        new Bloque("Bloque 2")));
+        preguntas.add(new Pregunta("¿Cuál es tu lenguaje de programación favorito?", respuestas10, 1,
+        new Bloque("Bloque 1")));
+        preguntas.add(new Pregunta("¿Cuál es tu día favorito de la semana?", respuestas11, 3,
+        new Bloque("Bloque 2")));
+        preguntas.add(new Pregunta("¿Cuál es tu medio de transporte preferido?", respuestas12, 4,
+        new Bloque("Bloque 4")));
+        preguntas.add(new Pregunta("¿Qué comida prefieres?", respuestas13, 1, 
+        new Bloque("Bloque 1")));
+        preguntas.add(new Pregunta("¿Qué bebida prefieres?", respuestas14, 2,
+        new Bloque("Bloque 2")));
+        preguntas.add(new Pregunta("¿Qué red social usas más?", respuestas15, 3,
+        new Bloque("Bloque 3")));
+        preguntas.add(new Pregunta("¿Cuál es tu clima ideal?", respuestas16, 2,
+        new Bloque("Bloque 2")));
+        preguntas.add(new Pregunta("¿Qué género musical te gusta más?", respuestas17, 1,
+        new Bloque("Bloque 1")));
+        preguntas.add(new Pregunta("¿En qué país te gustaría vivir?", respuestas18, 4,
+        new Bloque("Bloque 4")));
+        preguntas.add(new Pregunta("¿Cuál es tu planeta favorito?", respuestas19, 2,
+        new Bloque("Bloque 2")));
+        preguntas.add(new Pregunta("¿Qué mascota prefieres?", respuestas20, 1,
+        new Bloque("Bloque 1")));
         return preguntas;
     }
 }
