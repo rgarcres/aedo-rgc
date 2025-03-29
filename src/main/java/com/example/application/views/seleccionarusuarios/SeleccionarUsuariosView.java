@@ -163,7 +163,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         Utilidades.configurarBoton(siguienteButton);
 
         atrasButton.addClickListener(e -> {
-            listaCamps.getLast().setUsuarios(null);
+            listaCamps.removeLast();
             VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
         });
         buscarButton.addClickListener(e -> {

@@ -66,17 +66,6 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         Bloque bloqueSelec = (Bloque) VaadinSession.getCurrent().getAttribute("bloqueSelec");
 
         preguntasFiltradas.addAll(preguntasPorBloqueSeleccionado(bloqueSelec, listaPreguntas));
-        if(campEdit == null){
-            gridPreguntas.setItems(preguntasFiltradas);
-            for(Pregunta p: preguntasFiltradas){
-                gridPreguntas.select(p);
-            }
-        } else {
-            gridPreguntas.setItems(campEdit.getPreguntas());
-            for(Pregunta p: campEdit.getPreguntas()){
-                gridPreguntas.select(p);
-            }
-        }
 
         //CONFIGURAR EL GRID Y AÑADIR COLUMNAS
         gridPreguntas.setSelectionMode(Grid.SelectionMode.MULTI);
@@ -88,6 +77,13 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         gridPreguntas.addColumn(p -> String.join(",", p.getRespuestas())).setHeader("Respuesta").setAutoWidth(true);
         //TIPO
         gridPreguntas.addColumn(Pregunta::getTipo).setHeader("Tipo").setAutoWidth(true);
+        if(campEdit == null){
+            gridPreguntas.setItems(preguntasFiltradas);
+            gridPreguntas.asMultiSelect().select(preguntasFiltradas);
+        } else {
+            gridPreguntas.setItems(campEdit.getPreguntas());
+            gridPreguntas.asMultiSelect().select(campEdit.getPreguntas());
+        }
 
         //CONFIGURAR BOTONES
         crearButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);

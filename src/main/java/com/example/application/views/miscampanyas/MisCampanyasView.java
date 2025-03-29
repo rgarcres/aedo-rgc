@@ -7,7 +7,9 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.Uses;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
@@ -30,11 +32,17 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
 
     public MisCampanyasView (){
         H3 h3 = new H3("Mis Campañas");
+        H4 errorMsg = new H4("Selecciona una campaña para borrarla");
         HorizontalLayout tituloLayout = new HorizontalLayout();
+        HorizontalLayout botonesLayout = new HorizontalLayout();
         Grid<Campanya> gridCamps = new Grid<>();
         Button atrasButton = new Button("<");
+        Button borrarButton = new Button("Borrar Campaña");
 
         Utilidades.configurarBoton(atrasButton, "");
+        Utilidades.configurarBoton(borrarButton);
+        borrarButton.getStyle().setBackgroundColor("#cd3b3b");
+
         getContent().setHeightFull();
         getContent().setWidthFull();
         h3.setWidth("max-content");
@@ -45,10 +53,23 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
             VaadinSession.getCurrent().setAttribute("campEdit", e.getItem());
             getUI().ifPresent(ui -> ui.navigate("editar-campanya"));
         });
+        
 
         getContent().add(tituloLayout);
         tituloLayout.add(atrasButton, h3);
         getContent().add(gridCamps);
+        getContent().add(botonesLayout);
+        botonesLayout.add(borrarButton);
+        borrarButton.addClickListener(e->{
+            Campanya camp = gridCamps.asSingleSelect().getValue();
+            if(camp != null){
+                listaCamps.remove(camp);
+                gridCamps.setItems(listaCamps);
+                Notification.show("Se ha eleminado la campaña: "+camp.getNombre());
+            } else {
+                getContent().add(errorMsg);
+            }
+        });
     }
 
     private void configurarGrid(Grid<Campanya> grid){
