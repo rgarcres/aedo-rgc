@@ -25,7 +25,6 @@ import com.vaadin.flow.server.VaadinSession;
 import com.vaadin.flow.theme.lumo.LumoUtility.Gap;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
@@ -37,7 +36,8 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
 
     @SuppressWarnings("unchecked")
     private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
-    
+    private final Campanya campMedioCreada = (Campanya) VaadinSession.getCurrent().getAttribute("campMedioCreada");
+
     public CrearCampanyaView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3("Crear Campañas");
@@ -70,9 +70,11 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         datePickerFin.setWidth("min-content");
 
         regionComboBox.setWidth("min-content");
-        setComboBoxRegion(regionComboBox);
+        regionComboBox.setItems(Utilidades.crearListaRegiones());
+        regionComboBox.setItemLabelGenerator(item -> item.getNombre());
         bloqueComboBox.setWidth("min-content");
-        setComboBoxBloque(bloqueComboBox);
+        bloqueComboBox.setItems(Utilidades.crearListaBloques());
+        bloqueComboBox.setItemLabelGenerator(item -> item.getNombre());
 
         textFieldObjetivos.setWidth("100%");
         textFieldDemografia.setWidth("100%");
@@ -84,6 +86,21 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Utilidades.configurarBoton(siguienteButton);
         Utilidades.configurarBoton(cancelarButton, "");
+
+        if(campMedioCreada != null){
+            textFieldNombre.setValue(campMedioCreada.getNombre());
+            textFieldID.setValue(campMedioCreada.getId().toString());
+            datePickerInicio.setValue(campMedioCreada.getInicio());
+            datePickerFin.setValue(campMedioCreada.getFin());
+            regionComboBox.setValue(campMedioCreada.getRegion());
+            bloqueComboBox.setValue(campMedioCreada.getBloque());
+            if(!campMedioCreada.getObjetivos().isBlank()){
+                textFieldObjetivos.setValue(campMedioCreada.getObjetivos());
+            }
+            if(!campMedioCreada.getDemografia().isBlank()){
+                textFieldDemografia.setValue(campMedioCreada.getDemografia());
+            }
+        }
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
@@ -112,6 +129,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             if(comprobarCamposCompletos(ID, nombre, inicio, fin, bloque, region)) {
                 Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
+                VaadinSession.getCurrent().setAttribute("campMedioCreada", camp);
                 VaadinSession.getCurrent().setAttribute("bloqueSelec", bloque);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
@@ -119,26 +137,6 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
                 getContent().add(error);
             }        
         });
-    }
-
-    private void setComboBoxBloque(ComboBox<Bloque> comboBox){
-        List<Bloque> bloques = new ArrayList<>();
-        bloques.add(new Bloque("Bloque 1"));
-        bloques.add(new Bloque("Bloque 2"));
-        bloques.add(new Bloque("Bloque 3"));
-        bloques.add(new Bloque("Bloque 4"));
-        comboBox.setItems(bloques);
-        comboBox.setItemLabelGenerator(item -> ((Bloque)item).getNombre());
-    }
-
-    private void setComboBoxRegion(ComboBox<Region> comboBox){
-        List<Region> regiones = new ArrayList<>();
-        regiones.add(new Region("Torremolinos", "Malaga"));
-        regiones.add(new Region("Alora", "Malaga"));
-        regiones.add(new Region("Nerja", "Malaga"));
-        regiones.add(new Region("Velez Malaga", "Malaga"));
-        comboBox.setItems(regiones);
-        comboBox.setItemLabelGenerator(item -> ((Region)item).getNombre());
     }
 
     //Comprueba que todos los campos introducidos son correctos y no están vacíos
