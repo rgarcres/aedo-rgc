@@ -41,7 +41,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
     public CrearCampanyaView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
         H3 h3 = new H3("Crear Campañas");
-        H4 error = new H4("Selecciona todos los campos obligatorios");
+        H4 errorMsg = new H4("Selecciona todos los campos obligatorios");
         FormLayout camposObligatoriosLayout = new FormLayout();
         TextField textFieldNombre = new TextField("Nombre*");
         TextField textFieldID = new TextField("ID (Debe ser único)*");
@@ -68,6 +68,18 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         h3.setWidth("100%");
         camposObligatoriosLayout.setWidth("100%");
         datePickerFin.setWidth("min-content");
+
+        /*
+         * Establece la fecha mínima que se permite escoger
+         * Inicio: la fecha de hoy
+         * Fin: la fecha de inicio
+         */
+        datePickerInicio.setMin(LocalDate.now());
+        datePickerInicio.addValueChangeListener(e -> {
+            if(datePickerInicio.getValue() != null){
+                datePickerFin.setMin(datePickerInicio.getValue());
+            }
+        });
 
         regionComboBox.setWidth("min-content");
         regionComboBox.setItems(Utilidades.crearListaRegiones());
@@ -126,29 +138,27 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             String objetivos = textFieldObjetivos.getValue();
             String demografia = textFieldDemografia.getValue();
 
-            if(comprobarCamposCompletos(ID, nombre, inicio, fin, bloque, region)) {
+            if(!comprobarCamposCompletos(nombre, inicio, fin, bloque, region)) {
+                getContent().add(errorMsg);
+            } else if(!comprobarID(ID, errorMsg)){
+                getContent().add(errorMsg);
+            } else {
                 Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("campMedioCreada", camp);
                 VaadinSession.getCurrent().setAttribute("bloqueSelec", bloque);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
-            } else {
-                getContent().add(error);
             }        
         });
     }
 
     //Comprueba que todos los campos introducidos son correctos y no están vacíos
-    private boolean comprobarCamposCompletos(String ID, String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
+    private boolean comprobarCamposCompletos(String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
         if(nombre.isBlank()){
             return false;
         }
         if(inicio == null || fin == null){
-            return false;
-        }
-        //Comprobar que la fecha de inicio es anterior a la de fin
-        if(inicio.isAfter(fin)){
             return false;
         }
         if(b == null){
@@ -157,19 +167,25 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         if(r == null){
             return false;
         }
-        
-        //Comprobar ID: tiene formato numérico y es único
+
+        return true;
+    }
+
+    //Comprobar ID: tiene formato numérico y es único
+    private boolean comprobarID(String ID, H4 errorMsg){
         try {
-            
+    
             Long id = Long.parseLong(ID);
 
             for(Campanya c: listaCamps){
                 if(c.getId() == id){
+                    errorMsg.setText("El ID debe ser único");
                     return false;
                 }
             }
             return true;
         } catch (NumberFormatException nfe){
+            errorMsg.setText("El ID debe tener formato numérico");
             return false;
         }
     }

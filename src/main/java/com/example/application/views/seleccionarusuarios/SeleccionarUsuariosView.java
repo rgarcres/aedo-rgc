@@ -112,45 +112,29 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         //FILTROS
         selectGenero.addValueChangeListener(e -> {
             seleccionGeneros = e.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         selectNivelEstudios.addValueChangeListener(e -> {
             seleccionEstudios = e.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         selectSituacionLaboral.addValueChangeListener(e -> {
             seleccionLaboral = e.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
 
         //TEXTLABEL COMPORTAMIENTO AL PULSAR ENTER
         textFieldNombre.addKeyPressListener(Key.ENTER, e -> {
-            nombreFiltro = textFieldNombre.getValue().toLowerCase();
-            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
-            rangoMinFiltro = textFieldRangoMin.getValue();
-            rangoMaxFiltro = textFieldRangoMax.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         textFieldApellido.addKeyPressListener(Key.ENTER, e -> {
-            nombreFiltro = textFieldNombre.getValue().toLowerCase();
-            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
-            rangoMinFiltro = textFieldRangoMin.getValue();
-            rangoMaxFiltro = textFieldRangoMax.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         textFieldRangoMin.addKeyPressListener(Key.ENTER, e -> {
-            nombreFiltro = textFieldNombre.getValue().toLowerCase();
-            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
-            rangoMinFiltro = textFieldRangoMin.getValue();
-            rangoMaxFiltro = textFieldRangoMax.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         textFieldRangoMax.addKeyPressListener(Key.ENTER, e -> {
-            nombreFiltro = textFieldNombre.getValue().toLowerCase();
-            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
-            rangoMinFiltro = textFieldRangoMin.getValue();
-            rangoMaxFiltro = textFieldRangoMax.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         //BOTONES
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
@@ -167,11 +151,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
         });
         buscarButton.addClickListener(e -> {
-            nombreFiltro = textFieldNombre.getValue().toLowerCase();
-            apellidoFiltro = textFieldApellido.getValue().toLowerCase();
-            rangoMinFiltro = textFieldRangoMin.getValue();
-            rangoMaxFiltro = textFieldRangoMax.getValue();
-            actualizarFiltros(gridUsuario);
+            aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         limpiarButton.addClickListener(e -> {
             textFieldNombre.clear();
@@ -185,7 +165,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             textFieldRangoMax.clear();
             rangoMinFiltro = "";
             rangoMaxFiltro = "";
-            actualizarFiltros(gridUsuario);
+            actualizarGrid(gridUsuario);
         });
 
         //AÑADIR COMPONENENTES AL LAYOUT
@@ -225,7 +205,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
 
 
-    private void actualizarFiltros(Grid<Usuario> grid){
+    private void actualizarGrid(Grid<Usuario> grid){
         //LIMPAR LA LISTA DE USUARIOS FILTRADOS
         usuariosFiltrados.clear();
 
@@ -289,5 +269,14 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             }
         }
         return false;
+    }
+
+    private void aplicarFiltros(TextField textFieldNombre,TextField textFieldApellido, 
+                                TextField textFieldRangoMin,TextField textFieldRangoMax, Grid<Usuario> grid){
+        nombreFiltro = textFieldNombre.getValue().toLowerCase();
+        apellidoFiltro = textFieldApellido.getValue().toLowerCase();
+        rangoMinFiltro = textFieldRangoMin.getValue();
+        rangoMaxFiltro = textFieldRangoMax.getValue();
+        actualizarGrid(grid);
     }
 }

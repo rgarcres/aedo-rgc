@@ -142,6 +142,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
                 listaCamps.getLast().setPreguntas(new ArrayList<>(seleccionadas));
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 VaadinSession.getCurrent().setAttribute("campEdit", null);
+                VaadinSession.getCurrent().setAttribute("campMedioCreada", null);
                 getUI().ifPresent(ui -> ui.navigate("mis-campanyas"));
             } else {
                 getContent().add(errorMsg);
