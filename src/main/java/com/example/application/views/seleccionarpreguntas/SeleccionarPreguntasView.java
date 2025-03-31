@@ -99,20 +99,20 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         });
         buscarButton.addClickListener(e -> {
             enunciadoFiltro = textFieldEnunciado.getValue();
-            actualizarFiltros(gridPreguntas);
+            actualizarGrid(gridPreguntas);
         });
         limpiarButton.addClickListener(e -> {
             textFieldEnunciado.clear();
             checkboxTipo.clear();
             enunciadoFiltro = "";
-            actualizarFiltros(gridPreguntas);
+            actualizarGrid(gridPreguntas);
         });
 
         //CHECKBOX
         checkboxTipo.setItems(1,2,3,4);
         checkboxTipo.addValueChangeListener(e -> {
             tiposFiltro = checkboxTipo.getValue();
-            actualizarFiltros(gridPreguntas);
+            actualizarGrid(gridPreguntas);
         });
 
         getContent().setHeightFull();
@@ -150,14 +150,18 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         });
 
         cancelarButton.addClickListener(e-> {
-            listaCamps.removeLast();
+            if(campEdit == null){
+                listaCamps.removeLast();
+            } else {
+                listaCamps.getLast().setPreguntas(campEdit.getPreguntas());
+            }
             VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
         });
     }
 
     //Cuando se aplica un filtro se llama a este método para filtrar la lista de Preguntas que se muestra
     //en el grid
-    private void actualizarFiltros(Grid<Pregunta> grid){
+    private void actualizarGrid(Grid<Pregunta> grid){
         preguntasFiltradas.clear();
         
         preguntasFiltradas.addAll(listaPreguntas.stream()

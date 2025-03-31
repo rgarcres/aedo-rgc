@@ -140,16 +140,20 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Utilidades.configurarBoton(cancelarButton, "");
-        Utilidades.configurarBoton(atrasButton, "crear-campanya");
         Utilidades.configurarBoton(limpiarButton);
         Utilidades.configurarBoton(buscarButton);
         Utilidades.configurarBoton(atrasButton);
         Utilidades.configurarBoton(siguienteButton);
 
-        atrasButton.addClickListener(e -> {
-            listaCamps.removeLast();
-            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
-        });
+        if(campEdit == null){
+            Utilidades.configurarBoton(atrasButton, "crear-campanya");
+            atrasButton.addClickListener(e -> {
+                listaCamps.removeLast();
+                VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
+            });
+        } else {
+            Utilidades.configurarBoton(atrasButton, "editar-campanya");
+        }
         buscarButton.addClickListener(e -> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });

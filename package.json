@@ -104,11 +104,11 @@
     "@polymer/polymer": "$@polymer/polymer",
     "react": "$react",
     "react-router": "$react-router",
-    "@fontsource/lora": "$@fontsource/lora",
     "date-fns": "$date-fns",
     "proj4": "$proj4",
     "@vaadin/vaadin-themable-mixin": "$@vaadin/vaadin-themable-mixin",
     "@vaadin/vaadin-lumo-styles": "$@vaadin/vaadin-lumo-styles",
-    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles"
+    "@vaadin/vaadin-material-styles": "$@vaadin/vaadin-material-styles",
+    "@fontsource/lora": "$@fontsource/lora"
   }
 }

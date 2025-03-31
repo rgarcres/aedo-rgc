@@ -17,4 +17,21 @@ public class Bloque extends AbstractEntity{
     //descripcion
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+
+    @Override
+    public boolean equals(Object o){
+        if (o == null || getClass() != o.getClass()) return false;
+        Bloque bloque = (Bloque) o;
+        return this.nombre == bloque.getNombre();
+    }
+
+    @Override
+    public int hashCode(){
+        return nombre.hashCode();
+    }
+
+    @Override
+    public String toString(){
+        return nombre;
+    }
 }

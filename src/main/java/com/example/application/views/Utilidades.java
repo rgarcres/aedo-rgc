@@ -133,7 +133,7 @@ public class Utilidades {
         preguntas.add(new Pregunta("¿Cuál es tu lenguaje de programación favorito?", respuestas10, 1,
         new Bloque("Bloque 1")));
         preguntas.add(new Pregunta("¿Cuál es tu día favorito de la semana?", respuestas11, 3,
-        new Bloque("Bloque 2")));
+        new Bloque("Bloque 3")));
         preguntas.add(new Pregunta("¿Cuál es tu medio de transporte preferido?", respuestas12, 4,
         new Bloque("Bloque 4")));
         preguntas.add(new Pregunta("¿Qué comida prefieres?", respuestas13, 1, 
