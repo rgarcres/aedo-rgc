@@ -9,11 +9,13 @@ public class Grupo extends AbstractEntity{
     private List<Usuario> usuarios;
 
     //CONSTRUCTOR
-    public Grupo(String nombre){
+    public Grupo(Long ID, String nombre){
+        this.setId(ID);
         this.nombre = nombre;
         usuarios = new ArrayList<>();
     }
-    public Grupo(String nombre, String descripcion){
+    public Grupo(Long ID, String nombre, String descripcion){
+        this.setId(ID);
         this.nombre = nombre;
         this.descripcion = descripcion;
         usuarios = new ArrayList<>();

@@ -1,6 +1,7 @@
 package com.example.application.views.iniciarsesion;
 
 import com.example.application.data.Campanya;
+import com.example.application.data.Grupo;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -28,6 +29,7 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 public class IniciarsesionView extends Composite<VerticalLayout> {
 
     private final List<Campanya> listaCamps = new ArrayList<>();
+    private final List<Grupo> listaGrupos = new ArrayList<>();
 
     public IniciarsesionView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
@@ -35,6 +37,7 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
         TextField nombreUsuarioField = new TextField();
         Button iniciarSesionButton = new Button("Iniciar sesión");
         VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
+        VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
 
         getContent().setWidth("100%");
         getContent().getStyle().set("flex-grow", "1");
