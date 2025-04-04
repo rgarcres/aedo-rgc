@@ -1,7 +1,7 @@
 package com.example.application.views.seleccionarusuarios;
 
-import com.example.application.data.Campanya;
 import com.example.application.data.Genero;
+import com.example.application.data.Grupo;
 import com.example.application.data.NivelEstudios;
 //import com.example.application.data.SamplePerson;
 import com.example.application.data.SituacionLaboral;
@@ -56,12 +56,12 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private String rangoMaxFiltro;
 
     @SuppressWarnings("unchecked")
-    private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
-    private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
+    private final List<Grupo> listaGrupos = (List<Grupo>) VaadinSession.getCurrent().getAttribute("listaGrupos");
 
     public SeleccionarUsuariosView() {
         H3 h3 = new H3("Seleccionar Usuarios");
         H4 error = new H4("Selcciona algun usuario");
+        error.getStyle().set("color", "#ff4e4e");
         Grid<Usuario> gridUsuario = new Grid<>(Usuario.class);
         HorizontalLayout filtrosLayout = new HorizontalLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
@@ -100,14 +100,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         gridUsuario.getStyle().set("flex-grow", "0");
         usuarios.addAll(Utilidades.crearListaUsuarios());
         usuariosFiltrados.addAll(usuarios);
-        if(campEdit == null) {
-            gridUsuario.setItems(usuariosFiltrados);
-        } else {
-            gridUsuario.setItems(campEdit.getUsuarios());
-            for(Usuario u: campEdit.getUsuarios()){
-                gridUsuario.select(u);
-            }
-        }
+        gridUsuario.setItems(usuariosFiltrados);
 
         //FILTROS
         selectGenero.addValueChangeListener(e -> {
@@ -147,10 +140,10 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
         Utilidades.configurarBoton(atrasButton, "crear-grupo");
         atrasButton.addClickListener(e -> {
-            listaCamps.removeLast();
-            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
+            listaGrupos.removeLast();
+            VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
         });
-        
+
         buscarButton.addClickListener(e -> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
@@ -191,16 +184,16 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         siguienteButton.addClickListener(e -> {
             Set<Usuario> seleccionados = gridUsuario.getSelectedItems();
             if(!seleccionados.isEmpty()){
-                listaCamps.getLast().setUsuarios(new ArrayList<>(seleccionados));
-                VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
-                getUI().ifPresent(ui -> ui.navigate("seleccionar-preguntas"));
+                listaGrupos.getLast().setUsuarios(new ArrayList<>(seleccionados));
+                VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
+                getUI().ifPresent(ui -> ui.navigate("mis-grupos"));
             } else {
                 getContent().add(error);
             }
         });
         cancelarButton.addClickListener(e -> {
-            listaCamps.removeLast();
-            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
+            listaGrupos.removeLast();
+            VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
         });
     }
 

@@ -29,6 +29,7 @@ public class HomeView extends Composite<VerticalLayout> {
         Button crearCampanyaButton = new Button("Crear Campaña");
         Button misCampanyaButton = new Button("Mis Campañas");
         Button crearGrupoButton = new Button("Crear Grupo");
+        Button misGruposButton = new Button("Mis Grupos");
 
         String nombreUsuario = (String) VaadinSession.getCurrent().getAttribute("nombreUsuario");
 
@@ -49,12 +50,16 @@ public class HomeView extends Composite<VerticalLayout> {
         crearGrupoButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         Utilidades.configurarBoton(crearGrupoButton, "crear-grupo");
 
+        misGruposButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        Utilidades.configurarBoton(misGruposButton, "mis-grupos");
+
         getContent().add(mainLayout);
         mainLayout.add(h2);
         mainLayout.add(h3);
         mainLayout.add(crearCampanyaButton);
         mainLayout.add(misCampanyaButton);
         mainLayout.add(crearGrupoButton);
+        mainLayout.add(misGruposButton);
     }
 
     private void configurarLayout(VerticalLayout mainLayout){
