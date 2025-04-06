@@ -3,7 +3,9 @@ package com.example.application.views.seleccionarpreguntas;
 import com.example.application.data.Bloque;
 import com.example.application.data.Campanya;
 import com.example.application.data.Pregunta;
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
+import com.example.application.views.utilidades.ListaCreator;
+import com.example.application.views.utilidades.Utilidades;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -62,7 +64,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         TextField textFieldEnunciado = new TextField("Enunciado");
         CheckboxGroup<Integer> checkboxTipo = new CheckboxGroup<>("Tipo");
         
-        listaPreguntas.addAll(Utilidades.crearListaPreguntas());
+        listaPreguntas.addAll(ListaCreator.crearListaPreguntas());
         Bloque bloqueSelec = (Bloque) VaadinSession.getCurrent().getAttribute("bloqueSelec");
 
         preguntasFiltradas.addAll(preguntasPorBloqueSeleccionado(bloqueSelec, listaPreguntas));
@@ -88,11 +90,11 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         //CONFIGURAR BOTONES
         crearButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(buscarButton);
-        Utilidades.configurarBoton(limpiarButton);
-        Utilidades.configurarBoton(crearButton);
-        Utilidades.configurarBoton(cancelarButton, "");
-        Utilidades.configurarBoton(atrasButton, "seleccionar-usuarios");
+        BotonesCreator.configurarBoton(buscarButton);
+        BotonesCreator.configurarBoton(limpiarButton);
+        BotonesCreator.configurarBoton(crearButton);
+        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(atrasButton, "seleccionar-usuarios");
         atrasButton.addClickListener(e-> {
             listaCamps.getLast().setPreguntas(null);
             VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
@@ -165,7 +167,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         preguntasFiltradas.clear();
         
         preguntasFiltradas.addAll(listaPreguntas.stream()
-        .filter(pregunta -> enunciadoFiltro.isBlank() || buscarCoincidencias(enunciadoFiltro, pregunta.getEnunciado()))
+        .filter(pregunta -> enunciadoFiltro.isBlank() || Utilidades.buscarCoincidencias(enunciadoFiltro, pregunta.getEnunciado()))
         .filter(pregunta -> tiposFiltro.isEmpty() || buscarTipos(tiposFiltro, pregunta.getTipo()))
         .collect(Collectors.toList())
         );
@@ -185,23 +187,6 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
                 return true;
             }
         }
-        return false;
-    }
-
-    //Realiza una comparación entre el texto que se ha introducido en el filtro
-    //y el enunciado de la pregunta, solucionando conflictos de tildes y mayusculas
-    private boolean buscarCoincidencias(String filtro, String enunciado){
-        if(filtro == null || enunciado == null){
-            return false;
-        }
-
-        String enunciadoSinTilde = Utilidades.quitarTildes(enunciado).toLowerCase();
-        String filtroSinTilde = Utilidades.quitarTildes(filtro).toLowerCase();
-        
-        if(enunciadoSinTilde.contains(filtroSinTilde)){
-            return true;
-        }
-
         return false;
     }
 

@@ -3,7 +3,8 @@ package com.example.application.views.crearcampanya;
 import com.example.application.data.Bloque;
 import com.example.application.data.Campanya;
 import com.example.application.data.Region;
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
+import com.example.application.views.utilidades.ListaCreator;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -82,10 +83,10 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         });
 
         regionComboBox.setWidth("min-content");
-        regionComboBox.setItems(Utilidades.crearListaRegiones());
+        regionComboBox.setItems(ListaCreator.crearListaRegiones());
         regionComboBox.setItemLabelGenerator(item -> item.getNombre());
         bloqueComboBox.setWidth("min-content");
-        bloqueComboBox.setItems(Utilidades.crearListaBloques());
+        bloqueComboBox.setItems(ListaCreator.crearListaBloques());
         bloqueComboBox.setItemLabelGenerator(item -> item.getNombre());
 
         textFieldObjetivos.setWidth("100%");
@@ -96,8 +97,8 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutRow.setAlignItems(Alignment.CENTER);
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(siguienteButton);
-        Utilidades.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(siguienteButton);
+        BotonesCreator.configurarBoton(cancelarButton, "");
 
         if(campMedioCreada != null){
             textFieldNombre.setValue(campMedioCreada.getNombre());
@@ -148,7 +149,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
                 VaadinSession.getCurrent().setAttribute("campMedioCreada", camp);
                 VaadinSession.getCurrent().setAttribute("bloqueSelec", bloque);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
-                getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
+                getUI().ifPresent(ui -> ui.navigate("seleccionar-grupo"));
             }        
         });
     }

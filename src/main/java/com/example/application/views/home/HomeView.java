@@ -1,6 +1,6 @@
 package com.example.application.views.home;
 
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -42,16 +42,16 @@ public class HomeView extends Composite<VerticalLayout> {
 
         mainLayout.setAlignSelf(FlexComponent.Alignment.CENTER, crearCampanyaButton);
         crearCampanyaButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(crearCampanyaButton, "crear-campanya");
+        BotonesCreator.configurarBoton(crearCampanyaButton, "crear-campanya");
         
         misCampanyaButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(misCampanyaButton, "mis-campanyas");
+        BotonesCreator.configurarBoton(misCampanyaButton, "mis-campanyas");
 
         crearGrupoButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(crearGrupoButton, "crear-grupo");
+        BotonesCreator.configurarBoton(crearGrupoButton, "crear-grupo");
 
         misGruposButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(misGruposButton, "mis-grupos");
+        BotonesCreator.configurarBoton(misGruposButton, "mis-grupos");
 
         getContent().add(mainLayout);
         mainLayout.add(h2);

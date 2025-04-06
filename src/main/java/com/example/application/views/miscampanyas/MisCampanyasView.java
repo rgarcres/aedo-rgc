@@ -1,7 +1,7 @@
 package com.example.application.views.miscampanyas;
 
 import com.example.application.data.Campanya;
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.dependency.Uses;
@@ -39,8 +39,8 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         Button atrasButton = new Button("<");
         Button borrarButton = new Button("Borrar Campaña");
 
-        Utilidades.configurarBoton(atrasButton, "");
-        Utilidades.configurarBoton(borrarButton);
+        BotonesCreator.configurarBoton(atrasButton, "");
+        BotonesCreator.configurarBoton(borrarButton);
         borrarButton.getStyle().setBackgroundColor("#cd3b3b");
 
         getContent().setHeightFull();
@@ -80,7 +80,7 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         grid.addColumn(Campanya::getFin).setHeader("Fin").setAutoWidth(true);
         grid.addColumn(Campanya::getObjetivos).setHeader("Objetivos").setAutoWidth(true);
         grid.addColumn(Campanya::getDemografia).setHeader("Demografia").setAutoWidth(true);
-        grid.addColumn(c -> c.getUsuarios()).setHeader("Usuarios").setAutoWidth(true);
+        grid.addColumn(c -> c.getGrupos()).setHeader("Usuarios").setAutoWidth(true);
         grid.addColumn(c -> c.getPreguntas()).setHeader("Preguntas").setAutoWidth(true);
     }
 

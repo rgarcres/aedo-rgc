@@ -1,6 +1,5 @@
-package com.example.application.views;
+package com.example.application.views.utilidades;
 
-import java.text.Normalizer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,29 +11,9 @@ import com.example.application.data.Pregunta;
 import com.example.application.data.Region;
 import com.example.application.data.SituacionLaboral;
 import com.example.application.data.Usuario;
-import com.vaadin.flow.component.button.Button;
 
-public class Utilidades {
+public class ListaCreator {
     
-    public static void configurarBoton(Button boton){
-        boton.setWidth("min-content");
-        boton.getStyle().set("cursor", "pointer");
-    }
-
-    public static void configurarBoton(Button boton, String ruta){
-        boton.setWidth("min-content");
-        boton.getStyle().set("cursor", "pointer");
-        boton.addClickListener(e -> boton.getUI().ifPresent(
-            ui -> ui.navigate(ruta)   
-           ));
-    }
-
-    public static String quitarTildes(String s){
-        String sinTilde = Normalizer.normalize(s, Normalizer.Form.NFD);
-
-        return sinTilde.replaceAll("\\p{M}","");
-    }
-
     public static List<Bloque> crearListaBloques(){
         List<Bloque> bloques = new ArrayList<>();
         bloques.add(new Bloque("Bloque 1"));

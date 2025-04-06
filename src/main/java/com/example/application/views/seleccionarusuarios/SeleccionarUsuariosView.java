@@ -6,8 +6,9 @@ import com.example.application.data.NivelEstudios;
 //import com.example.application.data.SamplePerson;
 import com.example.application.data.SituacionLaboral;
 import com.example.application.data.Usuario;
-//import com.example.application.services.SamplePersonService;
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
+import com.example.application.views.utilidades.ListaCreator;
+import com.example.application.views.utilidades.Utilidades;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
@@ -98,7 +99,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         gridUsuario.setSelectionMode(Grid.SelectionMode.MULTI);
         gridUsuario.setWidth("100%");
         gridUsuario.getStyle().set("flex-grow", "0");
-        usuarios.addAll(Utilidades.crearListaUsuarios());
+        usuarios.addAll(ListaCreator.crearListaUsuarios());
         usuariosFiltrados.addAll(usuarios);
         gridUsuario.setItems(usuariosFiltrados);
 
@@ -132,13 +133,13 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         //BOTONES
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(cancelarButton, "");
-        Utilidades.configurarBoton(limpiarButton);
-        Utilidades.configurarBoton(buscarButton);
-        Utilidades.configurarBoton(atrasButton);
-        Utilidades.configurarBoton(siguienteButton);
+        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(limpiarButton);
+        BotonesCreator.configurarBoton(buscarButton);
+        BotonesCreator.configurarBoton(atrasButton);
+        BotonesCreator.configurarBoton(siguienteButton);
 
-        Utilidades.configurarBoton(atrasButton, "crear-grupo");
+        BotonesCreator.configurarBoton(atrasButton, "crear-grupo");
         atrasButton.addClickListener(e -> {
             listaGrupos.removeLast();
             VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
@@ -208,8 +209,8 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         .filter(user -> seleccionGeneros.isEmpty() || seleccionGeneros.contains(user.getGenero()))
         .filter(user -> seleccionEstudios.isEmpty() || seleccionEstudios.contains(user.getNivelEstudios()))
         .filter(user -> seleccionLaboral.isEmpty() || seleccionLaboral.contains(user.getSituacionLaboral()))
-        .filter(user -> nombreFiltro.isBlank() || buscarCoincidencias(user.getNombre().toLowerCase(), nombreFiltro))
-        .filter(user -> apellidoFiltro.isBlank() || buscarCoincidencias(user.getApellido().toLowerCase(), apellidoFiltro))
+        .filter(user -> nombreFiltro.isBlank() || Utilidades.buscarCoincidencias(user.getNombre().toLowerCase(), nombreFiltro))
+        .filter(user -> apellidoFiltro.isBlank() || Utilidades.buscarCoincidencias(user.getApellido().toLowerCase(), apellidoFiltro))
         .filter(user -> rangoMaxFiltro.isBlank() || filtrarRangoMax(rangoMaxFiltro, user.getRangoSalarial()))
         .filter(user -> rangoMinFiltro.isBlank() || filtrarRangoMin(rangoMinFiltro, user.getRangoSalarial()))
         .collect(Collectors.toList()));
@@ -242,25 +243,6 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         String[] rangoDividido = rangoCompleto.split("\\-");
         if(Double.parseDouble(rangoDividido[0]) >= Double.parseDouble(min)){
             return true;
-        }
-        return false;
-    }
-
-    private boolean buscarCoincidencias(String valorCompleto, String filtro){
-        if(valorCompleto == null || filtro == null){
-            return false;
-        }
-
-        String completoSinTilde = Utilidades.quitarTildes(valorCompleto).toLowerCase();
-        String filtroSinTilde = Utilidades.quitarTildes(filtro).toLowerCase();
-
-        //Si hay dos apellidos dividimos el string en dos mediante el espacio en blanco
-        String[] palabras = completoSinTilde.split("\\s+");
-
-        for(String p : palabras){
-            if(p.contains(filtroSinTilde)){
-                return true;
-            }
         }
         return false;
     }

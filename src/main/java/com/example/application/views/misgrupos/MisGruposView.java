@@ -5,7 +5,7 @@ import java.util.List;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 import com.example.application.data.Grupo;
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.grid.Grid;
@@ -37,8 +37,8 @@ public class MisGruposView extends Composite<VerticalLayout>{
         Button atrasButton = new Button("<");
         Button borrarButton = new Button("Borrar Grupo");
 
-        Utilidades.configurarBoton(atrasButton, "");
-        Utilidades.configurarBoton(borrarButton);
+        BotonesCreator.configurarBoton(atrasButton, "");
+        BotonesCreator.configurarBoton(borrarButton);
         borrarButton.getStyle().setBackgroundColor("#cd3b3b");
 
         getContent().setHeightFull();
@@ -48,7 +48,6 @@ public class MisGruposView extends Composite<VerticalLayout>{
 
         gridGrupos.setItems(listaGrupos);
         
-
         getContent().add(tituloLayout);
         tituloLayout.add(atrasButton, h3);
         getContent().add(gridGrupos);

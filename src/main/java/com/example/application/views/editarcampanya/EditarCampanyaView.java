@@ -3,7 +3,8 @@ package com.example.application.views.editarcampanya;
 import com.example.application.data.Bloque;
 import com.example.application.data.Campanya;
 import com.example.application.data.Region;
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
+import com.example.application.views.utilidades.ListaCreator;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -82,8 +83,8 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         layoutRow.setAlignItems(Alignment.CENTER);
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(siguienteButton);
-        Utilidades.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(siguienteButton);
+        BotonesCreator.configurarBoton(cancelarButton, "");
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);
@@ -138,12 +139,12 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
     }
 
     private void setComboBoxBloque(ComboBox<Bloque> comboBox){
-        comboBox.setItems(Utilidades.crearListaBloques());
+        comboBox.setItems(ListaCreator.crearListaBloques());
         comboBox.setItemLabelGenerator(item -> ((Bloque)item).getNombre());
     }
 
     private void setComboBoxRegion(ComboBox<Region> comboBox){
-        comboBox.setItems(Utilidades.crearListaRegiones());
+        comboBox.setItems(ListaCreator.crearListaRegiones());
         comboBox.setItemLabelGenerator(item -> ((Region)item).getNombre());
     }
 

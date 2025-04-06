@@ -13,7 +13,7 @@ public class Campanya extends AbstractEntity {
     private LocalDate fin;
     private Region region;
     private Bloque bloque;
-    private List<Usuario> usuarios;
+    private List<Grupo> grupos;
     private List<Pregunta> preguntas;
 
     public Campanya(Long ID, String nombre, String objetivos, String demografia, LocalDate inicio, LocalDate fin, Region region, Bloque bloque) {
@@ -24,7 +24,7 @@ public class Campanya extends AbstractEntity {
         this.inicio = inicio;
         this.fin = fin;
         this.region = region;
-        usuarios = new ArrayList<>();
+        grupos = new ArrayList<>();
         preguntas = new ArrayList<>();
     }
 
@@ -77,11 +77,11 @@ public class Campanya extends AbstractEntity {
         this.bloque = bloque;
     }
 
-    public List<Usuario> getUsuarios() {
-        return usuarios;
+    public List<Grupo> getGrupos() {
+        return grupos;
     }
-    public void setUsuarios(List<Usuario> usuarios) {
-        this.usuarios = usuarios;
+    public void setGrupos(List<Grupo> grupos) {
+        this.grupos = grupos;
     }
 
     public List<Pregunta> getPreguntas() {

@@ -5,7 +5,7 @@ import java.util.List;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 import com.example.application.data.Grupo;
-import com.example.application.views.Utilidades;
+import com.example.application.views.utilidades.BotonesCreator;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
@@ -38,7 +38,7 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
         HorizontalLayout botonesLayout = new HorizontalLayout();
 
         H3 titulo = new H3("Crear Grupo");
-        H4 errorMsg = new H4("Selecciona todos los campos obligatorios");
+        H4 errorMsg = new H4("Error desconocido");
         errorMsg.getStyle().set("color", "#ff4e4e");
         TextField nombreTextField = new TextField("Nombre*");
         TextField idTextField = new TextField("ID* (Debe ser único)");
@@ -47,8 +47,8 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
         Button siguienteButton = new Button("Siguiente");
         Button cancelarButton = new Button("Cancelar");
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        Utilidades.configurarBoton(siguienteButton);
-        Utilidades.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(siguienteButton);
+        BotonesCreator.configurarBoton(cancelarButton, "");
 
         configurarLayout(mainLayout);
         titulo.setWidth("100%");
@@ -115,6 +115,7 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
 
             for(Grupo g: listaGrupos){
                 if(g.getId() == id){
+                    errorMsg.setText("Ya hay un grupo con el ID: "+ ID);
                     return false;
                 }
             }
