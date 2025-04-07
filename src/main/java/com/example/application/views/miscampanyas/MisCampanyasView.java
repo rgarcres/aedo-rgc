@@ -39,7 +39,7 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         Button atrasButton = new Button("<");
         Button borrarButton = new Button("Borrar Campaña");
 
-        BotonesCreator.configurarBoton(atrasButton, "");
+        BotonesCreator.configurarBoton(atrasButton, "home");
         BotonesCreator.configurarBoton(borrarButton);
         borrarButton.getStyle().setBackgroundColor("#cd3b3b");
 

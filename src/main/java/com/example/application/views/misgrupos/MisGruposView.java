@@ -37,7 +37,7 @@ public class MisGruposView extends Composite<VerticalLayout>{
         Button atrasButton = new Button("<");
         Button borrarButton = new Button("Borrar Grupo");
 
-        BotonesCreator.configurarBoton(atrasButton, "");
+        BotonesCreator.configurarBoton(atrasButton, "home");
         BotonesCreator.configurarBoton(borrarButton);
         borrarButton.getStyle().setBackgroundColor("#cd3b3b");
 

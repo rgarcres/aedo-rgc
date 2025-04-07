@@ -98,7 +98,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(siguienteButton);
-        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(cancelarButton, "home");
 
         if(campMedioCreada != null){
             textFieldNombre.setValue(campMedioCreada.getNombre());

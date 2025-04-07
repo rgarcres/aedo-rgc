@@ -84,7 +84,7 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(siguienteButton);
-        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(cancelarButton, "home");
 
         getContent().add(layoutColumn2);
         layoutColumn2.add(h3);

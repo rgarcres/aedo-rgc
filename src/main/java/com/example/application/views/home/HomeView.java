@@ -18,7 +18,7 @@ import com.vaadin.flow.server.VaadinSession;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Home")
-@Route("")
+@Route("home")
 @Menu(order = 1, icon = LineAwesomeIconUrl.PENCIL_RULER_SOLID)
 public class HomeView extends Composite<VerticalLayout> {
 

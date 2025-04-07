@@ -48,7 +48,7 @@ public class EditarGrupoView extends Composite<VerticalLayout>{
         Button cancelarButton = new Button("Cancelar");
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(siguienteButton);
-        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(cancelarButton, "home");
 
         configurarLayout(mainLayout);
         titulo.setWidth("100%");

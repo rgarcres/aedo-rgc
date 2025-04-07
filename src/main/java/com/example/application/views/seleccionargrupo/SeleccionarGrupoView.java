@@ -85,7 +85,7 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(siguienteButton);
 
-        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(cancelarButton, "home");
 
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(buscarButton);

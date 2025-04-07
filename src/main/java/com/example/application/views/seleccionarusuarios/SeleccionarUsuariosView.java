@@ -140,7 +140,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         //BOTONES
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
-        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(cancelarButton, "home");
         BotonesCreator.configurarBoton(limpiarButton);
         BotonesCreator.configurarBoton(buscarButton);
         BotonesCreator.configurarBoton(atrasButton);

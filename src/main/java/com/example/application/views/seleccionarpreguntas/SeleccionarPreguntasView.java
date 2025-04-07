@@ -93,7 +93,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         BotonesCreator.configurarBoton(buscarButton);
         BotonesCreator.configurarBoton(limpiarButton);
         BotonesCreator.configurarBoton(crearButton);
-        BotonesCreator.configurarBoton(cancelarButton, "");
+        BotonesCreator.configurarBoton(cancelarButton, "home");
         BotonesCreator.configurarBoton(atrasButton, "seleccionar-usuarios");
         atrasButton.addClickListener(e-> {
             listaCamps.getLast().setPreguntas(null);

@@ -25,7 +25,7 @@ import java.util.List;
 import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Iniciar sesion")
-@Route("iniciar-sesion")
+@Route("")
 @Menu(order = 0, icon = LineAwesomeIconUrl.USER)
 public class IniciarsesionView extends Composite<VerticalLayout> {
 
@@ -55,7 +55,7 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
             VaadinSession.getCurrent().setAttribute("listaCamps", new ArrayList<Campanya>());
         }
 
-        //---------Configurar Layout---------
+        //---------Configurar Layout y títulos---------
         configurarLayaout(mainLayout);
         mainLayout.setAlignSelf(FlexComponent.Alignment.CENTER, titulo);
         titulo.setWidth("max-content");
@@ -96,7 +96,7 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
        
         if(!nombreUsuario.isEmpty()){
             VaadinSession.getCurrent().setAttribute("nombreUsuario", nombreUsuario);
-            getUI().ifPresent(ui -> ui.navigate(""));
+            getUI().ifPresent(ui -> ui.navigate("home"));
         } else {
             layout.add(errorMsg);
         }   
