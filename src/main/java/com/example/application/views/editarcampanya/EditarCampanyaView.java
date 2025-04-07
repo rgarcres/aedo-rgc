@@ -32,7 +32,7 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 
 @PageTitle("Editar Campaña")
 @Route("editar-campanya")
-@Menu(order = 2, icon = LineAwesomeIconUrl.USER)
+@Menu(order = 3, icon = LineAwesomeIconUrl.USER)
 public class EditarCampanyaView extends Composite<VerticalLayout> {
     
     @SuppressWarnings("unchecked")
@@ -131,7 +131,7 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
                 Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
-                getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
+                getUI().ifPresent(ui -> ui.navigate("seleccionar-grupo"));
             } else {
                 getContent().add(error);
             }        

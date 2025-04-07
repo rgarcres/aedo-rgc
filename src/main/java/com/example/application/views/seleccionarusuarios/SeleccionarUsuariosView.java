@@ -59,6 +59,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
 
     @SuppressWarnings("unchecked")
     private final List<Grupo> listaGrupos = (List<Grupo>) VaadinSession.getCurrent().getAttribute("listaGrupos");
+    private Grupo grupoEdit = (Grupo) VaadinSession.getCurrent().getAttribute("grupoEdit");
 
     public SeleccionarUsuariosView() {
         H3 h3 = new H3("Seleccionar Usuarios");
@@ -102,7 +103,12 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         gridUsuario.getStyle().set("flex-grow", "0");
         usuarios.addAll(ListaCreator.crearListaUsuarios());
         usuariosFiltrados.addAll(usuarios);
-        gridUsuario.setItems(usuariosFiltrados);
+        if(grupoEdit == null){
+            gridUsuario.setItems(usuariosFiltrados);
+        } else {
+            gridUsuario.setItems(grupoEdit.getUsuarios());
+            gridUsuario.asMultiSelect().select(grupoEdit.getUsuarios());
+        }
 
         //FILTROS
         selectGenero.addValueChangeListener(e -> {
@@ -195,7 +201,11 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             }
         });
         cancelarButton.addClickListener(e -> {
-            listaGrupos.removeLast();
+            if(grupoEdit == null){
+                listaGrupos.removeLast();
+            } else {
+                listaGrupos.getLast().setUsuarios(grupoEdit.getUsuarios());
+            }
             VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
         });
     }

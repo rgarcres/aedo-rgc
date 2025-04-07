@@ -47,6 +47,10 @@ public class MisGruposView extends Composite<VerticalLayout>{
         configurarGrid(gridGrupos);
 
         gridGrupos.setItems(listaGrupos);
+        gridGrupos.addItemDoubleClickListener(e -> {
+            VaadinSession.getCurrent().setAttribute("grupoEdit", e.getItem());
+            getUI().ifPresent(ui -> ui.navigate("editar-grupo"));
+        });
         
         getContent().add(tituloLayout);
         tituloLayout.add(atrasButton, h3);
