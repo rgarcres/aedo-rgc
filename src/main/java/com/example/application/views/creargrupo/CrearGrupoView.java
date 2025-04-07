@@ -69,9 +69,9 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
             nombre = nombreTextField.getValue();
             descripcion = descripcionTextField.getValue();
 
-            if(!comprobarID(ID, errorMsg)){
+            if (!comprobarCamposCompletos(ID, nombre, errorMsg)){
                 mainLayout.add(errorMsg);
-            } else if (!comprobarCamposCompletos(ID, nombre, errorMsg)){
+            } else if(!comprobarID(ID, errorMsg)){
                 mainLayout.add(errorMsg);
             } else {
                 Grupo grupo = new Grupo(Long.parseLong(ID), nombre, descripcion);
