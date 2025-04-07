@@ -80,7 +80,7 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         grid.addColumn(Campanya::getFin).setHeader("Fin").setAutoWidth(true);
         grid.addColumn(Campanya::getObjetivos).setHeader("Objetivos").setAutoWidth(true);
         grid.addColumn(Campanya::getDemografia).setHeader("Demografia").setAutoWidth(true);
-        grid.addColumn(c -> c.getGrupos()).setHeader("Usuarios").setAutoWidth(true);
+        grid.addColumn(c -> c.getGrupos()).setHeader("Grupos").setAutoWidth(true);
         grid.addColumn(c -> c.getPreguntas()).setHeader("Preguntas").setAutoWidth(true);
     }
 

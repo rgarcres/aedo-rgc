@@ -6,6 +6,7 @@ import com.example.application.views.utilidades.BotonesCreator;
 import com.vaadin.flow.component.Composite;
 import com.vaadin.flow.component.Key;
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -29,8 +30,10 @@ import org.vaadin.lineawesome.LineAwesomeIconUrl;
 public class IniciarsesionView extends Composite<VerticalLayout> {
 
     //Inicializar las listas que simulan la persistencia en esta demo
-    private final List<Campanya> listaCamps = new ArrayList<>();
-    private final List<Grupo> listaGrupos = new ArrayList<>();
+    @SuppressWarnings("unchecked")
+    private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
+    @SuppressWarnings("unchecked")
+    private final List<Grupo> listaGrupos = (List<Grupo>) VaadinSession.getCurrent().getAttribute("listaGrupos");
     
     //---------Variables locales---------
     String nombreUsuario;
@@ -44,8 +47,13 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
         Button iniciarSesionButton = new Button("Iniciar sesión");
 
         //Guardar los atributos en la sesión actual
-        VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
-        VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
+        if(listaGrupos == null){
+            VaadinSession.getCurrent().setAttribute("listaGrupos", new ArrayList<Grupo>());
+        }
+        
+        if(listaCamps == null){
+            VaadinSession.getCurrent().setAttribute("listaCamps", new ArrayList<Campanya>());
+        }
 
         //---------Configurar Layout---------
         configurarLayaout(mainLayout);
@@ -57,6 +65,7 @@ public class IniciarsesionView extends Composite<VerticalLayout> {
         mainLayout.add(titulo);
 
         //---------Botones---------
+        iniciarSesionButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(iniciarSesionButton, "");
 
         /*

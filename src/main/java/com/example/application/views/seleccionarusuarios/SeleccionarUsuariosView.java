@@ -20,6 +20,7 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -187,6 +188,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             if(!seleccionados.isEmpty()){
                 listaGrupos.getLast().setUsuarios(new ArrayList<>(seleccionados));
                 VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
+                Notification.show("Navegando a Mis Grupos");
                 getUI().ifPresent(ui -> ui.navigate("mis-grupos"));
             } else {
                 getContent().add(error);

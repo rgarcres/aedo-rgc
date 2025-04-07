@@ -40,6 +40,7 @@ public class Grupo extends AbstractEntity{
 
     @Override
     public boolean equals(Object o){
+        if(o == null) return false;
         //Pertenecen a la misma clase
         if(o.getClass() != getClass()) return false;
         Grupo g = (Grupo) o;

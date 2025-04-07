@@ -66,13 +66,18 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
         Button buscarButton = new Button("Buscar");
         Button limpiarButton = new Button("Limpiar");
 
+        //---------Configurar Layout---------
         configurarLayout(mainLayout);
         filtrosLayout.setWidth("100%");
         titulo.setWidth("100%");
         gridGrupos.setWidth("100%");
         botonesLayout.setWidth("100%");
+
+        //---------Configurar Grid---------
+        configurarGrid(gridGrupos);
         gruposFiltrados.addAll(listaGrupos);
         gridGrupos.setItems(gruposFiltrados);
+        
 
         //---------Configurar botones---------
         BotonesCreator.configurarBoton(atrasButton, "crear-campanya");
@@ -171,6 +176,10 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
         getContent().add(mainLayout);
     }
 
+    /*
+     * Realiza el filtrado de los grupos que se van a mostrar
+     * en el grid
+     */
     private void aplicarFiltros(Grid<Grupo> grid){
         //Limpiar lista de grupos
         gruposFiltrados.clear();
@@ -183,5 +192,23 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
 
         //Agrega los grupos que se han seleccionado
         grid.setItems(gruposFiltrados);
+    }
+
+    /*
+     * Estiliza en grid y añade las columnas
+     */
+    private void configurarGrid(Grid<Grupo> grid) {
+        //Ajustar tamaño
+        grid.setWidth("100%");      
+        grid.getStyle().set("flex-grow", "0");
+
+        //Permitir la selección multiple
+        grid.setSelectionMode(Grid.SelectionMode.MULTI);
+
+        //Establecer las columnas
+        grid.addColumn(Grupo::getId).setHeader("ID").setAutoWidth(true);
+        grid.addColumn(Grupo::getNombre).setHeader("Nombre").setAutoWidth(true);
+        grid.addColumn(Grupo::getDescripcion).setHeader("Descripcion").setAutoWidth(true);
+        grid.addColumn(g -> g.getUsuarios()).setHeader("Usuarios").setAutoWidth(true);
     }
 }
