@@ -32,6 +32,8 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
 
     @SuppressWarnings("unchecked")
     private final List<Grupo> listaGrupos = (List<Grupo>) VaadinSession.getCurrent().getAttribute("listaGrupos");
+    private Grupo grupoMedioCreado = (Grupo) VaadinSession.getCurrent().getAttribute("grupoMedioCreado");
+
     public CrearGrupoView(){
         VerticalLayout mainLayout = new VerticalLayout();
         FormLayout camposLayout = new FormLayout();
@@ -54,7 +56,14 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
         titulo.setWidth("100%");
         camposLayout.setWidth("100%");
         descripcionTextField.setWidth("100%");
+        //-----------Grupo a medio crear-----------
+        if(grupoMedioCreado != null){
+            nombreTextField.setValue(grupoMedioCreado.getNombre());
+            idTextField.setValue(grupoMedioCreado.getId().toString());
+            descripcionTextField.setValue(grupoMedioCreado.getDescripcion());
+        }
 
+        //-----------Añadir componentes-----------
         mainLayout.add(titulo);
         mainLayout.add(camposLayout);
         camposLayout.add(nombreTextField);
@@ -64,6 +73,7 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
         botonesLayout.add(siguienteButton);
         botonesLayout.add(cancelarButton);
         
+        //-----------Comportamiento botones-----------
         siguienteButton.addClickListener(e -> {
             ID = idTextField.getValue();
             nombre = nombreTextField.getValue();
@@ -77,6 +87,7 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
                 Grupo grupo = new Grupo(Long.parseLong(ID), nombre, descripcion);
                 listaGrupos.add(grupo);
                 VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
+                VaadinSession.getCurrent().setAttribute("grupoMedioCreado", grupo);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
             }
         });
@@ -84,7 +95,7 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
     }
 
     private boolean comprobarCamposCompletos(String ID, String nombre, H4 errorMsg) {
-        if(ID == null){
+        if(ID.isBlank()){
             errorMsg.setText("El ID no puede estar vacío");
             return false;
         }

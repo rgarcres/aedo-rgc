@@ -20,7 +20,6 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
-import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -79,7 +78,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         TextField textFieldRangoMin = new TextField("Rango Salarial Min");
         TextField textFieldRangoMax = new TextField("Rango Salarial Max");
 
-        Button siguienteButton = new Button("Siguiente");
+        Button crearButton = new Button("Crear grupo");
         Button cancelarButton = new Button("Cancelar");
         Button atrasButton = new Button("<");
         Button buscarButton = new Button("Buscar");
@@ -138,13 +137,13 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
         //BOTONES
-        siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
+        crearButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(cancelarButton, "home");
         BotonesCreator.configurarBoton(limpiarButton);
         BotonesCreator.configurarBoton(buscarButton);
         BotonesCreator.configurarBoton(atrasButton);
-        BotonesCreator.configurarBoton(siguienteButton);
+        BotonesCreator.configurarBoton(crearButton);
 
         BotonesCreator.configurarBoton(atrasButton, "crear-grupo");
         atrasButton.addClickListener(e -> {
@@ -186,15 +185,14 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         botonesFiltrosLayout.add(limpiarButton);
         getContent().add(gridUsuario);
         getContent().add(formLayout2Col);
-        formLayout2Col.add(siguienteButton);
+        formLayout2Col.add(crearButton);
         formLayout2Col.add(cancelarButton);
 
-        siguienteButton.addClickListener(e -> {
+        crearButton.addClickListener(e -> {
             Set<Usuario> seleccionados = gridUsuario.getSelectedItems();
             if(!seleccionados.isEmpty()){
                 listaGrupos.getLast().setUsuarios(new ArrayList<>(seleccionados));
                 VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
-                Notification.show("Navegando a Mis Grupos");
                 getUI().ifPresent(ui -> ui.navigate("mis-grupos"));
             } else {
                 getContent().add(error);

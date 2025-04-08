@@ -153,14 +153,14 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             Region region = regionComboBox.getValue();
             String objetivos = textFieldObjetivos.getValue();
             String demografia = textFieldDemografia.getValue();
-
-            if(!comprobarCamposCompletos(nombre, inicio, fin, bloque, region)) {
+            
+            if(listaGrupos.isEmpty() || listaGrupos == null){
+                notificarGruposVacios();
+            } else if(!comprobarCamposCompletos(nombre, inicio, fin, bloque, region)) {
                 getContent().add(errorMsg);
             } else if(!comprobarID(ID, errorMsg)){
                 getContent().add(errorMsg);
-            } else if(listaGrupos.isEmpty() || listaGrupos == null){
-                notificarGruposVacios();
-            } else {
+            } else  {
                 Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("campMedioCreada", camp);
