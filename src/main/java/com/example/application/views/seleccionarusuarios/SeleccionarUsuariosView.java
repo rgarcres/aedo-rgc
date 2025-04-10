@@ -142,10 +142,13 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         BotonesCreator.configurarBoton(cancelarButton, "home");
         BotonesCreator.configurarBoton(limpiarButton);
         BotonesCreator.configurarBoton(buscarButton);
-        BotonesCreator.configurarBoton(atrasButton);
         BotonesCreator.configurarBoton(crearButton);
 
-        BotonesCreator.configurarBoton(atrasButton, "crear-grupo");
+        if(grupoEdit == null){
+            BotonesCreator.configurarBoton(atrasButton, "crear-grupo");
+        } else {
+            BotonesCreator.configurarBoton(atrasButton, "editar-grupo");
+        }
         atrasButton.addClickListener(e -> {
             listaGrupos.removeLast();
             VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
@@ -193,6 +196,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             if(!seleccionados.isEmpty()){
                 listaGrupos.getLast().setUsuarios(new ArrayList<>(seleccionados));
                 VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
+                ponerAtributosNull();
                 getUI().ifPresent(ui -> ui.navigate("mis-grupos"));
             } else {
                 getContent().add(error);
@@ -208,7 +212,11 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         });
     }
 
-
+    private void ponerAtributosNull() {
+        VaadinSession.getCurrent().setAttribute("grupoMedioCreado", null);
+        VaadinSession.getCurrent().setAttribute("grupoMedioEditado", null);
+        VaadinSession.getCurrent().setAttribute("grupoEdit", null);
+    }
 
     private void actualizarGrid(Grid<Usuario> grid){
         //LIMPAR LA LISTA DE USUARIOS FILTRADOS

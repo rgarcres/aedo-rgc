@@ -31,6 +31,7 @@ public class EditarGrupoView extends Composite<VerticalLayout>{
     @SuppressWarnings("unchecked")
     private final List<Grupo> listaGrupos = (List<Grupo>) VaadinSession.getCurrent().getAttribute("listaGrupos");
     private Grupo grupoEdit = (Grupo) VaadinSession.getCurrent().getAttribute("grupoEdit");
+    private Grupo grupoMedioEditado = (Grupo) VaadinSession.getCurrent().getAttribute("grupoMedioEditado");
 
     public EditarGrupoView(){
         VerticalLayout mainLayout = new VerticalLayout();
@@ -64,7 +65,12 @@ public class EditarGrupoView extends Composite<VerticalLayout>{
         botonesLayout.add(siguienteButton);
         botonesLayout.add(cancelarButton);
         
-        if(grupoEdit != null){
+        //-----------Rellenar los campos-----------
+        if(grupoMedioEditado != null){
+            nombreTextField.setValue(grupoMedioEditado.getNombre());
+            idTextField.setValue(grupoMedioEditado.getId().toString());
+            descripcionTextField.setValue(grupoMedioEditado.getDescripcion());
+        } else if(grupoEdit != null){
             nombreTextField.setValue(grupoEdit.getNombre());
             idTextField.setValue(grupoEdit.getId().toString());
             descripcionTextField.setValue(grupoEdit.getDescripcion());
@@ -84,6 +90,7 @@ public class EditarGrupoView extends Composite<VerticalLayout>{
                 Grupo grupo = new Grupo(Long.parseLong(ID), nombre, descripcion);
                 listaGrupos.add(grupo);
                 VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
+                VaadinSession.getCurrent().setAttribute("grupoMedioEditado", grupo);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
             }
         });
