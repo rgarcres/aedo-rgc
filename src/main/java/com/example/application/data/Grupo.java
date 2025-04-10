@@ -8,7 +8,7 @@ public class Grupo extends AbstractEntity{
     private String descripcion;
     private List<Usuario> usuarios;
 
-    //CONSTRUCTOR
+    //------------Constructor------------
     public Grupo(Long ID, String nombre){
         this.setId(ID);
         this.nombre = nombre;
@@ -21,18 +21,20 @@ public class Grupo extends AbstractEntity{
         usuarios = new ArrayList<>();
     }
 
-    //GETTERS Y SETTERS
+    //------------Getters y Setters------------
     //Nombre
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
+
     //Descripcion
     public String getDescripcion() { return descripcion; }
     public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+    
     //Usuarios
     public List<Usuario> getUsuarios() { return usuarios; }
     public void setUsuarios(List<Usuario> usuarios) { this.usuarios = usuarios; }
 
-    //TOSTRING
+    //------------Métodos------------
     @Override
     public String toString(){
         return nombre;

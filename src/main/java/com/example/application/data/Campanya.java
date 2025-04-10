@@ -16,6 +16,7 @@ public class Campanya extends AbstractEntity {
     private List<Grupo> grupos;
     private List<Pregunta> preguntas;
 
+    //------------Constructor------------
     public Campanya(Long ID, String nombre, String objetivos, String demografia, LocalDate inicio, LocalDate fin, Region region, Bloque bloque) {
         this.setId(ID);
         this.nombre = nombre;
@@ -28,68 +29,40 @@ public class Campanya extends AbstractEntity {
         preguntas = new ArrayList<>();
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+    //------------Getters y Setters------------
+    //Nombre
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre;}
 
-    public String getObjetivos() {
-        return objetivos;
-    }
-    public void setObjetivos(String objetivos) {
-        this.objetivos = objetivos;
-    }
+    //Objetivos
+    public String getObjetivos() { return objetivos; }
+    public void setObjetivos(String objetivos) { this.objetivos = objetivos; }
     
-    public String getDemografia() {
-        return demografia;
-    }
-    public void setDemografia(String demografia) {
-        this.demografia = demografia;
-    }
+    //Demografia
+    public String getDemografia() { return demografia; }
+    public void setDemografia(String demografia) { this.demografia = demografia; }
 
-    public LocalDate getInicio() {
-        return inicio;
-    }
-    public void setInicio(LocalDate inicio) {
-        this.inicio = inicio;
-    }
+    //Fecha inicio
+    public LocalDate getInicio() { return inicio; }
+    public void setInicio(LocalDate inicio) { this.inicio = inicio; }
 
-    public LocalDate getFin() {
-        return fin;
-    }
-    public void setFin(LocalDate fin) {
-        this.fin = fin;
-    }
+    //Fecha fin
+    public LocalDate getFin() { return fin; }
+    public void setFin(LocalDate fin) { this.fin = fin; }
 
-    public Region getRegion() {
-        return region;
-    }
-    public void setRegion(Region region) {
-        this.region = region;
-    }
+    //Region
+    public Region getRegion() { return region; }
+    public void setRegion(Region region) { this.region = region; }
 
-    public Bloque getBloque() {
-        return bloque;
-    }
-    public void setBloque(Bloque bloque) {
-        this.bloque = bloque;
-    }
+    //Bloque
+    public Bloque getBloque() { return bloque; }
+    public void setBloque(Bloque bloque) { this.bloque = bloque; }
 
-    public List<Grupo> getGrupos() {
-        return grupos;
-    }
-    public void setGrupos(List<Grupo> grupos) {
-        this.grupos = grupos;
-    }
+    //Lista de grupos
+    public List<Grupo> getGrupos() { return grupos; }
+    public void setGrupos(List<Grupo> grupos) { this.grupos = grupos;  }
 
-    public List<Pregunta> getPreguntas() {
-        return preguntas;
-    }
-    public void setPreguntas(List<Pregunta> preguntas) {
-        this.preguntas = preguntas;
-    }
-
+    //Lista de preguntas
+    public List<Pregunta> getPreguntas() { return preguntas; }
+    public void setPreguntas(List<Pregunta> preguntas) { this.preguntas = preguntas; }
 }
-

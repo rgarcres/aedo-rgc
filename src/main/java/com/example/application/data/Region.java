@@ -4,13 +4,13 @@ public class Region extends AbstractEntity {
     private String nombre;
     private String provincia;
 
-    //CONSTRUCTOR
+    //------------Constructor------------
     public Region(String nombre, String provincia){
         this.nombre = nombre;
         this.provincia = provincia;
     }
 
-    //GETTERS Y SETTERS
+    //------------Getters y Setters------------
     //Nombre
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }

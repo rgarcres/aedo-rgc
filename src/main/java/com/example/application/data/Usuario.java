@@ -9,7 +9,7 @@ public class Usuario extends AbstractEntity{
     private String rangoSalarial;
     private String situacionPersonal;
 
-    //CONSTRUCTORES
+    //------------Getters y Setters------------
     public Usuario(String nombre, String apellido) {
         this.nombre = nombre;
         this.apellido = apellido;
@@ -26,7 +26,7 @@ public class Usuario extends AbstractEntity{
         this.situacionPersonal = situacionPersonal;
     }
 
-    //GETTERS Y SETTERS
+    //------------Getters y Setters------------
     public String getNombre() { return nombre; }
     public void setNombre(String nombre) { this.nombre = nombre; }
     
@@ -48,6 +48,8 @@ public class Usuario extends AbstractEntity{
     public String getSituacionPersonal() { return situacionPersonal; }
     public void setSituacionPersonal(String situacionPersonal) { this.situacionPersonal = situacionPersonal; }
 
+    //------------Métodos------------
+    @Override
     public String toString(){
         return this.nombre + " " + this.apellido;
     }
