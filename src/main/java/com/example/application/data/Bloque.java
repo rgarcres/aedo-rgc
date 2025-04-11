@@ -28,7 +28,7 @@ public class Bloque extends AbstractEntity{
 
     @Override
     public int hashCode(){
-        return nombre.hashCode() + descripcion.hashCode();
+        return nombre.hashCode();// + descripcion.hashCode();
     }
 
     @Override

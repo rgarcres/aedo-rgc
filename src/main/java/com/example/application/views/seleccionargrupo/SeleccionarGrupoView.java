@@ -40,12 +40,15 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
     @SuppressWarnings("unchecked")
     private final List<Grupo> listaGrupos = (List<Grupo>) VaadinSession.getCurrent().getAttribute("listaGrupos");
     private final List<Grupo> gruposFiltrados = new ArrayList<>();
+    private final Campanya campMedioCreada = (Campanya) VaadinSession.getCurrent().getAttribute("campMedioCreada");
+    private final Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
+    private final Campanya campMedioEditada = (Campanya) VaadinSession.getCurrent().getAttribute("campMedioEditada");
 
     private String nombreFiltro;
     private Long idFiltro;
 
     public SeleccionarGrupoView(){
-    //----Crear componentes----
+        //----Crear componentes----
         //Layouts
         VerticalLayout mainLayout = new VerticalLayout();
         HorizontalLayout filtrosLayout = new HorizontalLayout();
@@ -75,12 +78,23 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
 
         //---------Configurar Grid---------
         configurarGrid(gridGrupos);
-        gruposFiltrados.addAll(listaGrupos);
+        if(campMedioCreada != null){
+            gruposFiltrados.addAll(campMedioCreada.getGrupos());
+        } else if (campMedioEditada != null){
+            gruposFiltrados.addAll(campMedioEditada.getGrupos());
+        } else if (campEdit != null){
+            gruposFiltrados.addAll(campEdit.getGrupos());
+        } else {
+            gruposFiltrados.addAll(listaGrupos);
+        }
         gridGrupos.setItems(gruposFiltrados);
-        
 
         //---------Configurar botones---------
-        BotonesCreator.configurarBoton(atrasButton, "crear-campanya");
+        if(campEdit == null){
+            BotonesCreator.configurarBoton(atrasButton, "crear-campanya");
+        } else {
+            BotonesCreator.configurarBoton(atrasButton, "editar-campanya");
+        }
 
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(siguienteButton);
@@ -115,6 +129,10 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
         });
 
         //---------Comportamiento de botones---------
+        //Atras
+        atrasButton.addClickListener(e -> {
+            listaCamps.remove(campMedioCreada);
+        });
         //Buscar
         buscarButton.addClickListener(e -> {
             nombreFiltro = nombreTextField.getValue();
@@ -141,16 +159,30 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
                 errorMsg.setText("Selecciona un grupo");
             } else {
                 listaCamps.getLast().setGrupos(new ArrayList<>(seleccionados));
+
+                if(campEdit == null){
+                    VaadinSession.getCurrent().setAttribute("campMedioCreada", listaCamps.getLast());
+                } else {
+                    VaadinSession.getCurrent().setAttribute("campMedioEditada", listaCamps.getLast());
+                }
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-preguntas"));
             }
         });
         //Cancelar
         cancelarButton.addClickListener(e -> {
             listaCamps.removeLast();
+            if(campEdit != null){
+                listaCamps.add(campEdit);
+            }
+            VaadinSession.getCurrent().setAttribute("campEdit", null);
+            VaadinSession.getCurrent().setAttribute("campMedioCreada", null);
+            VaadinSession.getCurrent().setAttribute("campMedioEditada", null);
+            VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
         });
 
         //---------Añadir componentes a layaout---------
         mainLayout.add(filtrosLayout);
+        filtrosLayout.add(atrasButton);
         filtrosLayout.add(nombreTextField);
         filtrosLayout.add(idTextField);
         filtrosLayout.add(buscarButton);

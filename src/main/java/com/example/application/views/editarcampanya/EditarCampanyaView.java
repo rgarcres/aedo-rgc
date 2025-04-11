@@ -38,6 +38,7 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
     @SuppressWarnings("unchecked")
     private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
     private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
+    private Campanya campMedioEditada = (Campanya) VaadinSession.getCurrent().getAttribute("campMedioEditada");
 
     public EditarCampanyaView() {
         VerticalLayout layoutColumn2 = new VerticalLayout();
@@ -99,22 +100,28 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         layoutColumn2.add(textFieldDemografia);
         layoutColumn2.add(layoutRow);
         layoutRow.add(siguienteButton);
-        layoutRow.add(cancelarButton); 
-
-        if(campEdit != null){
+        layoutRow.add(cancelarButton);
+        
+        
+        if(campMedioEditada != null){
+            textFieldNombre.setValue(campMedioEditada.getNombre());
+            textFieldID.setValue(campMedioEditada.getId().toString());
+            datePickerInicio.setValue(campMedioEditada.getInicio());
+            datePickerFin.setValue(campMedioEditada.getFin());
+            regionComboBox.setValue(campMedioEditada.getRegion());
+            bloqueComboBox.setValue(campMedioEditada.getBloque());
+            textFieldObjetivos.setValue(campMedioEditada.getObjetivos());
+            textFieldDemografia.setValue(campMedioEditada.getDemografia());   
+        } else if(campEdit != null){
             textFieldNombre.setValue(campEdit.getNombre());
             textFieldID.setValue(campEdit.getId().toString());
             datePickerInicio.setValue(campEdit.getInicio());
             datePickerFin.setValue(campEdit.getFin());
             regionComboBox.setValue(campEdit.getRegion());
             bloqueComboBox.setValue(campEdit.getBloque());
-            if(!campEdit.getObjetivos().isBlank()){
-                textFieldObjetivos.setValue(campEdit.getObjetivos());
-            }
-            if(!campEdit.getDemografia().isBlank()){
-                textFieldDemografia.setValue(campEdit.getDemografia());
-            }
-        }
+            textFieldObjetivos.setValue(campEdit.getObjetivos());
+            textFieldDemografia.setValue(campEdit.getDemografia());
+        } 
 
         siguienteButton.addClickListener(e -> {
             String nombre = textFieldNombre.getValue();
@@ -130,6 +137,7 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
                 listaCamps.remove(campEdit);
                 Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
                 listaCamps.add(camp);
+                VaadinSession.getCurrent().setAttribute("campMedioEditada", camp);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-grupo"));
             } else {

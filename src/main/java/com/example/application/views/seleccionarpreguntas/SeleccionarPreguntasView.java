@@ -94,7 +94,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         BotonesCreator.configurarBoton(limpiarButton);
         BotonesCreator.configurarBoton(crearButton);
         BotonesCreator.configurarBoton(cancelarButton, "home");
-        BotonesCreator.configurarBoton(atrasButton, "seleccionar-usuarios");
+        BotonesCreator.configurarBoton(atrasButton, "seleccionar-grupos");
         atrasButton.addClickListener(e-> {
             listaCamps.getLast().setPreguntas(null);
             VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
@@ -145,6 +145,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 VaadinSession.getCurrent().setAttribute("campEdit", null);
                 VaadinSession.getCurrent().setAttribute("campMedioCreada", null);
+                VaadinSession.getCurrent().setAttribute("campMedioEditada", null);
                 getUI().ifPresent(ui -> ui.navigate("mis-campanyas"));
             } else {
                 getContent().add(errorMsg);
@@ -152,11 +153,13 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         });
 
         cancelarButton.addClickListener(e-> {
-            if(campEdit == null){
-                listaCamps.removeLast();
-            } else {
-                listaCamps.getLast().setPreguntas(campEdit.getPreguntas());
+            listaCamps.removeLast();
+            if(campEdit != null){
+                listaCamps.add(campEdit);
             }
+            VaadinSession.getCurrent().setAttribute("campEdit", null);
+            VaadinSession.getCurrent().setAttribute("campMedioCreada", null);
+            VaadinSession.getCurrent().setAttribute("campMedioEditada", null);
             VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
         });
     }

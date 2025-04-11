@@ -94,8 +94,19 @@ public class EditarGrupoView extends Composite<VerticalLayout>{
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
             }
         });
+
+        cancelarButton.addClickListener(e -> {
+            if(grupoMedioEditado != null){
+                listaGrupos.remove(grupoMedioEditado);
+                listaGrupos.add(grupoEdit);
+                VaadinSession.getCurrent().setAttribute("grupoMedioEditado", null);
+                VaadinSession.getCurrent().setAttribute("grupoEdit", null);
+                VaadinSession.getCurrent().setAttribute("listaGrupos", listaGrupos);
+            }
+        });
     }
-        private boolean comprobarCamposCompletos(String ID, String nombre, H4 errorMsg) {
+
+    private boolean comprobarCamposCompletos(String ID, String nombre, H4 errorMsg) {
         if(ID == null){
             errorMsg.setText("El ID no puede estar vacío");
             return false;
