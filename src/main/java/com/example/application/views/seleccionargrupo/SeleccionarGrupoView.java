@@ -78,9 +78,9 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
 
         //---------Configurar Grid---------
         configurarGrid(gridGrupos);
-        if(campMedioCreada != null){
+        if(campMedioCreada != null && !campMedioCreada.getGrupos().isEmpty()){
             gruposFiltrados.addAll(campMedioCreada.getGrupos());
-        } else if (campMedioEditada != null){
+        } else if (campMedioEditada != null && !campMedioEditada.getGrupos().isEmpty()){
             gruposFiltrados.addAll(campMedioEditada.getGrupos());
         } else if (campEdit != null){
             gruposFiltrados.addAll(campEdit.getGrupos());

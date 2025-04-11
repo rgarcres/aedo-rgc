@@ -94,7 +94,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         BotonesCreator.configurarBoton(limpiarButton);
         BotonesCreator.configurarBoton(crearButton);
         BotonesCreator.configurarBoton(cancelarButton, "home");
-        BotonesCreator.configurarBoton(atrasButton, "seleccionar-grupos");
+        BotonesCreator.configurarBoton(atrasButton, "seleccionar-grupo");
         atrasButton.addClickListener(e-> {
             listaCamps.getLast().setPreguntas(null);
             VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
