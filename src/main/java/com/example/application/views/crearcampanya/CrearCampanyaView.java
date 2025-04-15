@@ -184,8 +184,9 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
 
         layout.setAlignItems(Alignment.CENTER);
         tituloError.getStyle().set("font-weight", "bold").set("color", "black");
+        texto.getStyle().set("color","black");
         BotonesCreator.configurarBoton(cerrarButton);
-
+        cerrarButton.getStyle().set("background-color", "#fe6a6a");
         cerrarButton.addClickListener(e -> {
             errorGrupos.close();
         });

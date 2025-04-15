@@ -48,7 +48,7 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
     private Long idFiltro;
 
     public SeleccionarGrupoView(){
-        //----Crear componentes----
+        //---------Crear componentes---------
         //Layouts
         VerticalLayout mainLayout = new VerticalLayout();
         HorizontalLayout filtrosLayout = new HorizontalLayout();
@@ -88,6 +88,11 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
             gruposFiltrados.addAll(listaGrupos);
         }
         gridGrupos.setItems(gruposFiltrados);
+        if(gruposFiltrados.size() != listaGrupos.size()){
+            for(Grupo g: gruposFiltrados){
+                gridGrupos.select(g);
+            }
+        }
 
         //---------Configurar botones---------
         if(campEdit == null){
