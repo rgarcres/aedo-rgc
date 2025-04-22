@@ -195,8 +195,9 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         botonesFiltrosLayout.setAlignItems(Alignment.CENTER);
         botonesFiltrosLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         botonesFiltrosLayout.add(selectSituacionLaboral, textFieldRangoMin, textFieldRangoMax, buscarButton, limpiarButton);
-        mainLayout.add(gridUsuario);
-        mainLayout.add(botonesFinalLayout);
+        getContent().add(gridUsuario);
+        getContent().add(botonesFinalLayout);
+        botonesFinalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         botonesFinalLayout.add(crearButton, cancelarButton);
 
         crearButton.addClickListener(e -> {

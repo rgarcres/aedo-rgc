@@ -11,11 +11,12 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.checkbox.CheckboxGroup;
 import com.vaadin.flow.component.dependency.Uses;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -50,11 +51,13 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
 
     public SeleccionarPreguntasView() {
         H3 h3 = new H3("Seleccionar Preguntas");
+        h3.setWidth("max-content");
         H4 errorMsg = new H4("Selecciona alguna pregunta");
         Grid<Pregunta> gridPreguntas = new Grid<>();
-        FormLayout formLayout2Col = new FormLayout();
+        VerticalLayout mainLayout = new VerticalLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
         HorizontalLayout filtrosLayout = new HorizontalLayout();
+        HorizontalLayout botonesFinalLayout = new HorizontalLayout();
 
         Button crearButton = new Button("Crear Campaña");
         Button cancelarButton = new Button("Cancelar");
@@ -69,25 +72,10 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
 
         preguntasFiltradas.addAll(preguntasPorBloqueSeleccionado(bloqueSelec, listaPreguntas));
 
-        //CONFIGURAR EL GRID Y AÑADIR COLUMNAS
-        gridPreguntas.setSelectionMode(Grid.SelectionMode.MULTI);
-        gridPreguntas.setWidth("100%");
-        gridPreguntas.getStyle().set("flex-grow", "0");
-        //ENUNCIADO
-        gridPreguntas.addColumn(Pregunta::getEnunciado).setHeader("Pregunta").setAutoWidth(true);
-        //RESPUESTA
-        gridPreguntas.addColumn(p -> String.join(",", p.getRespuestas())).setHeader("Respuesta").setAutoWidth(true);
-        //TIPO
-        gridPreguntas.addColumn(Pregunta::getTipo).setHeader("Tipo").setAutoWidth(true);
-        if(campEdit == null){
-            gridPreguntas.setItems(preguntasFiltradas);
-            gridPreguntas.asMultiSelect().select(preguntasFiltradas);
-        } else {
-            gridPreguntas.setItems(campEdit.getPreguntas());
-            gridPreguntas.asMultiSelect().select(campEdit.getPreguntas());
-        }
+    //-----------Grid-----------
+        configurarGrid(gridPreguntas);
 
-        //CONFIGURAR BOTONES
+    //-----------Configurar Botones-----------
         crearButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(buscarButton);
@@ -110,34 +98,45 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
             actualizarGrid(gridPreguntas);
         });
 
-        //CHECKBOX
+    //-----------Checkbox-----------
         checkboxTipo.setItems(1,2,3,4);
         checkboxTipo.addValueChangeListener(e -> {
             tiposFiltro = checkboxTipo.getValue();
             actualizarGrid(gridPreguntas);
         });
 
-        getContent().setHeightFull();
-        getContent().setWidthFull();
-        h3.setWidth("max-content");
-        formLayout2Col.setWidth("100%");
+    //-----------Layout-----------
+        configurarLayout(mainLayout);
+        //Layout del titulo
         tituloLayout.setWidth("100%");
-        getContent().add(tituloLayout);
+        tituloLayout.setAlignItems(Alignment.CENTER);
+        tituloLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.add(tituloLayout);
         tituloLayout.add(atrasButton);
         tituloLayout.add(h3);
-        getContent().add(filtrosLayout);
+        //Layout de los filtros
+        mainLayout.add(filtrosLayout);
+        filtrosLayout.setAlignItems(Alignment.CENTER);
+        filtrosLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         filtrosLayout.add(textFieldEnunciado);
         filtrosLayout.add(checkboxTipo);
         filtrosLayout.add(buscarButton);
         filtrosLayout.add(limpiarButton);
-        getContent().add(gridPreguntas);
-        getContent().add(formLayout2Col);
-        formLayout2Col.add(crearButton);
-        formLayout2Col.add(cancelarButton);
-        
-        //Cuando se pulsa en el botón de crear se comprueba si se ha seleccionado alguna pregunta
-        //Si se selecciona alguna pregunta se añaden a la campaña de la lista y se navega a la siguiente ventana
-        //Si no se selecciona ninguna muestra un mensaje de error
+
+        mainLayout.add(gridPreguntas);
+        //Layout de los botones del final
+        mainLayout.add(botonesFinalLayout);
+        botonesFinalLayout.setWidth("100%");
+        botonesFinalLayout.setAlignItems(Alignment.CENTER);
+        botonesFinalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        botonesFinalLayout.add(crearButton);
+        botonesFinalLayout.add(cancelarButton);
+
+    /*
+    * Cuando se pulsa en el botón de crear se comprueba si se ha seleccionado alguna pregunta
+    *      Si se selecciona alguna pregunta se añaden a la campaña de la lista y se navega a la siguiente ventana
+    *      Si no se selecciona ninguna muestra un mensaje de error
+    */
         crearButton.addClickListener(e -> {
             Set<Pregunta> seleccionadas = gridPreguntas.getSelectedItems();
             if(!seleccionadas.isEmpty()){
@@ -151,7 +150,7 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
                 getContent().add(errorMsg);
             }
         });
-
+    //-----------Boton Cancelar-----------
         cancelarButton.addClickListener(e-> {
             listaCamps.removeLast();
             if(campEdit != null){
@@ -204,5 +203,39 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
             }
         }
         return lp;
+    }
+
+    //Configura el grid
+    private void configurarGrid(Grid<Pregunta> gridPreguntas){
+        gridPreguntas.setSelectionMode(Grid.SelectionMode.MULTI);
+        gridPreguntas.setWidth("100%");
+        gridPreguntas.getStyle().set("flex-grow", "0");
+        //Enunciado
+        gridPreguntas.addColumn(Pregunta::getEnunciado).setHeader("Pregunta").setAutoWidth(true);
+        //Respuesta
+        gridPreguntas.addColumn(p -> String.join(",", p.getRespuestas())).setHeader("Respuesta").setAutoWidth(true);
+        //Tipo
+        gridPreguntas.addColumn(Pregunta::getTipo).setHeader("Tipo").setAutoWidth(true);
+        if(campEdit == null){
+            gridPreguntas.setItems(preguntasFiltradas);
+            gridPreguntas.asMultiSelect().select(preguntasFiltradas);
+        } else {
+            gridPreguntas.setItems(campEdit.getPreguntas());
+            gridPreguntas.asMultiSelect().select(campEdit.getPreguntas());
+        }
+    }
+
+    //Configura el layout
+    private void configurarLayout(VerticalLayout mainLayout){
+        getContent().setWidth("100%");
+        getContent().getStyle().set("flex-grow", "1");
+        getContent().setJustifyContentMode(JustifyContentMode.START);
+        getContent().setAlignItems(Alignment.CENTER);
+        mainLayout.setWidth("100%");
+        mainLayout.setMaxWidth("800px");
+        mainLayout.setHeight("min-content");
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setAlignItems(Alignment.CENTER);
+        getContent().add(mainLayout);
     }
 }
