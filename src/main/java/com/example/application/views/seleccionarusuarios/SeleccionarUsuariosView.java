@@ -62,7 +62,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private Grupo grupoEdit = (Grupo) VaadinSession.getCurrent().getAttribute("grupoEdit");
 
     public SeleccionarUsuariosView() {
-        //---------Inicialización de componentes---------
+    //---------Inicialización de componentes---------
         //---------Encabezados---------
         H3 h3 = new H3("Seleccionar Usuarios");
         H4 error = new H4("Selcciona algun usuario");
@@ -94,19 +94,19 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         Button buscarButton = new Button("Buscar");
         Button limpiarButton = new Button("Limpiar");
 
-        //---------Configurar el layout---------
+    //---------Configurar el layout---------
         configurarLayout(mainLayout);
         h3.setWidth("max-content");    
         botonesFinalLayout.setWidth("100%");
         filtrosLayout.setWidth("100%");
         tituloLayout.setWidth("100%");
 
-        //---------Establecer valores de las MultiSelectComboBox---------
+    //---------Establecer valores de las MultiSelectComboBox---------
         selectGenero.setItems(Genero.DESCONOCIDO, Genero.HOMBRE, Genero.MUJER, Genero.NO_BINARIO, Genero.OTRO);
         selectNivelEstudios.setItems(NivelEstudios.DESCONOCIDO, NivelEstudios.ESO, NivelEstudios.BACHILLERATO, NivelEstudios.FORMACION_PROFESIONAL, NivelEstudios.GRADO_UNIVERSITARIO, NivelEstudios.MASTER, NivelEstudios.DOCTORADO, NivelEstudios.OTRO);
         selectSituacionLaboral.setItems(SituacionLaboral.DESCONOCIDO, SituacionLaboral.ASALARIADO, SituacionLaboral.AUTONOMO, SituacionLaboral.PARO, SituacionLaboral.TIEMPO_PARCIAL, SituacionLaboral.TIEMPO_TOTAL, SituacionLaboral.OTRO);
 
-        //---------Grid---------
+    //---------Grid---------
         gridUsuario.setSelectionMode(Grid.SelectionMode.MULTI);
         gridUsuario.setWidth("100%");
         gridUsuario.getStyle().set("flex-grow", "0");
@@ -119,7 +119,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             gridUsuario.asMultiSelect().select(grupoEdit.getUsuarios());
         }
 
-        //---------Filtros---------
+    //---------Filtros---------
         selectGenero.addValueChangeListener(e -> {
             seleccionGeneros = e.getValue();
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
@@ -133,7 +133,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
 
-        //---------Textlabel al pulsar Enter---------
+    //---------Textlabel al pulsar Enter---------
         textFieldNombre.addKeyPressListener(Key.ENTER, e -> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
