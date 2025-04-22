@@ -1,6 +1,6 @@
 package com.example.application.data;
 
-public enum NivelEstudios {
+public enum ENivelEstudios {
     DESCONOCIDO,
     ESO,
     BACHILLERATO,

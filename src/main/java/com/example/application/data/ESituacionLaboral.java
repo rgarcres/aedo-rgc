@@ -1,6 +1,6 @@
 package com.example.application.data;
 
-public enum SituacionLaboral {
+public enum ESituacionLaboral {
     DESCONOCIDO,
     PARO,
     ASALARIADO,

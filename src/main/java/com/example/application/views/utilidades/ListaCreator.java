@@ -5,11 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 
 import com.example.application.data.Bloque;
-import com.example.application.data.Genero;
-import com.example.application.data.NivelEstudios;
+import com.example.application.data.EGenero;
+import com.example.application.data.ENivelEstudios;
 import com.example.application.data.Pregunta;
 import com.example.application.data.Region;
-import com.example.application.data.SituacionLaboral;
+import com.example.application.data.ESituacionLaboral;
 import com.example.application.data.Usuario;
 
 public class ListaCreator {
@@ -35,33 +35,33 @@ public class ListaCreator {
     public static List<Usuario> crearListaUsuarios(){
         List<Usuario> usuarios = new ArrayList<>();
 
-        usuarios.add(new Usuario("Ruben", "Garcia Crespo", Genero.HOMBRE, SituacionLaboral.OTRO, NivelEstudios.BACHILLERATO, "550-1000", "Situacion Personal"));
-        usuarios.add(new Usuario("Juan", "Cuesta", Genero.HOMBRE, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.MASTER, "2300-3000", "Situacion Personal"));
-        usuarios.add(new Usuario("Pedro", "Martínez López", Genero.HOMBRE, SituacionLaboral.ASALARIADO, NivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
-        usuarios.add(new Usuario("Carlos", "Sánchez Ruiz", Genero.HOMBRE, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1800-2200", "Situacion Personal"));
-        usuarios.add(new Usuario("Frank", "Sinatra", Genero.HOMBRE, SituacionLaboral.AUTONOMO, NivelEstudios.DOCTORADO, "3000-3500", "Situacion Personal"));
-        usuarios.add(new Usuario("Antonio", "Hernández Pérez", Genero.HOMBRE, SituacionLaboral.PARO, NivelEstudios.ESO, "0", "Situacion Personal"));
+        usuarios.add(new Usuario("Ruben", "Garcia Crespo", EGenero.HOMBRE, ESituacionLaboral.OTRO, ENivelEstudios.BACHILLERATO, "550-1000", "Situacion Personal"));
+        usuarios.add(new Usuario("Juan", "Cuesta", EGenero.HOMBRE, ESituacionLaboral.TIEMPO_TOTAL, ENivelEstudios.MASTER, "2300-3000", "Situacion Personal"));
+        usuarios.add(new Usuario("Pedro", "Martínez López", EGenero.HOMBRE, ESituacionLaboral.ASALARIADO, ENivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
+        usuarios.add(new Usuario("Carlos", "Sánchez Ruiz", EGenero.HOMBRE, ESituacionLaboral.TIEMPO_PARCIAL, ENivelEstudios.FORMACION_PROFESIONAL, "1800-2200", "Situacion Personal"));
+        usuarios.add(new Usuario("Frank", "Sinatra", EGenero.HOMBRE, ESituacionLaboral.AUTONOMO, ENivelEstudios.DOCTORADO, "3000-3500", "Situacion Personal"));
+        usuarios.add(new Usuario("Antonio", "Hernández Pérez", EGenero.HOMBRE, ESituacionLaboral.PARO, ENivelEstudios.ESO, "0", "Situacion Personal"));
 
-        usuarios.add(new Usuario("Maria", "Gomez Perez", Genero.MUJER, SituacionLaboral.ASALARIADO, NivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
-        usuarios.add(new Usuario("Lucia", "Sanchez Garcia", Genero.MUJER, SituacionLaboral.OTRO, NivelEstudios.MASTER, "1800-2100", "Situacion Personal"));
-        usuarios.add(new Usuario("Patricia", "Sánchez Gómez", Genero.MUJER, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.MASTER, "2500-3000", "Situacion Personal"));
-        usuarios.add(new Usuario("Laura", "Fernández Ruiz", Genero.MUJER, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1700-2000", "Situacion Personal"));
-        usuarios.add(new Usuario("Sandra", "García Pérez", Genero.MUJER, SituacionLaboral.AUTONOMO, NivelEstudios.GRADO_UNIVERSITARIO, "2100-2700", "Situacion Personal"));
-        usuarios.add(new Usuario("Bad", "Gyal", Genero.MUJER, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.GRADO_UNIVERSITARIO, "1900-2400", "Situacion Personal"));
+        usuarios.add(new Usuario("Maria", "Gomez Perez", EGenero.MUJER, ESituacionLaboral.ASALARIADO, ENivelEstudios.GRADO_UNIVERSITARIO, "1200-1600", "Situacion Personal"));
+        usuarios.add(new Usuario("Lucia", "Sanchez Garcia", EGenero.MUJER, ESituacionLaboral.OTRO, ENivelEstudios.MASTER, "1800-2100", "Situacion Personal"));
+        usuarios.add(new Usuario("Patricia", "Sánchez Gómez", EGenero.MUJER, ESituacionLaboral.TIEMPO_TOTAL, ENivelEstudios.MASTER, "2500-3000", "Situacion Personal"));
+        usuarios.add(new Usuario("Laura", "Fernández Ruiz", EGenero.MUJER, ESituacionLaboral.TIEMPO_PARCIAL, ENivelEstudios.FORMACION_PROFESIONAL, "1700-2000", "Situacion Personal"));
+        usuarios.add(new Usuario("Sandra", "García Pérez", EGenero.MUJER, ESituacionLaboral.AUTONOMO, ENivelEstudios.GRADO_UNIVERSITARIO, "2100-2700", "Situacion Personal"));
+        usuarios.add(new Usuario("Bad", "Gyal", EGenero.MUJER, ESituacionLaboral.TIEMPO_TOTAL, ENivelEstudios.GRADO_UNIVERSITARIO, "1900-2400", "Situacion Personal"));
 
-        usuarios.add(new Usuario("Alex", "Ruiz Fernández", Genero.NO_BINARIO, SituacionLaboral.ASALARIADO, NivelEstudios.MASTER, "2200-2800", "Situacion Personal"));
-        usuarios.add(new Usuario("Taylor", "Smith", Genero.NO_BINARIO, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.BACHILLERATO, "1500-1800", "Situacion Personal"));
-        usuarios.add(new Usuario("Robin", "Nico", Genero.NO_BINARIO, SituacionLaboral.PARO, NivelEstudios.ESO, "0", "Situacion Personal"));
-        usuarios.add(new Usuario("Jordan", "Williams", Genero.NO_BINARIO, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1600-2000", "Situacion Personal"));
-        usuarios.add(new Usuario("Sanji", "Vinsmoke", Genero.NO_BINARIO, SituacionLaboral.ASALARIADO, NivelEstudios.DOCTORADO, "2500-3300", "Situacion Personal"));
+        usuarios.add(new Usuario("Alex", "Ruiz Fernández", EGenero.NO_BINARIO, ESituacionLaboral.ASALARIADO, ENivelEstudios.MASTER, "2200-2800", "Situacion Personal"));
+        usuarios.add(new Usuario("Taylor", "Smith", EGenero.NO_BINARIO, ESituacionLaboral.TIEMPO_TOTAL, ENivelEstudios.BACHILLERATO, "1500-1800", "Situacion Personal"));
+        usuarios.add(new Usuario("Robin", "Nico", EGenero.NO_BINARIO, ESituacionLaboral.PARO, ENivelEstudios.ESO, "0", "Situacion Personal"));
+        usuarios.add(new Usuario("Jordan", "Williams", EGenero.NO_BINARIO, ESituacionLaboral.TIEMPO_PARCIAL, ENivelEstudios.FORMACION_PROFESIONAL, "1600-2000", "Situacion Personal"));
+        usuarios.add(new Usuario("Sanji", "Vinsmoke", EGenero.NO_BINARIO, ESituacionLaboral.ASALARIADO, ENivelEstudios.DOCTORADO, "2500-3300", "Situacion Personal"));
 
-        usuarios.add(new Usuario("Chris", "Evans", Genero.OTRO, SituacionLaboral.DESCONOCIDO, NivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));
-        usuarios.add(new Usuario("Jamie", "Lee Curtis", Genero.OTRO, SituacionLaboral.AUTONOMO, NivelEstudios.GRADO_UNIVERSITARIO, "2200-2800", "Situacion Personal"));
-        usuarios.add(new Usuario("Sam", "Taylor-Johnson", Genero.OTRO, SituacionLaboral.TIEMPO_PARCIAL, NivelEstudios.FORMACION_PROFESIONAL, "1800-2100", "Situacion Personal"));
-        usuarios.add(new Usuario("Alex", "Turner", Genero.OTRO, SituacionLaboral.TIEMPO_TOTAL, NivelEstudios.MASTER, "2000-2600", "Situacion Personal"));
-        usuarios.add(new Usuario("Jordan", "Peterson", Genero.OTRO, SituacionLaboral.OTRO, NivelEstudios.BACHILLERATO, "1700-2300", "Situacion Personal"));
+        usuarios.add(new Usuario("Chris", "Evans", EGenero.OTRO, ESituacionLaboral.DESCONOCIDO, ENivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));
+        usuarios.add(new Usuario("Jamie", "Lee Curtis", EGenero.OTRO, ESituacionLaboral.AUTONOMO, ENivelEstudios.GRADO_UNIVERSITARIO, "2200-2800", "Situacion Personal"));
+        usuarios.add(new Usuario("Sam", "Taylor-Johnson", EGenero.OTRO, ESituacionLaboral.TIEMPO_PARCIAL, ENivelEstudios.FORMACION_PROFESIONAL, "1800-2100", "Situacion Personal"));
+        usuarios.add(new Usuario("Alex", "Turner", EGenero.OTRO, ESituacionLaboral.TIEMPO_TOTAL, ENivelEstudios.MASTER, "2000-2600", "Situacion Personal"));
+        usuarios.add(new Usuario("Jordan", "Peterson", EGenero.OTRO, ESituacionLaboral.OTRO, ENivelEstudios.BACHILLERATO, "1700-2300", "Situacion Personal"));
 
-        usuarios.add(new Usuario("Anónimo", "Sin datos", Genero.DESCONOCIDO, SituacionLaboral.DESCONOCIDO, NivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));
+        usuarios.add(new Usuario("Anónimo", "Sin datos", EGenero.DESCONOCIDO, ESituacionLaboral.DESCONOCIDO, ENivelEstudios.DESCONOCIDO, "0", "Situacion Personal"));
 
         return usuarios;
     }

@@ -1,6 +1,6 @@
 package com.example.application.data;
 
-public enum Genero {
+public enum EGenero {
     DESCONOCIDO,
     MUJER,
     HOMBRE,

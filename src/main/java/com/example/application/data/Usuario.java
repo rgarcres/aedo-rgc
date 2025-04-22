@@ -3,9 +3,9 @@ package com.example.application.data;
 public class Usuario extends AbstractEntity{
     private String nombre;
     private String apellido;
-    private Genero genero;
-    private SituacionLaboral situacionLaboral;
-    private NivelEstudios nivelEstudios;
+    private EGenero genero;
+    private ESituacionLaboral situacionLaboral;
+    private ENivelEstudios nivelEstudios;
     private String rangoSalarial;
     private String situacionPersonal;
 
@@ -15,7 +15,7 @@ public class Usuario extends AbstractEntity{
         this.apellido = apellido;
     }
 
-    public Usuario(String nombre, String apellido, Genero genero, SituacionLaboral situacionLabroal, NivelEstudios nivelEstudios, String rangoSalarial, String situacionPersonal){
+    public Usuario(String nombre, String apellido, EGenero genero, ESituacionLaboral situacionLabroal, ENivelEstudios nivelEstudios, String rangoSalarial, String situacionPersonal){
         this.nombre = nombre;
         this.apellido = apellido;
         this.genero = genero;
@@ -33,17 +33,17 @@ public class Usuario extends AbstractEntity{
     public String getApellido() { return apellido; }
     public void setApellido(String apellido) { this.apellido = apellido; }
     
-    public Genero getGenero() { return genero; }
-    public void setGenero(Genero genero) { this.genero = genero; }
+    public EGenero getGenero() { return genero; }
+    public void setGenero(EGenero genero) { this.genero = genero; }
 
-    public NivelEstudios getNivelEstudios() { return nivelEstudios; }
-    public void setNivelEstudios(NivelEstudios nivelEstudios) { this.nivelEstudios = nivelEstudios; }
+    public ENivelEstudios getNivelEstudios() { return nivelEstudios; }
+    public void setNivelEstudios(ENivelEstudios nivelEstudios) { this.nivelEstudios = nivelEstudios; }
 
     public String getRangoSalarial() { return rangoSalarial; }
     public void setRangoSalarial(String rangoSalarial) { this.rangoSalarial = rangoSalarial; }
     
-    public SituacionLaboral getSituacionLaboral() { return situacionLaboral; }
-    public void setSituacionLaboral(SituacionLaboral situacionLaboral) { this.situacionLaboral = situacionLaboral; }
+    public ESituacionLaboral getSituacionLaboral() { return situacionLaboral; }
+    public void setSituacionLaboral(ESituacionLaboral situacionLaboral) { this.situacionLaboral = situacionLaboral; }
 
     public String getSituacionPersonal() { return situacionPersonal; }
     public void setSituacionPersonal(String situacionPersonal) { this.situacionPersonal = situacionPersonal; }

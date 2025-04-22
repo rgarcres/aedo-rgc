@@ -1,10 +1,10 @@
 package com.example.application.views.seleccionarusuarios;
 
-import com.example.application.data.Genero;
+import com.example.application.data.EGenero;
 import com.example.application.data.Grupo;
-import com.example.application.data.NivelEstudios;
+import com.example.application.data.ENivelEstudios;
 //import com.example.application.data.SamplePerson;
-import com.example.application.data.SituacionLaboral;
+import com.example.application.data.ESituacionLaboral;
 import com.example.application.data.Usuario;
 import com.example.application.views.utilidades.BotonesCreator;
 import com.example.application.views.utilidades.ListaCreator;
@@ -49,9 +49,9 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private final List<Usuario> usuarios = new ArrayList<>();
     private final List<Usuario> usuariosFiltrados = new ArrayList<>();
 
-    private Set<Genero> seleccionGeneros = new HashSet<>();
-    private Set<NivelEstudios> seleccionEstudios = new HashSet<>();
-    private Set<SituacionLaboral> seleccionLaboral = new HashSet<>();
+    private Set<EGenero> seleccionGeneros = new HashSet<>();
+    private Set<ENivelEstudios> seleccionEstudios = new HashSet<>();
+    private Set<ESituacionLaboral> seleccionLaboral = new HashSet<>();
     private String nombreFiltro;
     private String apellidoFiltro;
     private String rangoMinFiltro;
@@ -79,9 +79,9 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         HorizontalLayout botonesFinalLayout = new HorizontalLayout();
 
         //---------Filtros---------
-        MultiSelectComboBox<Genero> selectGenero = new MultiSelectComboBox<>("Genero"); 
-        MultiSelectComboBox<NivelEstudios> selectNivelEstudios = new MultiSelectComboBox<>("Nivel Estudios"); 
-        MultiSelectComboBox<SituacionLaboral> selectSituacionLaboral = new MultiSelectComboBox<>("Situacion Laboral");
+        MultiSelectComboBox<EGenero> selectGenero = new MultiSelectComboBox<>("Genero"); 
+        MultiSelectComboBox<ENivelEstudios> selectNivelEstudios = new MultiSelectComboBox<>("Nivel Estudios"); 
+        MultiSelectComboBox<ESituacionLaboral> selectSituacionLaboral = new MultiSelectComboBox<>("Situacion Laboral");
         TextField textFieldNombre = new TextField("Nombre");
         TextField textFieldApellido = new TextField("Apellidos");
         TextField textFieldRangoMin = new TextField("Rango Salarial Min");
@@ -102,9 +102,9 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         tituloLayout.setWidth("100%");
 
     //---------Establecer valores de las MultiSelectComboBox---------
-        selectGenero.setItems(Genero.DESCONOCIDO, Genero.HOMBRE, Genero.MUJER, Genero.NO_BINARIO, Genero.OTRO);
-        selectNivelEstudios.setItems(NivelEstudios.DESCONOCIDO, NivelEstudios.ESO, NivelEstudios.BACHILLERATO, NivelEstudios.FORMACION_PROFESIONAL, NivelEstudios.GRADO_UNIVERSITARIO, NivelEstudios.MASTER, NivelEstudios.DOCTORADO, NivelEstudios.OTRO);
-        selectSituacionLaboral.setItems(SituacionLaboral.DESCONOCIDO, SituacionLaboral.ASALARIADO, SituacionLaboral.AUTONOMO, SituacionLaboral.PARO, SituacionLaboral.TIEMPO_PARCIAL, SituacionLaboral.TIEMPO_TOTAL, SituacionLaboral.OTRO);
+        selectGenero.setItems(EGenero.DESCONOCIDO, EGenero.HOMBRE, EGenero.MUJER, EGenero.NO_BINARIO, EGenero.OTRO);
+        selectNivelEstudios.setItems(ENivelEstudios.DESCONOCIDO, ENivelEstudios.ESO, ENivelEstudios.BACHILLERATO, ENivelEstudios.FORMACION_PROFESIONAL, ENivelEstudios.GRADO_UNIVERSITARIO, ENivelEstudios.MASTER, ENivelEstudios.DOCTORADO, ENivelEstudios.OTRO);
+        selectSituacionLaboral.setItems(ESituacionLaboral.DESCONOCIDO, ESituacionLaboral.ASALARIADO, ESituacionLaboral.AUTONOMO, ESituacionLaboral.PARO, ESituacionLaboral.TIEMPO_PARCIAL, ESituacionLaboral.TIEMPO_TOTAL, ESituacionLaboral.OTRO);
 
     //---------Grid---------
         gridUsuario.setSelectionMode(Grid.SelectionMode.MULTI);
