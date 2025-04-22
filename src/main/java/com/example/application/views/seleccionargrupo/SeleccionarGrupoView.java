@@ -187,6 +187,7 @@ public class SeleccionarGrupoView extends Composite<VerticalLayout>{
 
         //---------Añadir componentes a layaout---------
         mainLayout.add(filtrosLayout);
+        filtrosLayout.setAlignItems(Alignment.CENTER);
         filtrosLayout.add(atrasButton);
         filtrosLayout.add(nombreTextField);
         filtrosLayout.add(idTextField);

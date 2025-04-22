@@ -10,6 +10,8 @@ import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
@@ -33,6 +35,7 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
     public MisCampanyasView (){
         H3 h3 = new H3("Mis Campañas");
         H4 errorMsg = new H4("Selecciona una campaña para borrarla");
+        VerticalLayout mainLayout = new VerticalLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
         HorizontalLayout botonesLayout = new HorizontalLayout();
         Grid<Campanya> gridCamps = new Grid<>();
@@ -43,8 +46,7 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         BotonesCreator.configurarBoton(borrarButton);
         borrarButton.getStyle().setBackgroundColor("#cd3b3b");
 
-        getContent().setHeightFull();
-        getContent().setWidthFull();
+        configurarLayout(mainLayout);
         h3.setWidth("max-content");
         configurarGrid(gridCamps);
 
@@ -55,10 +57,11 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         });
         
 
-        getContent().add(tituloLayout);
+        mainLayout.add(tituloLayout);
+        tituloLayout.setAlignItems(Alignment.CENTER);
         tituloLayout.add(atrasButton, h3);
-        getContent().add(gridCamps);
-        getContent().add(botonesLayout);
+        mainLayout.add(gridCamps);
+        mainLayout.add(botonesLayout);
         botonesLayout.add(borrarButton);
         borrarButton.addClickListener(e->{
             Campanya camp = gridCamps.asSingleSelect().getValue();
@@ -84,4 +87,16 @@ public class MisCampanyasView extends Composite<VerticalLayout> {
         grid.addColumn(c -> c.getPreguntas()).setHeader("Preguntas").setAutoWidth(true);
     }
 
+    private void configurarLayout(VerticalLayout mainLayout){
+        getContent().setWidth("100%");
+        getContent().getStyle().set("flex-grow", "1");
+        getContent().setJustifyContentMode(JustifyContentMode.START);
+        getContent().setAlignItems(Alignment.CENTER);
+        mainLayout.setWidth("100%");
+        mainLayout.setMaxWidth("800px");
+        mainLayout.setHeight("min-content");
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setAlignItems(Alignment.CENTER);
+        getContent().add(mainLayout);
+    }
 }

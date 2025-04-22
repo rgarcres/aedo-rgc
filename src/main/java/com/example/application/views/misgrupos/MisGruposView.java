@@ -12,6 +12,8 @@ import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.notification.Notification;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Menu;
@@ -31,6 +33,7 @@ public class MisGruposView extends Composite<VerticalLayout>{
         H3 h3 = new H3("Mis Grupos");
         H4 errorMsg = new H4("Selecciona un grupo para borrarlo");
         errorMsg.getStyle().set("color", "#ff4e4e");
+        VerticalLayout mainLayout = new VerticalLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
         HorizontalLayout botonesLayout = new HorizontalLayout();
         Grid<Grupo> gridGrupos = new Grid<>();
@@ -41,8 +44,7 @@ public class MisGruposView extends Composite<VerticalLayout>{
         BotonesCreator.configurarBoton(borrarButton);
         borrarButton.getStyle().setBackgroundColor("#cd3b3b");
 
-        getContent().setHeightFull();
-        getContent().setWidthFull();
+        configurarLayout(mainLayout);
         h3.setWidth("max-content");
         configurarGrid(gridGrupos);
 
@@ -52,10 +54,11 @@ public class MisGruposView extends Composite<VerticalLayout>{
             getUI().ifPresent(ui -> ui.navigate("editar-grupo"));
         });
         
-        getContent().add(tituloLayout);
+        mainLayout.add(tituloLayout);
+        tituloLayout.setAlignItems(Alignment.CENTER);
         tituloLayout.add(atrasButton, h3);
-        getContent().add(gridGrupos);
-        getContent().add(botonesLayout);
+        mainLayout.add(gridGrupos);
+        mainLayout.add(botonesLayout);
         botonesLayout.add(borrarButton);
         borrarButton.addClickListener(e->{
             Grupo grupo = gridGrupos.asSingleSelect().getValue();
@@ -76,5 +79,18 @@ public class MisGruposView extends Composite<VerticalLayout>{
         grid.addColumn(Grupo::getNombre).setHeader("Nombre").setAutoWidth(true);
         grid.addColumn(Grupo::getDescripcion).setHeader("Descripcion").setAutoWidth(true);
         grid.addColumn(u -> u.getUsuarios()).setHeader("Usuarios").setAutoWidth(true);
+    }
+
+    private void configurarLayout(VerticalLayout mainLayout){
+        getContent().setWidth("100%");
+        getContent().getStyle().set("flex-grow", "1");
+        getContent().setJustifyContentMode(JustifyContentMode.START);
+        getContent().setAlignItems(Alignment.CENTER);
+        mainLayout.setWidth("100%");
+        mainLayout.setMaxWidth("800px");
+        mainLayout.setHeight("min-content");
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setAlignItems(Alignment.CENTER);
+        getContent().add(mainLayout);
     }
 }

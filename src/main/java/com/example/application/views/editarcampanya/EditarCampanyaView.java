@@ -102,7 +102,6 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         layoutRow.add(siguienteButton);
         layoutRow.add(cancelarButton);
         
-        
         if(campMedioEditada != null){
             textFieldNombre.setValue(campMedioEditada.getNombre());
             textFieldID.setValue(campMedioEditada.getId().toString());

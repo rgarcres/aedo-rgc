@@ -15,11 +15,12 @@ import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.button.ButtonVariant;
 import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.dependency.Uses;
-import com.vaadin.flow.component.formlayout.FormLayout;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H3;
 import com.vaadin.flow.component.html.H4;
 import com.vaadin.flow.component.icon.Icon;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.Alignment;
+import com.vaadin.flow.component.orderedlayout.FlexComponent.JustifyContentMode;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
@@ -61,15 +62,23 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
     private Grupo grupoEdit = (Grupo) VaadinSession.getCurrent().getAttribute("grupoEdit");
 
     public SeleccionarUsuariosView() {
+        //---------Inicialización de componentes---------
+        //---------Encabezados---------
         H3 h3 = new H3("Seleccionar Usuarios");
         H4 error = new H4("Selcciona algun usuario");
         error.getStyle().set("color", "#ff4e4e");
+
+        //---------Grid---------
         Grid<Usuario> gridUsuario = new Grid<>(Usuario.class);
+
+        //---------Layouts---------
+        VerticalLayout mainLayout = new VerticalLayout();
         HorizontalLayout filtrosLayout = new HorizontalLayout();
         HorizontalLayout tituloLayout = new HorizontalLayout();
         HorizontalLayout botonesFiltrosLayout = new HorizontalLayout(); 
-        FormLayout formLayout2Col = new FormLayout();
+        HorizontalLayout botonesFinalLayout = new HorizontalLayout();
 
+        //---------Filtros---------
         MultiSelectComboBox<Genero> selectGenero = new MultiSelectComboBox<>("Genero"); 
         MultiSelectComboBox<NivelEstudios> selectNivelEstudios = new MultiSelectComboBox<>("Nivel Estudios"); 
         MultiSelectComboBox<SituacionLaboral> selectSituacionLaboral = new MultiSelectComboBox<>("Situacion Laboral");
@@ -78,25 +87,26 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         TextField textFieldRangoMin = new TextField("Rango Salarial Min");
         TextField textFieldRangoMax = new TextField("Rango Salarial Max");
 
+        //---------Botones---------
         Button crearButton = new Button("Crear grupo");
         Button cancelarButton = new Button("Cancelar");
         Button atrasButton = new Button("<");
         Button buscarButton = new Button("Buscar");
         Button limpiarButton = new Button("Limpiar");
 
-        getContent().setHeightFull();
-        getContent().setWidthFull();
+        //---------Configurar el layout---------
+        configurarLayout(mainLayout);
         h3.setWidth("max-content");    
-        formLayout2Col.setWidth("100%");
+        botonesFinalLayout.setWidth("100%");
         filtrosLayout.setWidth("100%");
         tituloLayout.setWidth("100%");
 
-        //Establecer valores de las MultiSelectComboBox
+        //---------Establecer valores de las MultiSelectComboBox---------
         selectGenero.setItems(Genero.DESCONOCIDO, Genero.HOMBRE, Genero.MUJER, Genero.NO_BINARIO, Genero.OTRO);
         selectNivelEstudios.setItems(NivelEstudios.DESCONOCIDO, NivelEstudios.ESO, NivelEstudios.BACHILLERATO, NivelEstudios.FORMACION_PROFESIONAL, NivelEstudios.GRADO_UNIVERSITARIO, NivelEstudios.MASTER, NivelEstudios.DOCTORADO, NivelEstudios.OTRO);
         selectSituacionLaboral.setItems(SituacionLaboral.DESCONOCIDO, SituacionLaboral.ASALARIADO, SituacionLaboral.AUTONOMO, SituacionLaboral.PARO, SituacionLaboral.TIEMPO_PARCIAL, SituacionLaboral.TIEMPO_TOTAL, SituacionLaboral.OTRO);
 
-        //PERSONALIZAR GRID
+        //---------Grid---------
         gridUsuario.setSelectionMode(Grid.SelectionMode.MULTI);
         gridUsuario.setWidth("100%");
         gridUsuario.getStyle().set("flex-grow", "0");
@@ -109,7 +119,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             gridUsuario.asMultiSelect().select(grupoEdit.getUsuarios());
         }
 
-        //FILTROS
+        //---------Filtros---------
         selectGenero.addValueChangeListener(e -> {
             seleccionGeneros = e.getValue();
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
@@ -123,7 +133,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
 
-        //TEXTLABEL COMPORTAMIENTO AL PULSAR ENTER
+        //---------Textlabel al pulsar Enter---------
         textFieldNombre.addKeyPressListener(Key.ENTER, e -> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
@@ -136,7 +146,7 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         textFieldRangoMax.addKeyPressListener(Key.ENTER, e -> {
             aplicarFiltros(textFieldNombre, textFieldApellido, textFieldRangoMin, textFieldRangoMax, gridUsuario);
         });
-        //BOTONES
+        //---------Botones---------
         crearButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         buscarButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(cancelarButton, "home");
@@ -172,24 +182,22 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
             actualizarGrid(gridUsuario);
         });
 
-        //AÑADIR COMPONENENTES AL LAYOUT
-        getContent().add(tituloLayout);
+        //---------Añadir componentes al layout---------
+        mainLayout.add(tituloLayout);
         tituloLayout.add(atrasButton, h3);
-        getContent().add(filtrosLayout);
-        filtrosLayout.add(textFieldNombre);
-        filtrosLayout.add(textFieldApellido);
-        filtrosLayout.add(selectGenero);
-        filtrosLayout.add(selectNivelEstudios);
-        filtrosLayout.add(selectSituacionLaboral);
-        getContent().add(botonesFiltrosLayout);
-        botonesFiltrosLayout.add(textFieldRangoMin);
-        botonesFiltrosLayout.add(textFieldRangoMax);
-        botonesFiltrosLayout.add(buscarButton);
-        botonesFiltrosLayout.add(limpiarButton);
-        getContent().add(gridUsuario);
-        getContent().add(formLayout2Col);
-        formLayout2Col.add(crearButton);
-        formLayout2Col.add(cancelarButton);
+        tituloLayout.setAlignItems(Alignment.CENTER);
+        tituloLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.add(filtrosLayout);
+        filtrosLayout.setAlignItems(Alignment.CENTER);
+        filtrosLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        filtrosLayout.add(textFieldNombre, textFieldApellido, selectGenero, selectNivelEstudios);
+        mainLayout.add(botonesFiltrosLayout);
+        botonesFiltrosLayout.setAlignItems(Alignment.CENTER);
+        botonesFiltrosLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        botonesFiltrosLayout.add(selectSituacionLaboral, textFieldRangoMin, textFieldRangoMax, buscarButton, limpiarButton);
+        mainLayout.add(gridUsuario);
+        mainLayout.add(botonesFinalLayout);
+        botonesFinalLayout.add(crearButton, cancelarButton);
 
         crearButton.addClickListener(e -> {
             Set<Usuario> seleccionados = gridUsuario.getSelectedItems();
@@ -272,5 +280,18 @@ public class SeleccionarUsuariosView extends Composite<VerticalLayout> {
         rangoMinFiltro = textFieldRangoMin.getValue();
         rangoMaxFiltro = textFieldRangoMax.getValue();
         actualizarGrid(grid);
+    }
+
+    private void configurarLayout(VerticalLayout mainLayout){
+        getContent().setWidth("100%");
+        getContent().getStyle().set("flex-grow", "1");
+        getContent().setJustifyContentMode(JustifyContentMode.START);
+        getContent().setAlignItems(Alignment.CENTER);
+        mainLayout.setWidth("100%");
+        mainLayout.setMaxWidth("800px");
+        mainLayout.setHeight("min-content");
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setAlignItems(Alignment.CENTER);
+        getContent().add(mainLayout);
     }
 }
