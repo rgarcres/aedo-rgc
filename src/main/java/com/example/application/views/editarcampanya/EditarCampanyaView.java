@@ -39,12 +39,17 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
     private final List<Campanya> listaCamps = (List<Campanya>) VaadinSession.getCurrent().getAttribute("listaCamps");
     private Campanya campEdit = (Campanya) VaadinSession.getCurrent().getAttribute("campEdit");
     private Campanya campMedioEditada = (Campanya) VaadinSession.getCurrent().getAttribute("campMedioEditada");
-
+    
     public EditarCampanyaView() {
-        VerticalLayout layoutColumn2 = new VerticalLayout();
+    //--------------Inicialización--------------
+        //--------------Layouts--------------
+        VerticalLayout mainLayout = new VerticalLayout();
+        HorizontalLayout botonesFinalLayout = new HorizontalLayout();
+        FormLayout camposLayout = new FormLayout();
+        //--------------Encabezados--------------
         H3 h3 = new H3("Editar Campañas");
         H4 error = new H4("Selecciona todos los campos obligatorios");
-        FormLayout formLayout2Col = new FormLayout();
+        //--------------Campos a rellenar--------------
         TextField textFieldNombre = new TextField("Nombre*");
         TextField textFieldID = new TextField("ID (Debe ser único)*");
         DatePicker datePickerInicio = new DatePicker("Inicio*");
@@ -53,22 +58,14 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         ComboBox<Bloque> bloqueComboBox = new ComboBox<>("Bloque*");
         TextField textFieldObjetivos = new TextField("Objetivos");
         TextField textFieldDemografia = new TextField("Demografia");
-        HorizontalLayout layoutRow = new HorizontalLayout();
+        //--------------Botones--------------
         Button siguienteButton = new Button("Siguiente");
         Button cancelarButton = new Button("Cancelar");
 
-        getContent().setWidth("100%");
-        getContent().getStyle().set("flex-grow", "1");
-        getContent().setJustifyContentMode(JustifyContentMode.START);
-        getContent().setAlignItems(Alignment.CENTER);
-        layoutColumn2.setWidth("100%");
-        layoutColumn2.setMaxWidth("800px");
-        layoutColumn2.setHeight("min-content");
-        layoutColumn2.setJustifyContentMode(JustifyContentMode.CENTER);
-        layoutColumn2.setAlignItems(Alignment.CENTER);
-        layoutColumn2.setAlignSelf(FlexComponent.Alignment.CENTER, h3);
+        configurarLayout(mainLayout);
+        mainLayout.setAlignSelf(FlexComponent.Alignment.CENTER, h3);
         h3.setWidth("100%");
-        formLayout2Col.setWidth("100%");
+        camposLayout.setWidth("100%");
         datePickerFin.setWidth("min-content");
 
         regionComboBox.setWidth("min-content");
@@ -78,30 +75,30 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
 
         textFieldObjetivos.setWidth("100%");
         textFieldDemografia.setWidth("100%");
-        layoutRow.addClassName(Gap.MEDIUM);
-        layoutRow.setWidth("100%");
-        layoutRow.getStyle().set("flex-grow", "1");
-        layoutRow.setAlignItems(Alignment.CENTER);
-        layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
+        botonesFinalLayout.addClassName(Gap.MEDIUM);
+        botonesFinalLayout.setWidth("100%");
+        botonesFinalLayout.getStyle().set("flex-grow", "1");
+        botonesFinalLayout.setAlignItems(Alignment.CENTER);
+        botonesFinalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(siguienteButton);
         BotonesCreator.configurarBoton(cancelarButton, "home");
 
-        getContent().add(layoutColumn2);
-        layoutColumn2.add(h3);
-        layoutColumn2.add(formLayout2Col);
-        formLayout2Col.add(textFieldNombre);
-        formLayout2Col.add(textFieldID);
-        formLayout2Col.add(datePickerInicio);
-        formLayout2Col.add(datePickerFin);
-        formLayout2Col.add(regionComboBox);
-        formLayout2Col.add(bloqueComboBox);
-        layoutColumn2.add(textFieldObjetivos);
-        layoutColumn2.add(textFieldDemografia);
-        layoutColumn2.add(layoutRow);
-        layoutRow.add(siguienteButton);
-        layoutRow.add(cancelarButton);
-        
+        getContent().add(mainLayout);
+        mainLayout.add(h3);
+        mainLayout.add(camposLayout);
+        camposLayout.add(textFieldNombre);
+        camposLayout.add(textFieldID);
+        camposLayout.add(datePickerInicio);
+        camposLayout.add(datePickerFin);
+        camposLayout.add(regionComboBox);
+        camposLayout.add(bloqueComboBox);
+        mainLayout.add(textFieldObjetivos);
+        mainLayout.add(textFieldDemografia);
+        mainLayout.add(botonesFinalLayout);
+        botonesFinalLayout.add(siguienteButton);
+        botonesFinalLayout.add(cancelarButton);
+
         if(campMedioEditada != null){
             textFieldNombre.setValue(campMedioEditada.getNombre());
             textFieldID.setValue(campMedioEditada.getId().toString());
@@ -155,6 +152,18 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         comboBox.setItemLabelGenerator(item -> ((Region)item).getNombre());
     }
 
+    private void configurarLayout(VerticalLayout mainLayout){
+        getContent().setWidth("100%");
+        getContent().getStyle().set("flex-grow", "1");
+        getContent().setJustifyContentMode(JustifyContentMode.START);
+        getContent().setAlignItems(Alignment.CENTER);
+        mainLayout.setWidth("100%");
+        mainLayout.setMaxWidth("800px");
+        mainLayout.setHeight("min-content");
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setAlignItems(Alignment.CENTER);
+    }
+
     private boolean comprobarCamposCompletos(String ID, String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
         if(nombre.isBlank()){
             return false;
@@ -180,5 +189,5 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         } catch (NumberFormatException nfe){
             return false;
         }
-}
+    }
 }

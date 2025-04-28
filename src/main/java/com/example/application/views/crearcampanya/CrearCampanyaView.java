@@ -54,6 +54,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         //Cabeceras
         H3 h3 = new H3("Crear Campañas");
         H4 errorMsg = new H4("Selecciona todos los campos obligatorios");
+        errorMsg.getStyle().set("color", "#ff4e4e");
         //Campos a rellenar
         TextField textFieldNombre = new TextField("Nombre*");
         TextField textFieldID = new TextField("ID (Debe ser único)*");
