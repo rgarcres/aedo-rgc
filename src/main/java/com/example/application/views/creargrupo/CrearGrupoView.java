@@ -91,7 +91,6 @@ public class CrearGrupoView extends Composite<VerticalLayout>{
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-usuarios"));
             }
         });
-
     }
 
     private boolean comprobarCamposCompletos(String ID, String nombre, H4 errorMsg) {

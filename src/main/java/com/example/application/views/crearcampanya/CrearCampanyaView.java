@@ -46,16 +46,16 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
     private final List<Grupo> listaGrupos = (List<Grupo>) VaadinSession.getCurrent().getAttribute("listaGrupos");
 
     public CrearCampanyaView() {
-        //-----------Inicializar componentes-----------
-        //Layouts
+    //-----------Inicializar componentes-----------
+        //-----------Layouts-----------
         VerticalLayout mainLayout = new VerticalLayout();
         FormLayout camposObligatoriosLayout = new FormLayout();
-        HorizontalLayout layoutRow = new HorizontalLayout();
-        //Cabeceras
+        HorizontalLayout botonesFinalLayout = new HorizontalLayout();
+        //-----------Cabeceras-----------
         H3 h3 = new H3("Crear Campañas");
         H4 errorMsg = new H4("Selecciona todos los campos obligatorios");
         errorMsg.getStyle().set("color", "#ff4e4e");
-        //Campos a rellenar
+        //-----------Campos a rellenar-----------
         TextField textFieldNombre = new TextField("Nombre*");
         TextField textFieldID = new TextField("ID (Debe ser único)*");
         DatePicker datePickerInicio = new DatePicker("Inicio*");
@@ -64,36 +64,19 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         ComboBox<Bloque> bloqueComboBox = new ComboBox<>("Bloque*");
         TextField textFieldObjetivos = new TextField("Objetivos");
         TextField textFieldDemografia = new TextField("Demografia");
-        //Botones
+        //-----------Botones-----------
         Button siguienteButton = new Button("Siguiente");
         Button cancelarButton = new Button("Cancelar");
 
-        getContent().setWidth("100%");
-        getContent().getStyle().set("flex-grow", "1");
-        getContent().setJustifyContentMode(JustifyContentMode.START);
-        getContent().setAlignItems(Alignment.CENTER);
-        mainLayout.setWidth("100%");
-        mainLayout.setMaxWidth("800px");
-        mainLayout.setHeight("min-content");
-        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
-        mainLayout.setAlignItems(Alignment.CENTER);
+    //-----------Configurar Layout-----------
+        configurarLayout(mainLayout);
         mainLayout.setAlignSelf(FlexComponent.Alignment.CENTER, h3);
         h3.setWidth("100%");
         camposObligatoriosLayout.setWidth("100%");
-        datePickerFin.setWidth("min-content");
+    //-----------Configurar los Date Picker-----------
+        configurarDatePicker(datePickerInicio, datePickerFin);
 
-        /*
-         * Establece la fecha mínima que se permite escoger
-         * Inicio: la fecha de hoy
-         * Fin: la fecha de inicio
-         */
-        datePickerInicio.setMin(LocalDate.now());
-        datePickerInicio.addValueChangeListener(e -> {
-            if(datePickerInicio.getValue() != null){
-                datePickerFin.setMin(datePickerInicio.getValue());
-            }
-        });
-
+    //-----------Configurar ComboBox-----------
         regionComboBox.setWidth("min-content");
         regionComboBox.setItems(ListaCreator.crearListaRegiones());
         regionComboBox.setItemLabelGenerator(item -> item.getNombre());
@@ -103,16 +86,16 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
 
         textFieldObjetivos.setWidth("100%");
         textFieldDemografia.setWidth("100%");
-        layoutRow.addClassName(Gap.MEDIUM);
-        layoutRow.setWidth("100%");
-        layoutRow.getStyle().set("flex-grow", "1");
-        layoutRow.setAlignItems(Alignment.CENTER);
-        layoutRow.setJustifyContentMode(JustifyContentMode.CENTER);
+        botonesFinalLayout.addClassName(Gap.MEDIUM);
+        botonesFinalLayout.setWidth("100%");
+        botonesFinalLayout.getStyle().set("flex-grow", "1");
+        botonesFinalLayout.setAlignItems(Alignment.CENTER);
+        botonesFinalLayout.setJustifyContentMode(JustifyContentMode.CENTER);
         siguienteButton.addThemeVariants(ButtonVariant.LUMO_PRIMARY);
         BotonesCreator.configurarBoton(siguienteButton);
         BotonesCreator.configurarBoton(cancelarButton, "home");
 
-        //-----------Llenar campos-----------
+    //-----------Llenar campos-----------
         if(campMedioCreada != null){
             textFieldNombre.setValue(campMedioCreada.getNombre());
             textFieldID.setValue(campMedioCreada.getId().toString());
@@ -128,7 +111,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             }
         }
 
-        //-----------Añadir componentes a la vista-----------
+    //-----------Añadir componentes a la vista-----------
         getContent().add(mainLayout);
         mainLayout.add(h3);
         mainLayout.add(camposObligatoriosLayout);
@@ -140,11 +123,11 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         camposObligatoriosLayout.add(bloqueComboBox);
         mainLayout.add(textFieldObjetivos);
         mainLayout.add(textFieldDemografia);
-        mainLayout.add(layoutRow);
-        layoutRow.add(siguienteButton);
-        layoutRow.add(cancelarButton);
+        mainLayout.add(botonesFinalLayout);
+        botonesFinalLayout.add(siguienteButton);
+        botonesFinalLayout.add(cancelarButton);
 
-        //-----------Comportamiento de botones-----------
+    //-----------Comportamiento de botones-----------
         siguienteButton.addClickListener(e -> {
             String nombre = textFieldNombre.getValue();
             String ID = textFieldID.getValue();
@@ -170,6 +153,33 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-grupo"));
             }        
         });
+    }
+
+    /*
+    * Establece la fecha mínima que se permite escoger
+        * Inicio: la fecha de hoy
+        * Fin: el dia siguiente de la fecha de inicio
+    */
+    private void configurarDatePicker(DatePicker datePickerInicio, DatePicker datePickerFin) {
+        datePickerFin.setWidth("min-content");
+        datePickerInicio.setMin(LocalDate.now());
+        datePickerInicio.addValueChangeListener(e -> {
+            if(datePickerInicio.getValue() != null){
+                datePickerFin.setMin(datePickerInicio.getValue().plusDays(1));
+            }
+        });
+    }
+
+    private void configurarLayout(VerticalLayout mainLayout) {
+        getContent().setWidth("100%");
+        getContent().getStyle().set("flex-grow", "1");
+        getContent().setJustifyContentMode(JustifyContentMode.START);
+        getContent().setAlignItems(Alignment.CENTER);
+        mainLayout.setWidth("100%");
+        mainLayout.setMaxWidth("800px");
+        mainLayout.setHeight("min-content");
+        mainLayout.setJustifyContentMode(JustifyContentMode.CENTER);
+        mainLayout.setAlignItems(Alignment.CENTER);
     }
 
     /*
