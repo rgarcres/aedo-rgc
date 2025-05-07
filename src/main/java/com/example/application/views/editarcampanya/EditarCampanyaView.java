@@ -1,6 +1,5 @@
 package com.example.application.views.editarcampanya;
 
-import com.example.application.data.Bloque;
 import com.example.application.data.Campanya;
 import com.example.application.data.Region;
 import com.example.application.views.utilidades.BotonesCreator;
@@ -55,7 +54,6 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         DatePicker datePickerInicio = new DatePicker("Inicio*");
         DatePicker datePickerFin = new DatePicker("Fin*");
         ComboBox<Region> regionComboBox = new ComboBox<>("Region*");
-        ComboBox<Bloque> bloqueComboBox = new ComboBox<>("Bloque*");
         TextField textFieldObjetivos = new TextField("Objetivos");
         TextField textFieldDemografia = new TextField("Demografia");
         //--------------Botones--------------
@@ -70,8 +68,6 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
 
         regionComboBox.setWidth("min-content");
         setComboBoxRegion(regionComboBox);
-        bloqueComboBox.setWidth("min-content");
-        setComboBoxBloque(bloqueComboBox);
 
         textFieldObjetivos.setWidth("100%");
         textFieldDemografia.setWidth("100%");
@@ -91,8 +87,7 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         camposLayout.add(textFieldID);
         camposLayout.add(datePickerInicio);
         camposLayout.add(datePickerFin);
-        camposLayout.add(regionComboBox);
-        camposLayout.add(bloqueComboBox);
+        mainLayout.add(regionComboBox);
         mainLayout.add(textFieldObjetivos);
         mainLayout.add(textFieldDemografia);
         mainLayout.add(botonesFinalLayout);
@@ -105,7 +100,6 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
             datePickerInicio.setValue(campMedioEditada.getInicio());
             datePickerFin.setValue(campMedioEditada.getFin());
             regionComboBox.setValue(campMedioEditada.getRegion());
-            bloqueComboBox.setValue(campMedioEditada.getBloque());
             textFieldObjetivos.setValue(campMedioEditada.getObjetivos());
             textFieldDemografia.setValue(campMedioEditada.getDemografia());   
         } else if(campEdit != null){
@@ -114,7 +108,6 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
             datePickerInicio.setValue(campEdit.getInicio());
             datePickerFin.setValue(campEdit.getFin());
             regionComboBox.setValue(campEdit.getRegion());
-            bloqueComboBox.setValue(campEdit.getBloque());
             textFieldObjetivos.setValue(campEdit.getObjetivos());
             textFieldDemografia.setValue(campEdit.getDemografia());
         } 
@@ -124,14 +117,13 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
             String ID = textFieldID.getValue();
             LocalDate inicio = datePickerInicio.getValue();
             LocalDate fin = datePickerFin.getValue();
-            Bloque bloque = bloqueComboBox.getValue();
             Region region = regionComboBox.getValue();
             String objetivos = textFieldObjetivos.getValue();
             String demografia = textFieldDemografia.getValue();
 
-            if(comprobarCamposCompletos(ID, nombre, inicio, fin, bloque, region)) {
+            if(comprobarCamposCompletos(ID, nombre, inicio, fin, region)) {
                 listaCamps.remove(campEdit);
-                Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
+                Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("campMedioEditada", camp);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
@@ -140,11 +132,6 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
                 getContent().add(error);
             }        
         });
-    }
-
-    private void setComboBoxBloque(ComboBox<Bloque> comboBox){
-        comboBox.setItems(ListaCreator.crearListaBloques());
-        comboBox.setItemLabelGenerator(item -> ((Bloque)item).getNombre());
     }
 
     private void setComboBoxRegion(ComboBox<Region> comboBox){
@@ -164,7 +151,7 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
         mainLayout.setAlignItems(Alignment.CENTER);
     }
 
-    private boolean comprobarCamposCompletos(String ID, String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
+    private boolean comprobarCamposCompletos(String ID, String nombre, LocalDate inicio, LocalDate fin, Region r){
         if(nombre.isBlank()){
             return false;
         }
@@ -172,9 +159,6 @@ public class EditarCampanyaView extends Composite<VerticalLayout> {
             return false;
         }
         if(inicio.isAfter(fin)){
-            return false;
-        }
-        if(b == null){
             return false;
         }
         if(r == null){

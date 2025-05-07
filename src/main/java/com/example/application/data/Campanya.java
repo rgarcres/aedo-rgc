@@ -12,12 +12,11 @@ public class Campanya extends AbstractEntity {
     private LocalDate inicio;
     private LocalDate fin;
     private Region region;
-    private Bloque bloque;
     private List<Grupo> grupos;
     private List<Pregunta> preguntas;
 
     //------------Constructor------------
-    public Campanya(Long ID, String nombre, String objetivos, String demografia, LocalDate inicio, LocalDate fin, Region region, Bloque bloque) {
+    public Campanya(Long ID, String nombre, String objetivos, String demografia, LocalDate inicio, LocalDate fin, Region region) {
         this.setId(ID);
         this.nombre = nombre;
         this.objetivos = objetivos;
@@ -53,10 +52,6 @@ public class Campanya extends AbstractEntity {
     //Region
     public Region getRegion() { return region; }
     public void setRegion(Region region) { this.region = region; }
-
-    //Bloque
-    public Bloque getBloque() { return bloque; }
-    public void setBloque(Bloque bloque) { this.bloque = bloque; }
 
     //Lista de grupos
     public List<Grupo> getGrupos() { return grupos; }

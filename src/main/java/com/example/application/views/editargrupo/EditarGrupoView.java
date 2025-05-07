@@ -2,6 +2,8 @@ package com.example.application.views.editargrupo;
 
 import java.util.List;
 
+import org.vaadin.lineawesome.LineAwesomeIconUrl;
+
 import com.example.application.data.Grupo;
 import com.example.application.views.utilidades.BotonesCreator;
 import com.vaadin.flow.component.Composite;
@@ -22,7 +24,7 @@ import com.vaadin.flow.server.VaadinSession;
 
 @PageTitle("Editar Grupo")
 @Route("editar-grupo")
-@Menu(order = 3)
+@Menu(order = 3, icon = LineAwesomeIconUrl.USERS_SOLID)
 public class EditarGrupoView extends Composite<VerticalLayout>{
     private String ID;
     private String nombre;

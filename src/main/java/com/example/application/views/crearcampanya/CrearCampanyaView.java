@@ -1,6 +1,5 @@
 package com.example.application.views.crearcampanya;
 
-import com.example.application.data.Bloque;
 import com.example.application.data.Campanya;
 import com.example.application.data.Grupo;
 import com.example.application.data.Region;
@@ -61,7 +60,6 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         DatePicker datePickerInicio = new DatePicker("Inicio*");
         DatePicker datePickerFin = new DatePicker("Fin*");
         ComboBox<Region> regionComboBox = new ComboBox<>("Region*");
-        ComboBox<Bloque> bloqueComboBox = new ComboBox<>("Bloque*");
         TextField textFieldObjetivos = new TextField("Objetivos");
         TextField textFieldDemografia = new TextField("Demografia");
         //-----------Botones-----------
@@ -80,9 +78,6 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         regionComboBox.setWidth("min-content");
         regionComboBox.setItems(ListaCreator.crearListaRegiones());
         regionComboBox.setItemLabelGenerator(item -> item.getNombre());
-        bloqueComboBox.setWidth("min-content");
-        bloqueComboBox.setItems(ListaCreator.crearListaBloques());
-        bloqueComboBox.setItemLabelGenerator(item -> item.getNombre());
 
         textFieldObjetivos.setWidth("100%");
         textFieldDemografia.setWidth("100%");
@@ -102,7 +97,6 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             datePickerInicio.setValue(campMedioCreada.getInicio());
             datePickerFin.setValue(campMedioCreada.getFin());
             regionComboBox.setValue(campMedioCreada.getRegion());
-            bloqueComboBox.setValue(campMedioCreada.getBloque());
             if(!campMedioCreada.getObjetivos().isBlank()){
                 textFieldObjetivos.setValue(campMedioCreada.getObjetivos());
             }
@@ -119,8 +113,7 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
         camposObligatoriosLayout.add(textFieldID);
         camposObligatoriosLayout.add(datePickerInicio);
         camposObligatoriosLayout.add(datePickerFin);
-        camposObligatoriosLayout.add(regionComboBox);
-        camposObligatoriosLayout.add(bloqueComboBox);
+        mainLayout.add(regionComboBox);
         mainLayout.add(textFieldObjetivos);
         mainLayout.add(textFieldDemografia);
         mainLayout.add(botonesFinalLayout);
@@ -133,22 +126,20 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
             String ID = textFieldID.getValue();
             LocalDate inicio = datePickerInicio.getValue();
             LocalDate fin = datePickerFin.getValue();
-            Bloque bloque = bloqueComboBox.getValue();
             Region region = regionComboBox.getValue();
             String objetivos = textFieldObjetivos.getValue();
             String demografia = textFieldDemografia.getValue();
             
             if(listaGrupos.isEmpty() || listaGrupos == null){
                 notificarGruposVacios();
-            } else if(!comprobarCamposCompletos(nombre, inicio, fin, bloque, region)) {
+            } else if(!comprobarCamposCompletos(nombre, inicio, fin, region)) {
                 getContent().add(errorMsg);
             } else if(!comprobarID(ID, errorMsg)){
                 getContent().add(errorMsg);
             } else  {
-                Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region, bloque);
+                Campanya camp = new Campanya(Long.parseLong(ID), nombre, objetivos, demografia, inicio, fin, region);
                 listaCamps.add(camp);
                 VaadinSession.getCurrent().setAttribute("campMedioCreada", camp);
-                VaadinSession.getCurrent().setAttribute("bloqueSelec", bloque);
                 VaadinSession.getCurrent().setAttribute("listaCamps", listaCamps);
                 getUI().ifPresent(ui -> ui.navigate("seleccionar-grupo"));
             }        
@@ -209,14 +200,11 @@ public class CrearCampanyaView extends Composite<VerticalLayout> {
     }
 
     //Comprueba que todos los campos introducidos son correctos y no están vacíos
-    private boolean comprobarCamposCompletos(String nombre, LocalDate inicio, LocalDate fin, Bloque b, Region r){
+    private boolean comprobarCamposCompletos(String nombre, LocalDate inicio, LocalDate fin, Region r){
         if(nombre.isBlank()){
             return false;
         }
         if(inicio == null || fin == null){
-            return false;
-        }
-        if(b == null){
             return false;
         }
         if(r == null){

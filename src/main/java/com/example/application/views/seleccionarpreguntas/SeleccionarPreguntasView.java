@@ -1,6 +1,5 @@
 package com.example.application.views.seleccionarpreguntas;
 
-import com.example.application.data.Bloque;
 import com.example.application.data.Campanya;
 import com.example.application.data.Pregunta;
 import com.example.application.views.utilidades.BotonesCreator;
@@ -65,12 +64,10 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         Button buscarButton = new Button("Buscar");
         Button limpiarButton = new Button("Limpiar");
         TextField textFieldEnunciado = new TextField("Enunciado");
-        CheckboxGroup<Integer> checkboxTipo = new CheckboxGroup<>("Tipo");
+        CheckboxGroup<Integer> checkboxTipo = new CheckboxGroup<>("Bloque");
         
         listaPreguntas.addAll(ListaCreator.crearListaPreguntas());
-        Bloque bloqueSelec = (Bloque) VaadinSession.getCurrent().getAttribute("bloqueSelec");
-
-        preguntasFiltradas.addAll(preguntasPorBloqueSeleccionado(bloqueSelec, listaPreguntas));
+        preguntasFiltradas.addAll(listaPreguntas);
 
     //-----------Grid-----------
         configurarGrid(gridPreguntas);
@@ -192,19 +189,6 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         return false;
     }
 
-    //Genera una lista de preguntas a partir de la pregunta pasada por parámetro que pertenezcan al
-    //bloque pasado como primer parámetro
-    private List<Pregunta> preguntasPorBloqueSeleccionado(Bloque bloque, List<Pregunta> preguntas){
-        List<Pregunta> lp = new ArrayList<>();
-
-        for(Pregunta p: preguntas){
-            if(p.getBloque().getNombre().equals(bloque.getNombre())){
-                lp.add(p);
-            }
-        }
-        return lp;
-    }
-
     //Configura el grid
     private void configurarGrid(Grid<Pregunta> gridPreguntas){
         gridPreguntas.setSelectionMode(Grid.SelectionMode.MULTI);
@@ -215,10 +199,9 @@ public class SeleccionarPreguntasView extends Composite<VerticalLayout> {
         //Respuesta
         gridPreguntas.addColumn(p -> String.join(",", p.getRespuestas())).setHeader("Respuesta").setAutoWidth(true);
         //Tipo
-        gridPreguntas.addColumn(Pregunta::getTipo).setHeader("Tipo").setAutoWidth(true);
+        gridPreguntas.addColumn(Pregunta::getTipo).setHeader("Bloque").setAutoWidth(true);
         if(campEdit == null){
             gridPreguntas.setItems(preguntasFiltradas);
-            gridPreguntas.asMultiSelect().select(preguntasFiltradas);
         } else {
             gridPreguntas.setItems(campEdit.getPreguntas());
             gridPreguntas.asMultiSelect().select(campEdit.getPreguntas());

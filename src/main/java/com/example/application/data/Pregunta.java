@@ -42,7 +42,7 @@ public class Pregunta extends AbstractEntity{
 
         Pregunta pregunta = (Pregunta) o;
 
-        return pregunta.getBloque() == bloque && pregunta.getEnunciado() == enunciado
+        return super.equals(o) && pregunta.getBloque() == bloque && pregunta.getEnunciado() == enunciado
                 && pregunta.getTipo() == tipo;
     }
 }
